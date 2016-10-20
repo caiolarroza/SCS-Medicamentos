@@ -1,3 +1,6 @@
+Versao 0.2.1
+-Modificacao no diagrama de classes
+
 Versao 0.2
 -Modificacao no diagrama de classes
 
