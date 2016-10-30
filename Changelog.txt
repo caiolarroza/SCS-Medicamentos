@@ -1,3 +1,9 @@
+Versao 0.3.1
+-Modificacao look and feel (tema) classes View
+-Modificacao no diagrama de classes
+-Modificacao do DER
+-Modificacao script SQL (igualado ao DER)
+
 Versao 0.3
 -Criacao classes View
 -Modificacao no diagrama de classes
