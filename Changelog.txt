@@ -1,3 +1,7 @@
+Versao 0.3.2
+-Modificação classes View
+-Modificação diagrama de classes
+
 Versao 0.3.1
 -Modificacao look and feel (tema) classes View
 -Modificacao no diagrama de classes
