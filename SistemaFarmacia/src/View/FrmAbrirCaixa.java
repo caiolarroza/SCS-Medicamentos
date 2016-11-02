@@ -37,12 +37,13 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 137, 154));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
 
-        jPanel1.setBackground(new java.awt.Color(231, 247, 244));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         btnEntrar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnEntrar.setText("ABRIR CAIXA");
@@ -61,6 +62,8 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Candara", 0, 24)); // NOI18N
         jLabel2.setText("Abrir Caixa");
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478125897_icon-115-lock-open.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -75,9 +78,11 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
                     .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 288, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(349, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addGap(387, 387, 387))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -88,7 +93,9 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(55, 55, 55)
@@ -150,6 +157,7 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtSenha;
     // End of variables declaration//GEN-END:variables

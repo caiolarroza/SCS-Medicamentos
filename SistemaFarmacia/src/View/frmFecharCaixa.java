@@ -72,10 +72,11 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(228, 246, 242));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton2.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jButton2.setText("CANCELAR");
@@ -190,6 +191,8 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
 
         jLabel38.setText("jLabel38");
 
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478125951_icon-114-lock.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,9 +207,11 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
                         .addComponent(jButton2)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(378, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel39)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(417, 417, 417)
                 .addComponent(jLabel1)
@@ -301,7 +306,9 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jLabel2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel39))
                         .addGap(97, 97, 97))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -448,6 +455,7 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

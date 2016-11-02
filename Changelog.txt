@@ -1,3 +1,8 @@
+Versao 0.3.4
+-Modificação classes View
+-Modificação diagrama de classes
+-Modificacao do DER
+
 Versao 0.3.3
 -Modificação classes View
 -Modificação diagrama de classes

@@ -64,6 +64,7 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         btnVoltar = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(240, 96, 106));
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 600));
@@ -109,7 +110,7 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
 
-        jPanel2.setBackground(new java.awt.Color(228, 246, 242));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
@@ -144,6 +145,8 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         btnConfirmar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConfirmar.setText("CONFIRMAR");
 
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478128718_credit_card.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -151,7 +154,9 @@ public class FrmCartao extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(344, 344, 344)
+                        .addGap(286, 286, 286)
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel5))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(173, 173, 173)
@@ -184,7 +189,9 @@ public class FrmCartao extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jLabel5)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel11))
                 .addGap(75, 75, 75)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,6 +278,7 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
