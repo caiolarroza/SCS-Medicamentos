@@ -62,7 +62,7 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Candara", 0, 24)); // NOI18N
         jLabel2.setText("Abrir Caixa");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478125897_icon-115-lock-open.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/DinheiroCircular.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

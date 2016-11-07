@@ -96,7 +96,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
         jButton1.setText("Pesquisar");
 
         jLabel3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel3.setText("Fabricante:");
+        jLabel3.setText("Fornecedor:");
 
         jLabel4.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel4.setText("Nome:");
@@ -119,7 +119,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
         btnAtualizar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnAtualizar.setText("ATUALIZAR");
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478125692_27.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Remedio.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,7 +176,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel8))
                 .addGap(43, 43, 43)

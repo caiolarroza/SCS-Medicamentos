@@ -5,8 +5,13 @@
  */
 package View;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -19,6 +24,8 @@ public class frmDinheiro extends javax.swing.JInternalFrame {
      */
     public frmDinheiro() {
         initComponents();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
 
     /**
@@ -138,7 +145,7 @@ public class frmDinheiro extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478129184_Untitled-2-34.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Dinheiro.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

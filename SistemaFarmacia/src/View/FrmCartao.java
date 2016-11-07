@@ -145,7 +145,7 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         btnConfirmar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConfirmar.setText("CONFIRMAR");
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/1478128718_credit_card.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CartaoCredito.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
