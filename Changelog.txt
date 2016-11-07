@@ -1,3 +1,8 @@
+Versao 0.3.6
+ -Criacao das classes Model com suas variaveis e getters/setters
+ -Modelagem do FrmUsuario e FrmFornecedor
+ -Correcao de alguns nomes de componentes das views
+
 Versao 0.3.5
 -Organizacao pacotes Java
 -Criacao FrmUsuario e FrmFornecedor e respectivos Controllers e model para Fornecedor
