@@ -1,3 +1,7 @@
+Versao 0.3.8
+-Adicionado atributo Lote para medicamento (Classes, DER, BD e Codigo)
+-Criadas 3 Views (vCompra, vCliente e vFornecedor)
+
 Versao 0.3.7
 -Modificacao Diagrama de classes (atributo status em Caixa)
 -Modificacao DER (atributo status em Caixa)

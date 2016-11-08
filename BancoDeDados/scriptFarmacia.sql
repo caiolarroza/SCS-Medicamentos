@@ -42,6 +42,7 @@ create table medicamento(
 	dataValidade Date,
 	preco decimal(7,2),
 	qtdEstoque int(5),
+	lote int(5),
 	constraint fkForMed foreign key(codFornecedor) references fornecedor(codFornecedor)
 );
 
@@ -132,4 +133,38 @@ create table vendaMedicamento(
 	constraint fkVendaVM foreign key(codVenda) references venda(codVenda),
 	constraint fkMedicamentoVM foreign key(codMedicamento) references medicamento(codMedicamento)
 );
+
+
+create view vCompra as
+	select c.nome as Cliente, v.codVenda as CodigoVenda, 
+	tP.valorTotal as ValorTotal,
+	v.porcentagemDesconto as PorcentagemDesconto, 
+	ValorTotal*1-PorcentagemDesconto/100 as ValorFinal,
+	m.nome as Medicamento, vM.quantidade as Quantidade,
+	m.lote as Lote, m.preco as PrecoUnitario from Venda v
+	inner join tipoPagamento tP on v.codPagamento = tP.codPagamento
+	inner join vendaMedicamento vM on v.codVenda = vM.codVenda
+	inner join medicamento m on vM.codMedicamento = m.codMedicamento
+	inner join cliente c on v.codCliente = c.codCliente;
+
+
+create view vCliente as
+	select c.nome as Cliente, c.telefone as Telefone,
+	c.celular as Celular, c.rg as RG, c.cpf as CPF,
+	date_format(c.dataNascimento, '%d/%m/%Y') as DataNascimento,
+	c.aposentado as Aposentado, e.logradouro as Logradouro,
+	e.numero as Numero, e.complemento as Complemento,
+	e.bairro as Bairro, e.cep as CEP, e.cidade as Cidade,
+	e.estado as Estado from cliente c
+	inner join endereco e on c.codEndereco = e.codEndereco; 
+
+
+create view vFornecedor as
+	select f.nome as Fornecedor, f.telefone as Telefone,
+	f.celular as Celular, f.cnpj as CNPJ, e.logradouro as Logradouro,
+	e.numero as Numero, e.complemento as Complemento,
+	e.bairro as Bairro, e.cep as CEP, e.cidade as Cidade,
+	e.estado as Estado from fornecedor f
+	inner join endereco e on f.codEndereco = e.codEndereco; 
+
 /*good to go*/

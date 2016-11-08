@@ -17,6 +17,7 @@ public class Medicamento {
     private String nome, fabricante;
     private Date dataValidade;
     private BigDecimal preco;
+    private int lote;
 
     public int getCodMedicamento() {
         return codMedicamento;
