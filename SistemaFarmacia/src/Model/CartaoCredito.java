@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author caiol
  */
-public class CartaoCredito {
+public class CartaoCredito extends TipoPagamento {
     private int codSeguranca;
     private Long numero;
     private String nome;

@@ -9,7 +9,7 @@ package Model;
  *
  * @author caiol
  */
-public class Notas extends Dinheiro{
+public class Notas{
     private int codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100;
 
     public int getCodNotas() {

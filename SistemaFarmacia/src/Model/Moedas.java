@@ -9,7 +9,7 @@ package Model;
  *
  * @author caiol
  */
-public class Moedas extends Dinheiro{
+public class Moedas{
     private int codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real;
 
     public int getCodMoedas() {

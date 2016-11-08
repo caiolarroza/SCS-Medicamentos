@@ -9,9 +9,14 @@ package Model;
  *
  * @author caiol
  */
-public class Dinheiro {
+public class Dinheiro extends TipoPagamento{
     private Moedas moedas;
     private Notas notas;
+
+    public Dinheiro(Moedas moedas, Notas notas) {
+        this.moedas = moedas;
+        this.notas = notas;
+    }
 
     public Moedas getMoedas() {
         return moedas;

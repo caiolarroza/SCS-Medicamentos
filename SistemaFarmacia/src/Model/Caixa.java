@@ -21,6 +21,11 @@ public class Caixa {
     private Notas notas;
     private Usuario usuarioAbriu, usuarioFechou;
 
+    public Caixa(Moedas moedas, Notas notas) {
+        this.moedas = moedas;
+        this.notas = notas;
+    }
+    
     public int getCodCaixa() {
         return codCaixa;
     }

@@ -22,16 +22,27 @@ create table cliente(
 	dataNascimento Date,
 	aposentado boolean,
 	codEndereco int(5),
-	constraint fkEndCL foreign key(codEndereco) references Endereco(codEndereco)
+	constraint fkEndCli foreign key(codEndereco) references endereco(codEndereco)
+);
+
+create table fornecedor(
+	codFornecedor int(5) primary key,
+	nome varchar(40),
+	telefone char(10),
+	celular char(11),
+	cnpj varchar(14),
+	codEndereco int(5),
+	constraint fkEndFor foreign key(codEndereco) references endereco(codEndereco)
 );
 
 create table medicamento(
 	codMedicamento int(5) primary key,
 	nome varchar(30),
-	fabricante varchar(30),
+	codFornecedor int(5),
 	dataValidade Date,
 	preco decimal(7,2),
-	qtdEstoque int(5)
+	qtdEstoque int(5),
+	constraint fkForMed foreign key(codFornecedor) references fornecedor(codFornecedor)
 );
 
 create table usuario(
@@ -62,8 +73,6 @@ create table notas(
 
 create table caixa(
 	codCaixa int(5) primary key,
-	senhaAbertura varchar(25),
-	senhaFechamento varchar(25),
 	dataAbertura date,
 	dataFechamento date,
 	horaAbertura time,
@@ -72,6 +81,7 @@ create table caixa(
 	codMoedas int(5),
 	usuarioAbriu int(5),
 	usuarioFechou int(5),
+	status boolean,
 	constraint fkNotasC foreign key(codNotas) references notas(codNotas),
 	constraint fkMoedasC foreign key(codMoedas) references moedas(codMoedas),
 	constraint fkUsuarioAbriuC foreign key(usuarioAbriu) references usuario(codUsuario),
@@ -80,7 +90,7 @@ create table caixa(
 
 create table tipoPagamento(
 	codPagamento int(5) primary key,
-	valor decimal(7,2),
+	valorTotal decimal(7,2),
 	codCaixa int(5),
 	constraint fkCaixaTP foreign key(codCaixa) references caixa(codCaixa)
 );
