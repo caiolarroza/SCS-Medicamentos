@@ -2,25 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmCliente.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmMedicamento.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/Caixa.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/TipoPagamento.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/frmLogin.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmUsuario.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/frmDinheiro.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/Moedas.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmAbrirCaixa.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmVenda.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/frmPrincipal.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmFornecedor.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/Dinheiro.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/frmFecharCaixa.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/View/FrmCartao.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/CartaoCredito.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/Notas.java</file>
-            <file>file:/D:/Drive/Fatec/4_Semestre/Prog_Orientada_a_Objetos_-_Viotti/N2/Sistema_Farmacia_Fatec/SistemaFarmacia/src/Model/Medicamento.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
