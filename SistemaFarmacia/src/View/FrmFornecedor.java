@@ -5,6 +5,11 @@
  */
 package View;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
+import javax.swing.border.EmptyBorder;
+
 /**
  *
  * @author mslda
@@ -16,8 +21,16 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
      */
     public FrmFornecedor() {
         initComponents();
+        //Retirar bordas
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
-
+    //centralizar o InternalFrame no DesktopPane
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -335,7 +348,9 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        getContentPane().removeAll();
+        this.dispose();
+        getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed

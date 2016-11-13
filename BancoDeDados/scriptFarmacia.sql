@@ -199,8 +199,8 @@ insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
 		  values ("2", "6", "5", "4","3","2","1");
 
 /*insere valores na tabela usuario*/
-insert into usuario(codUsuario, login, senha, tipoUsuario) values ("1", "usuario1","123", "Funcionario");
-insert into usuario(codUsuario, login, senha, tipoUsuario) values ("2", "usuario2","321", "Funcionario");
+insert into usuario(codUsuario, login, senha, tipoUsuario) values ("1", "usuario1","123", "Atendente");
+insert into usuario(codUsuario, login, senha, tipoUsuario) values ("2", "usuario2","321", "Gerente");
 
 /*insere valores na tabela endereco*/
 insert into endereco(codEndereco, logradouro, numero, complemento, bairro, cep, cidade, estado) 

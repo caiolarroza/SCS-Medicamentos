@@ -5,8 +5,11 @@
  */
 package View;
 
+import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -19,8 +22,15 @@ public class FrmCartao extends javax.swing.JInternalFrame {
      */
     public FrmCartao() {
         initComponents();
+        //Retirar bordas
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
-
+    //centralizar o InternalFrame no DesktopPane
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +145,7 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         jLabel5.setText("Cartão de Crédito");
 
         btnVoltar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        btnVoltar.setText("VOLTAR");
+        btnVoltar.setText("CANCELAR");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);

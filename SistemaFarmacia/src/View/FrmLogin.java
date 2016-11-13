@@ -5,20 +5,32 @@
  */
 package View;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author caiol
  */
-public class frmLogin extends javax.swing.JInternalFrame {
+public class FrmLogin extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmLogin
      */
-    public frmLogin() {
+    public FrmLogin() {
         initComponents();
+        //Retirar bordas
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
+    }
+    //centralizar o InternalFrame no DesktopPane
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
     }
 
     /**
@@ -116,7 +128,9 @@ public class frmLogin extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        getContentPane().removeAll();
+        this.dispose();
+        getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -135,7 +149,7 @@ public class frmLogin extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmLogin().setVisible(true);
+                new FrmLogin().setVisible(true);
             }
         });
     }

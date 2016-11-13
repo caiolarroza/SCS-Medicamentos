@@ -1,3 +1,11 @@
+Versao 0.4.1
+-Organizacao da pasta Logo
+-Modificacoes de tamanho do FrmPrincipal e de seus componentes (Resolvido problema de jDesktopPane mudar o tamanho ao redimensionar a janela, janela agora inicia maximizada, Internal frames ficam centralizados independentemente do tamanho da janela, menus dropdown organizados por tipo de formulário)
+-Todos botoes de FrmPrincipal que linkam internal frames e opcoes do dropdown funcionando
+-Adicionado botao de pesquisa no FrmUsuario
+-Adicionados botoes em FrmPrincipal para fornecedor e usuario
+-Criado FrmSobre
+
 Versao 0.4
 -Implementado metodo inserir() em CaixaDAO
 -Corrigido erro do valor com desconto na vCompra (script sql)

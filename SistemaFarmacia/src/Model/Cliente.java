@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author caiol
@@ -12,7 +14,8 @@ package Model;
 public class Cliente {
     private int codCliente;
     private Endereco endereco;
-    private String nome, telefone, celular, rg, cpf, dataNasc;
+    private String nome, telefone, celular, rg, cpf;
+    private String dataNasc;
     private Boolean aposentado;
 
     public int getCodCliente() {

@@ -5,9 +5,13 @@
  */
 package View;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.JInternalFrame;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -17,17 +21,17 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author caiol
  */
-public class frmDinheiro extends javax.swing.JInternalFrame {
+public class FrmDinheiro extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmDinheiro
      */
-    public frmDinheiro() {
+    public FrmDinheiro() {
         initComponents();
+        //Retirar bordas
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -322,7 +326,9 @@ public class frmDinheiro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        getContentPane().removeAll();
+        this.dispose();
+        getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -341,7 +347,7 @@ public class frmDinheiro extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDinheiro().setVisible(true);
+                new FrmDinheiro().setVisible(true);
             }
         });
     }

@@ -5,22 +5,33 @@
  */
 package View;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author mslda
  */
-public class frmFecharCaixa extends javax.swing.JInternalFrame {
+public class FrmFecharCaixa extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmFecharCaixa
      */
-    public frmFecharCaixa() {
+    public FrmFecharCaixa() {
         initComponents();
+        //Retirar bordas
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
-
+    //centralizar o InternalFrame no DesktopPane
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -390,7 +401,9 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        getContentPane().removeAll();
+        this.dispose();
+        getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
@@ -412,7 +425,7 @@ public class frmFecharCaixa extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmFecharCaixa().setVisible(true);
+                new FrmFecharCaixa().setVisible(true);
             }
         });
     }
