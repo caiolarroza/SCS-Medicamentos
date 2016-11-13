@@ -154,7 +154,7 @@ create view vCompra as
 	select c.nome as Cliente, v.codVenda as CodigoVenda, 
 	tP.valorTotal as ValorTotal,
 	v.porcentagemDesconto as PorcentagemDesconto, 
-	ValorTotal*1-PorcentagemDesconto/100 as ValorFinal,
+	round(ValorTotal*(1-PorcentagemDesconto/100), 2) as ValorFinal,
 	m.nome as Medicamento, vM.quantidade as Quantidade,
 	m.lote as Lote, m.preco as PrecoUnitario from Venda v
 	inner join tipoPagamento tP on v.codPagamento = tP.codPagamento

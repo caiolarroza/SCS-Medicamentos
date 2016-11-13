@@ -1,3 +1,11 @@
+Versao 0.4
+-Implementado metodo inserir() em CaixaDAO
+-Corrigido erro do valor com desconto na vCompra (script sql)
+-Adicionada pasta com possiveis logos
+-Adicionado metodo proximoCodigo() na interface DAO
+-Alteracao do diagrama de classes para insercao das DAOs e seus devidos relacionamentos
+-Adicionado atributo status na classe Caixa
+
 Versao 0.3.9
 -Criacao da interface DAO
 -Criacao das DAO's das models

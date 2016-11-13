@@ -6,7 +6,7 @@
 package Model;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -20,6 +20,15 @@ public class Caixa {
     private Moedas moedas;
     private Notas notas;
     private Usuario usuarioAbriu, usuarioFechou;
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public Caixa(Moedas moedas, Notas notas) {
         this.moedas = moedas;
