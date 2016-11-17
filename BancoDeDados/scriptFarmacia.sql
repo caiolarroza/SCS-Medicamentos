@@ -112,7 +112,7 @@ create table cartaoCredito(
 	codPagamento int(5) primary key,
 	numero bigint(16),
 	nome varchar(40),
-	validade date,
+	validade char(7),
 	codSeguranca int(3),
 	constraint fkTipoPagCC foreign key(codPagamento) references tipoPagamento(codPagamento)
 );
@@ -149,20 +149,21 @@ create table vendaMedicamento(
 	constraint fkMedicamentoVM foreign key(codMedicamento) references medicamento(codMedicamento)
 );
 
-/*view que mosta as compras realizadas*/
+/*view que mosta as compras realizadas, o nome do cliente, o tipo de pagamento e todos os medicamentos inclusos na compra*/
 create view vCompra as
 	select c.nome as Cliente, v.codVenda as CodigoVenda, 
 	tP.valorTotal as ValorTotal,
 	v.porcentagemDesconto as PorcentagemDesconto, 
 	round(ValorTotal*(1-PorcentagemDesconto/100), 2) as ValorFinal,
 	m.nome as Medicamento, vM.quantidade as Quantidade,
-	m.lote as Lote, m.preco as PrecoUnitario from Venda v
+	m.lote as Lote, m.preco as PrecoUnitario,
+	m.preco*vM.quantidade as PrecoItem from Venda v
 	inner join tipoPagamento tP on v.codPagamento = tP.codPagamento
 	inner join vendaMedicamento vM on v.codVenda = vM.codVenda
 	inner join medicamento m on vM.codMedicamento = m.codMedicamento
 	inner join cliente c on v.codCliente = c.codCliente;
 
-/*mostra os clientes cadastrados no sistema*/
+/*mostra os dados dos clientes cadastrados no sistema, incluindo endereço */
 create view vCliente as
 	select c.nome as Cliente, c.telefone as Telefone,
 	c.celular as Celular, c.rg as RG, c.cpf as CPF,
@@ -173,7 +174,7 @@ create view vCliente as
 	e.estado as Estado from cliente c
 	inner join endereco e on c.codEndereco = e.codEndereco; 
 
-/*mostra todos os fornecedores cadastrados no sistema*/
+/*mostra os dados dos fornecedores cadastrados no sistema, incluindo endereço*/
 create view vFornecedor as
 	select f.nome as Fornecedor, f.telefone as Telefone,
 	f.celular as Celular, f.cnpj as CNPJ, e.logradouro as Logradouro,
@@ -244,15 +245,15 @@ insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFech
 		  values ("2", "20161009", "20161009","07:15","13:27","2","2","2","2","0");		 
 
 /*insere valores na tabela de tipopagamento*/
-insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("1","1000", "1");
-insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("2","5000.56", "2");
+insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("1","1039.70", "1");
+insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("2","1410.90", "2");
 		  
 /*insere valores na tabela de dinheiro*/
 insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","1","1");
 
 /*insere valores na tabela de cartaoCredito*/
 insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca)
-						  values("2", "1122334455667788", "Caio Larroza de Oliveira", "20170529", "225");					  
+						  values("2", "1122334455667788", "Caio Larroza de Oliveira", "05/2017", "225");					  
 
 /*insere valores na tabela de venda*/
 insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa)
@@ -261,7 +262,7 @@ insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCa
 				  values ("2", "20", "2", "2", "2");				  
 				  
 /*insere valores na tabela de vendamedicamento*/
-insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("1", "1", "1", "20");
-insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("2", "2", "2", "50");				  
-
-/*good to go*/
+insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("1", "1", "1", "20");				  
+insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("2", "1", "2", "29");
+insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("3", "2", "2", "50");
+insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("4", "2", "1", "10");

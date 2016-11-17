@@ -1,3 +1,11 @@
+Versao 0.4.2
+-Adicionado icones de Usuario e Fornecedor
+-Adicionado logo
+-Adicionado FrmVendasEfetuadas e modelado
+-Modelado FrmSobre
+-Adicionado arquivo Word com os scripts do BD e DER
+-Adicionado .gitignore
+
 Versao 0.4.1
 -Organizacao da pasta Logo
 -Modificacoes de tamanho do FrmPrincipal e de seus componentes (Resolvido problema de jDesktopPane mudar o tamanho ao redimensionar a janela, janela agora inicia maximizada, Internal frames ficam centralizados independentemente do tamanho da janela, menus dropdown organizados por tipo de formulário)
