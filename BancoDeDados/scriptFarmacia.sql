@@ -49,6 +49,7 @@ create table medicamento(
 	preco decimal(7,2),
 	qtdEstoque int(5),
 	lote int(5),
+	dataEntrada Date,
 	constraint fkForMed foreign key(codFornecedor) references fornecedor(codFornecedor)
 );
 
@@ -102,9 +103,7 @@ create table caixa(
 /*cria a tabela com o tipo do pagamento*/
 create table tipoPagamento(
 	codPagamento int(5) primary key,
-	valorTotal decimal(7,2),
-	codCaixa int(5),
-	constraint fkCaixaTP foreign key(codCaixa) references caixa(codCaixa)
+	valorTotal decimal(7,2)
 );
 
 /*cria a tabela q armazena os dados do cartao de credito*/
@@ -134,6 +133,7 @@ create table venda(
 	codCliente int(5),
 	codPagamento int(5),
 	codCaixa int(5),
+	data Date,
 	constraint fkClienteV foreign key(codCliente) references cliente(codCliente),
 	constraint fkPagamentoV foreign key(codPagamento) references tipoPagamento(codPagamento),
 	constraint fkCaixaV foreign key(codCaixa) references caixa(codCaixa)
@@ -231,11 +231,11 @@ insert into fornecedor(codFornecedor, nome, telefone, celular, cnpj, codEndereco
 		     values ("2", "Medlye Industria Farmaceutica Ltda.","1921178222","","50929710000179","4");
 					
 /*insere valores na tabela medicamento*/
-insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtdEstoque,lote)
-						values ("1", "Betatrinta 1x1ml", "1", "20180315", "15.59", "100", "1");
+insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtdEstoque,lote, dataEntrada)
+						values ("1", "Betatrinta 1x1ml", "1", "20180315", "15.59", "100", "1", "20161022");
 						
-insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtdEstoque,lote)
-						values ("2", "Fluxocor 20MG 30 comp", "2", "20170723", "25.10", "110", "1");						
+insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtdEstoque,lote, dataEntrada)
+						values ("2", "Fluxocor 20MG 30 comp", "2", "20170723", "25.10", "110", "1", "20161030");						
 					
 /*insere valores na tabela de caixa*/
 insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, usuarioAbriu, usuarioFechou, status)
@@ -245,8 +245,8 @@ insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFech
 		  values ("2", "20161009", "20161009","07:15","13:27","2","2","2","2","0");		 
 
 /*insere valores na tabela de tipopagamento*/
-insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("1","1039.70", "1");
-insert into tipopagamento(codPagamento, valorTotal, codCaixa) values ("2","1410.90", "2");
+insert into tipopagamento(codPagamento, valorTotal) values ("1","1039.70");
+insert into tipopagamento(codPagamento, valorTotal) values ("2","1410.90");
 		  
 /*insere valores na tabela de dinheiro*/
 insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","1","1");
@@ -256,10 +256,10 @@ insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca)
 						  values("2", "1122334455667788", "Caio Larroza de Oliveira", "05/2017", "225");					  
 
 /*insere valores na tabela de venda*/
-insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa)
-				  values ("1", "5", "1", "1", "1");
-insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa)
-				  values ("2", "20", "2", "2", "2");				  
+insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa, data)
+				  values ("1", "5", "1", "1", "1", "20161124");
+insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa, data)
+				  values ("2", "20", "2", "2", "2", "20161120");				  
 				  
 /*insere valores na tabela de vendamedicamento*/
 insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("1", "1", "1", "20");				  

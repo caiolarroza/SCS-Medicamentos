@@ -10,8 +10,18 @@ package Model;
  * @author caiol
  */
 public class Endereco {
+    private int codEndereco;
     private String numero, complemento, bairro, cep, cidade, estado, logradouro;
 
+    public int getCodEndereco() {
+        return codEndereco;
+    }
+
+    public void setCodEndereco(int codEndereco) {
+        this.codEndereco = codEndereco;
+    }
+
+    
     public String getNumero() {
         return numero;
     }

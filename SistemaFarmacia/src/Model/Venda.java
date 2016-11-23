@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 /**
@@ -17,8 +16,16 @@ public class Venda {
     private Cliente cliente;
     private Caixa caixa;
     private TipoPagamento tipoPagamento;
-    private ArrayList<Medicamento> medicamento = new ArrayList();
-    private ArrayList<List> quantidade = new ArrayList();
+    private ArrayList<MedQtd> medQtd;
+    private String data;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public int getCodVenda() {
         return codVenda;
@@ -60,20 +67,14 @@ public class Venda {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public ArrayList<Medicamento> getMedicamento() {
-        return medicamento;
+    public ArrayList<MedQtd> getMedQtd() {
+        return medQtd;
     }
 
-    public void setMedicamento(ArrayList<Medicamento> medicamento) {
-        this.medicamento = medicamento;
+    public void setMedQtd(ArrayList<MedQtd> medQtd) {
+        this.medQtd = medQtd;
     }
 
-    public ArrayList<List> getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(ArrayList<List> quantidade) {
-        this.quantidade = quantidade;
-    }
+ 
     
 }

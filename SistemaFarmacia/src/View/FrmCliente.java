@@ -5,6 +5,9 @@
  */
 package View;
 
+import DAO.ClienteDAO;
+import DAO.DAO;
+import Model.Cliente;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -407,7 +410,8 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        DAO dao = new ClienteDAO();
+        Cliente cliente = new Cliente();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

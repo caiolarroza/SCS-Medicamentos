@@ -14,7 +14,7 @@ import java.sql.Date;
  */
 public class Caixa {
     private int codCaixa;
-    private String senhaAbertura, senhaFechamento;
+    private static String senhaAbertura = "123", senhaFechamento = "321";
     private Date dataAbertura, dataFechamento;
     private Time horaAbertura, horaFechamento;
     private Moedas moedas;

@@ -1,3 +1,10 @@
+Versao 0.4.3
+-Implementadas todas as classes DAO
+-Adicionada ao pacote Model classe MedQtd
+-Adicionada no diagrama de classes as seguintes classes: MedQtd, FrmVendasEfetuadas e FrmLogin
+-Adicionado atributo data para venda e dataEntrada para medicamento
+-Modificacao script BD(retirado codCaixa da tabela tipoPagamento)
+
 Versao 0.4.2
 -Adicionado icones de Usuario e Fornecedor
 -Adicionado logo

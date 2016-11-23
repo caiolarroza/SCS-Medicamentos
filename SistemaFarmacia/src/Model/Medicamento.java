@@ -6,18 +6,16 @@
 package Model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  *
  * @author caiol
  */
 public class Medicamento {
-    private int codMedicamento,qtdEstoque;
-    private String nome, fabricante;
-    private Date dataValidade;
+    private int codMedicamento,qtdEstoque, lote;
+    private String nome, dataValidade, dataEntrada; 
+    private Fornecedor fornecedor;
     private BigDecimal preco;
-    private int lote;
 
     public int getCodMedicamento() {
         return codMedicamento;
@@ -35,12 +33,20 @@ public class Medicamento {
         this.nome = nome;
     }
 
-    public String getFabricante() {
-        return fabricante;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public int getLote() {
+        return lote;
+    }
+
+    public void setLote(int lote) {
+        this.lote = lote;
     }
 
     public int getQtdEstoque() {
@@ -51,11 +57,11 @@ public class Medicamento {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public Date getDataValidade() {
+    public String getDataValidade() {
         return dataValidade;
     }
 
-    public void setDataValidade(Date dataValidade) {
+    public void setDataValidade(String dataValidade) {
         this.dataValidade = dataValidade;
     }
 
@@ -67,6 +73,13 @@ public class Medicamento {
         this.preco = preco;
     }
 
+    public String getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(String dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
 
     
 }

@@ -75,7 +75,24 @@ public class CaixaDAO implements DAO<Caixa>{
 
     @Override
     public boolean alterar(Caixa obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            bd.conectar();
+            pst = bd.getConexao().prepareStatement(
+            "update caixa set dataFechamento = ?, horaFechamento = ?,"
+                    + "usuarioFechou = ?, status = ? where codCaixa = ?");
+            pst.setDate(1, getData());
+            pst.setTime(2, getHora());
+            pst.setInt(3, obj.getUsuarioFechou().getCodUsuario());
+            pst.setBoolean(4, obj.isStatus());
+            pst.setInt(5, obj.getCodCaixa());
+            return pst.executeUpdate() > 0;
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro no Update\n"
+                     + ex.getMessage());
+             return false;
+        }finally {
+            bd.fechaConexao();
+        }
     }
 
     @Override
@@ -85,7 +102,34 @@ public class CaixaDAO implements DAO<Caixa>{
 
     @Override
     public Caixa pesquisar(Caixa obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM caixa WHERE codCaixa = ?");
+            pst.setInt(1, obj.getCodCaixa());
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                obj.setDataAbertura(rs.getDate("dataAbertura"));
+                obj.setDataFechamento(rs.getDate("dataFechamento"));
+                obj.setHoraAbertura(rs.getTime("horaAbertura"));
+                obj.setHoraAbertura(rs.getTime("horaFechamento"));
+                obj.getNotas().setCodNotas(rs.getInt("codNotas"));
+                obj.getMoedas().setCodMoedas(rs.getInt("codMoedas"));
+                obj.getUsuarioAbriu().setCodUsuario(rs.getInt("usuarioAbriu"));
+                obj.getUsuarioFechou().setCodUsuario(rs.getInt("usuarioFechou"));
+                obj.setStatus(rs.getBoolean("status"));
+                return obj;
+            } else
+                return null;            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
     }
 
     /*@Override

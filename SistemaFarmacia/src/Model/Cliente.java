@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author caiol
@@ -14,8 +12,7 @@ import java.util.Date;
 public class Cliente {
     private int codCliente;
     private Endereco endereco;
-    private String nome, telefone, celular, rg, cpf;
-    private String dataNasc;
+    private String nome, telefone, celular, rg, cpf, dataNasc;
     private Boolean aposentado;
 
     public int getCodCliente() {
@@ -82,7 +79,7 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
 
-    public Boolean getAposentado() {
+    public Boolean isAposentado() {
         return aposentado;
     }
 

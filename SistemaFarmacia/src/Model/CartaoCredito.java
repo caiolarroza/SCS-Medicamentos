@@ -12,10 +12,9 @@ import java.util.Date;
  * @author caiol
  */
 public class CartaoCredito extends TipoPagamento {
-    private int codSeguranca;
     private Long numero;
-    private String nome;
-    private Date validade;
+    private String nome, validade;
+    private int codSeguranca;
 
     public int getCodSeguranca() {
         return codSeguranca;
@@ -41,11 +40,11 @@ public class CartaoCredito extends TipoPagamento {
         this.nome = nome;
     }
 
-    public Date getValidade() {
+    public String getValidade() {
         return validade;
     }
 
-    public void setValidade(Date validade) {
+    public void setValidade(String validade) {
         this.validade = validade;
     }
     
