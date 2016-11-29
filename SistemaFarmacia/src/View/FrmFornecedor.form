@@ -122,7 +122,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="txtBuscaCPF" max="32767" attributes="0"/>
+                                          <Component id="txtBuscaCNPJ" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -160,7 +160,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtBuscaCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtBuscaCNPJ" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -274,9 +274,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtEstado">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEstadoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtBairro">
         </Component>
@@ -325,9 +322,6 @@
         <Component class="javax.swing.JTextField" name="txtLogradouro">
         </Component>
         <Component class="javax.swing.JTextField" name="txtComplemento">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtComplementoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -340,9 +334,6 @@
         <Component class="javax.swing.JTextField" name="txtNum">
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtCEP">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCEPActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
@@ -353,14 +344,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTelefone">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTelefoneActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCelular">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCelularActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -387,9 +372,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtFornecedor">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFornecedorActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
           <Properties>
@@ -399,7 +381,7 @@
             <Property name="text" type="java.lang.String" value="Buscar fornecedor por CNPJ: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="txtBuscaCPF">
+        <Component class="javax.swing.JFormattedTextField" name="txtBuscaCNPJ">
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
@@ -421,9 +403,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtCNPJ">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCNPJActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>

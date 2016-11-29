@@ -1,5 +1,14 @@
+Versao 0.4.4
+-Implementadas todas as classes do pacote Controller(Não foram testadas)
+-Adicionado atributo dataEntrada nos metodos em MedicamentoDAO
+-Alterado os tipos de dataAbertura e dataFechamento da classe Caixa
+-Adicionados metodos em ClienteDAO, MedicamentoDAO e VendaDAO de conversao de data do formato do MySQL (yyyy-MM-dd) para o padrao brasileiro (dd/MM/yyyy) e para a conversao inversa tambem, ja foram tambem adicionados ao diagrama de classes
+-Formularios de: cliente, fornecedor, usuario e medicamentos estao funcionais
+-Modificacoes em varias classes e no BD para mudancas de tipos e adicao ou remocao de metodos (precisam ser arrumados nos diagramas de classes e DER)
+-Adicionados arquivos de relatorios (notaFiscal e fechamentoCaixa)
+
 Versao 0.4.3
--Implementadas todas as classes DAO
+-Implementadas todas as classes do pacote DAO
 -Adicionada ao pacote Model classe MedQtd
 -Adicionada no diagrama de classes as seguintes classes: MedQtd, FrmVendasEfetuadas e FrmLogin
 -Adicionado atributo data para venda e dataEntrada para medicamento

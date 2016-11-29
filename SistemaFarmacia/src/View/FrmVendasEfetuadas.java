@@ -41,16 +41,14 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        lvlValorTotal = new javax.swing.JLabel();
+        lblValorTotal = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         cbPagamento = new javax.swing.JComboBox<>();
         btnConcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblPorcentagem = new javax.swing.JLabel();
-        cbCaixa = new javax.swing.JComboBox<>();
         txtBuscaCPF = new javax.swing.JFormattedTextField();
         btnBuscarCPF = new javax.swing.JButton();
         txtNome = new javax.swing.JTextField();
@@ -64,7 +62,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbBusca = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        lvlValorFinal = new javax.swing.JLabel();
+        lblValorFinal = new javax.swing.JLabel();
         btnApagar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtData = new javax.swing.JTextField();
@@ -73,7 +71,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        lvlValorTotal.setText("jLabel13");
+        lblValorTotal.setText("           ");
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Carrinho.png"))); // NOI18N
 
@@ -83,10 +81,8 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Porcentagem de Desconto:");
 
-        jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel7.setText("Caixa:");
-
         cbPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão de Credito" }));
+        cbPagamento.setSelectedIndex(-1);
         cbPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbPagamentoActionPerformed(evt);
@@ -109,9 +105,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
             }
         });
 
-        lblPorcentagem.setText("jLabel8");
-
-        cbCaixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblPorcentagem.setText("         ");
 
         btnBuscarCPF.setText("BUSCAR");
 
@@ -167,7 +161,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel13.setText("Valor Final: ");
 
-        lvlValorFinal.setText("jLabel13");
+        lblValorFinal.setText("          ");
 
         btnApagar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnApagar.setText("APAGAR");
@@ -190,13 +184,9 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
+                        .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cbCaixa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbPagamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,11 +218,11 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lvlValorFinal))))
+                                        .addComponent(lblValorFinal))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lvlValorTotal)
+                                .addComponent(lblValorTotal)
                                 .addGap(91, 91, 91)))))
                 .addGap(166, 166, 166))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -285,15 +275,12 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                             .addComponent(cbPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel12)
-                                .addComponent(lvlValorTotal)))
+                                .addComponent(lblValorTotal)))
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(cbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel13)
-                                .addComponent(lvlValorFinal)))
-                        .addGap(42, 42, 42)
+                            .addComponent(jLabel13)
+                            .addComponent(lblValorFinal))
+                        .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnConcluir)
                             .addComponent(btnCancelar)
@@ -301,7 +288,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                         .addGap(49, 49, 49))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                        .addContainerGap(34, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -378,7 +365,6 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConcluir;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbCaixa;
     private javax.swing.JComboBox<String> cbPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -389,14 +375,13 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblPorcentagem;
-    private javax.swing.JLabel lvlValorFinal;
-    private javax.swing.JLabel lvlValorTotal;
+    private javax.swing.JLabel lblValorFinal;
+    private javax.swing.JLabel lblValorTotal;
     private javax.swing.JTable tbBusca;
     private javax.swing.JTable tbSelecionado;
     private javax.swing.JFormattedTextField txtBuscaCPF;

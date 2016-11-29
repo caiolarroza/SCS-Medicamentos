@@ -5,22 +5,57 @@
  */
 package Model;
 
-import java.sql.Time;
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
  * @author caiol
  */
 public class Caixa {
-    private int codCaixa;
+    private int codCaixa, qtdDinheiro, qtdCartao;
     private static String senhaAbertura = "123", senhaFechamento = "321";
     private Date dataAbertura, dataFechamento;
     private Time horaAbertura, horaFechamento;
-    private Moedas moedas;
-    private Notas notas;
-    private Usuario usuarioAbriu, usuarioFechou;
+    private Moedas moedas = new Moedas();
+    private Notas notas = new Notas();
     private boolean status;
+    private BigDecimal valorTotalDinheiro, valorTotalCartao;
+
+    public BigDecimal getValorTotalDinheiro() {
+        return valorTotalDinheiro;
+    }
+
+    public void setValorTotalDinheiro(BigDecimal valorTotalDinheiro) {
+        this.valorTotalDinheiro = new BigDecimal(valorTotalDinheiro.toString());
+    }
+
+    public BigDecimal getValorTotalCartao() {
+        return valorTotalCartao;
+    }
+
+    public void setValorTotalCartao(BigDecimal valorTotalCartao) {
+        this.valorTotalCartao = new BigDecimal(valorTotalCartao.toString());
+    }
+
+    
+
+    public int getQtdDinheiro() {
+        return qtdDinheiro;
+    }
+
+    public void setQtdDinheiro(int qtdDinheiro) {
+        this.qtdDinheiro = qtdDinheiro;
+    }
+
+    public int getQtdCartao() {
+        return qtdCartao;
+    }
+
+    public void setQtdCartao(int qtdCartao) {
+        this.qtdCartao = qtdCartao;
+    }
 
     public boolean isStatus() {
         return status;
@@ -30,10 +65,7 @@ public class Caixa {
         this.status = status;
     }
 
-    public Caixa(Moedas moedas, Notas notas) {
-        this.moedas = moedas;
-        this.notas = notas;
-    }
+    
     
     public int getCodCaixa() {
         return codCaixa;
@@ -107,21 +139,7 @@ public class Caixa {
         this.notas = notas;
     }
 
-    public Usuario getUsuarioAbriu() {
-        return usuarioAbriu;
-    }
 
-    public void setUsuarioAbriu(Usuario usuarioAbriu) {
-        this.usuarioAbriu = usuarioAbriu;
-    }
-
-    public Usuario getUsuarioFechou() {
-        return usuarioFechou;
-    }
-
-    public void setUsuarioFechou(Usuario usuarioFechou) {
-        this.usuarioFechou = usuarioFechou;
-    }
     
     
 }

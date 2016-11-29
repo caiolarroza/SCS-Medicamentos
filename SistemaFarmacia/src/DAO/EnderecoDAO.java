@@ -9,7 +9,6 @@ import Model.Endereco;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,11 +18,18 @@ import javax.swing.JOptionPane;
 public class EnderecoDAO implements DAO<Endereco>{
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public EnderecoDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
     @Override
     public boolean inserir(Endereco obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into endereco values (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -51,6 +57,7 @@ public class EnderecoDAO implements DAO<Endereco>{
     @Override
     public boolean alterar(Endereco obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "update endereco set logradouro = ?, numero = ?,"
@@ -78,6 +85,7 @@ public class EnderecoDAO implements DAO<Endereco>{
     @Override
     public boolean excluir(Endereco obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM endereco WHERE codEndereco = ?");
@@ -95,6 +103,7 @@ public class EnderecoDAO implements DAO<Endereco>{
     @Override
     public Endereco pesquisar(Endereco obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM endereco WHERE codEndereco = ?");
@@ -103,13 +112,13 @@ public class EnderecoDAO implements DAO<Endereco>{
             rs = pst.executeQuery();
             //verifica se achou alguem
             if(rs.next()) { //achou
-                obj.setLogradouro("logradouro");
-                obj.setNumero("numero");
-                obj.setComplemento("complemento");
-                obj.setBairro("bairro");
-                obj.setCep("cep");
-                obj.setCidade("cidade");
-                obj.setEstado("estado");
+                obj.setLogradouro(rs.getString("logradouro"));
+                obj.setNumero(rs.getString("numero"));
+                obj.setComplemento(rs.getString("complemento"));
+                obj.setBairro(rs.getString("bairro"));
+                obj.setCep(rs.getString("cep"));
+                obj.setCidade(rs.getString("cidade"));
+                obj.setEstado(rs.getString("estado"));
                 return obj;
             } else
                 return null;            
@@ -130,7 +139,8 @@ public class EnderecoDAO implements DAO<Endereco>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
+            
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codEndereco), 0) + 1 as numero from endereco");
                 
@@ -144,7 +154,7 @@ public class EnderecoDAO implements DAO<Endereco>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+            
         }
     }
     

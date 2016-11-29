@@ -12,7 +12,7 @@ package Model;
 public class Fornecedor {
    private int codFornecedor;
    private String nome, telefone, celular, cnpj;
-   private Endereco endereco;
+   private Endereco endereco = new Endereco();
 
     public int getCodFornecedor() {
         return codFornecedor;

@@ -11,8 +11,8 @@ package Model;
  */
 public class Cliente {
     private int codCliente;
-    private Endereco endereco;
-    private String nome, telefone, celular, rg, cpf, dataNasc;
+    private Endereco endereco = new Endereco();
+    private String nome = "", telefone, celular, rg, cpf, dataNasc;
     private Boolean aposentado;
 
     public int getCodCliente() {

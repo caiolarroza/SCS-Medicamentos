@@ -16,6 +16,6 @@ public interface DAO<T> {
     public boolean alterar(T obj);
     public boolean excluir(T obj);
     public T pesquisar(T obj);
-    //public List<T> listar(String filtro);
+    //public ArrayList<T> listar(String filtro);
     public int proxCodigo();
 }

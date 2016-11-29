@@ -9,7 +9,6 @@ import Model.CartaoCredito;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +19,18 @@ public class CartaoCreditoDAO implements DAO<CartaoCredito>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public CartaoCreditoDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
     
     @Override
     public boolean inserir(CartaoCredito obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into cartaoCredito values (?, ?, ?, ?, ?)");
@@ -55,6 +60,7 @@ public class CartaoCreditoDAO implements DAO<CartaoCredito>{
     @Override
     public boolean excluir(CartaoCredito obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM cartaoCredito WHERE codPagamento = ?");
@@ -72,6 +78,7 @@ public class CartaoCreditoDAO implements DAO<CartaoCredito>{
     @Override
     public CartaoCredito pesquisar(CartaoCredito obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM cartaoCredito WHERE codPagamento = ?");

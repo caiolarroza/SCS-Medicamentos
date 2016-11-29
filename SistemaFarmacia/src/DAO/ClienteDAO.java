@@ -22,10 +22,14 @@ public class ClienteDAO implements DAO<Cliente>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
-    ResultSet rs;
     
-    public java.sql.Date getData(String dataS){
+    ResultSet rs;
+
+    public ClienteDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    private java.sql.Date converteDataSQL(String dataS){
         //data formatada para ir para o BD
         try{
             DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -38,28 +42,69 @@ public class ClienteDAO implements DAO<Cliente>{
         }
     }
     
+    private String converteDataView(String dataV){
+        try {
+            //data formatada para ir para a View
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data = formato.parse(dataV);
+            formato.applyPattern("dd/MM/yyyy");
+            dataV = formato.format(data);
+            return dataV;
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    //busca o codigo do endereco no BD
+    private int getEnderecoBD(){
+        try {
+            PreparedStatement pst;
+           // bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT max(codEndereco) as codigo from endereco");
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                return rs.getInt("codigo");
+                
+            } else{
+               return -1;   
+            }
+                          
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        } finally {
+           // bd.fechaConexao();
+        }
+    }
+    
     @Override
     public boolean inserir(Cliente obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into cliente values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                
-            pst.setInt(1, proxCodigo());
-            pst.setString(2, obj.getNome());
+            
+            obj.getEndereco().setCodEndereco(getEnderecoBD());
+            
+            pst.setInt(1,proxCodigo());
+            pst.setString(2,obj.getNome());
             pst.setString(3, obj.getTelefone());
             pst.setString(4, obj.getCelular());
             pst.setString(5, obj.getRg());
             pst.setString(6, obj.getCpf());
-            pst.setDate(7, getData(obj.getDataNasc()));
+            pst.setDate(7, converteDataSQL(obj.getDataNasc()));
             pst.setBoolean(8, obj.isAposentado());
             pst.setInt(9, obj.getEndereco().getCodEndereco());
             //verifica se o update foi efetuado e retorna true ou false
             return pst.executeUpdate() > 0;
             
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Erro na inserção\n"
-                     + ex.getMessage());
+            ex.printStackTrace();
              return false;
         }finally{
             bd.fechaConexao();
@@ -69,19 +114,19 @@ public class ClienteDAO implements DAO<Cliente>{
     @Override
     public boolean alterar(Cliente obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
             "update cliente set nome = ?, telefone = ?,"
-                    + "celular = ?, rg = ?, cpf = ?, dataNascimento = ?,"
+                    + "celular = ?, rg = ?, dataNascimento = ?,"
                     + "aposentado = ? WHERE codCliente = ?");
             pst.setString(1, obj.getNome());
             pst.setString(2, obj.getTelefone());
             pst.setString(3, obj.getCelular());
             pst.setString(4, obj.getRg());
-            pst.setString(5, obj.getCpf());
-            pst.setDate(6, getData(obj.getDataNasc()));
-            pst.setBoolean(7, obj.isAposentado());
-            pst.setInt(8, obj.getCodCliente());
+            pst.setDate(5, converteDataSQL(obj.getDataNasc()));
+            pst.setBoolean(6, obj.isAposentado());
+            pst.setInt(7, obj.getCodCliente());
             return pst.executeUpdate() > 0;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro no Update\n"
@@ -95,6 +140,7 @@ public class ClienteDAO implements DAO<Cliente>{
     @Override
     public boolean excluir(Cliente obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM cliente WHERE codCliente = ?");
@@ -112,6 +158,7 @@ public class ClienteDAO implements DAO<Cliente>{
     @Override
     public Cliente pesquisar(Cliente obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM cliente WHERE cpf = ?");
@@ -121,11 +168,12 @@ public class ClienteDAO implements DAO<Cliente>{
             //verifica se achou alguem
             if(rs.next()) { //achou
                 obj.setCodCliente(rs.getInt("codCliente"));
-                obj.setNome("nome");
-                obj.setTelefone("telefone");
-                obj.setCelular("celular");
-                obj.setRg("rg");
-                obj.setDataNasc(rs.getDate("dataNascimento").toString());
+                obj.setNome(rs.getString("nome"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setDataNasc(converteDataView(rs.getDate("dataNascimento").toString()));
                 obj.setAposentado(rs.getBoolean("aposentado"));
                 obj.getEndereco().setCodEndereco(rs.getInt("codEndereco"));
                 return obj;
@@ -148,7 +196,7 @@ public class ClienteDAO implements DAO<Cliente>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codCliente), 0) + 1 as numero from cliente");
                 
@@ -156,13 +204,14 @@ public class ClienteDAO implements DAO<Cliente>{
                     
             rs.next();//retorna o valor do BD
             
-            return rs.getInt("numero");
+            int x = rs.getInt("numero");
+            return x;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+            
         }
     }
     

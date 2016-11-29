@@ -9,7 +9,6 @@ import Model.Fornecedor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,16 +19,48 @@ public class FornecedorDAO implements DAO<Fornecedor>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public FornecedorDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
+    //busca o codigo do endereco no BD
+    private int getEnderecoBD(){
+        try {
+            PreparedStatement pst;
+            
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT max(codEndereco) as codigo from endereco");
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                return rs.getInt("codigo");
+                
+            } else{
+               return -1;   
+            }
+                          
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        } finally {
+            
+        }
+    }
     
     @Override
     public boolean inserir(Fornecedor obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into fornecedor values (?, ?, ?, ?, ?, ?)");
-                
+            obj.getEndereco().setCodEndereco(getEnderecoBD());
             pst.setInt(1, proxCodigo());
             pst.setString(2, obj.getNome());
             pst.setString(3, obj.getTelefone());
@@ -52,17 +83,18 @@ public class FornecedorDAO implements DAO<Fornecedor>{
     @Override
     public boolean alterar(Fornecedor obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "update fornecedor set nome = ?, telefone = ?,"
                     + "celular = ?, cnpj = ? WHERE codFornecedor = ?");
 
-            pst.setInt(1, proxCodigo());
-            pst.setString(2, obj.getNome());
-            pst.setString(3, obj.getTelefone());
-            pst.setString(4, obj.getCelular());
-            pst.setString(5, obj.getCnpj());
-            pst.setInt(6, obj.getCodFornecedor());
+            
+            pst.setString(1, obj.getNome());
+            pst.setString(2, obj.getTelefone());
+            pst.setString(3, obj.getCelular());
+            pst.setString(4, obj.getCnpj());
+            pst.setInt(5, obj.getCodFornecedor());
             return pst.executeUpdate() > 0;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro no Update\n"
@@ -76,6 +108,7 @@ public class FornecedorDAO implements DAO<Fornecedor>{
     @Override
     public boolean excluir(Fornecedor obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM fornecedor WHERE codFornecedor = ?");
@@ -93,19 +126,30 @@ public class FornecedorDAO implements DAO<Fornecedor>{
     @Override
     public Fornecedor pesquisar(Fornecedor obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
-            pst = bd.getConexao().prepareStatement(
+            if(obj.getCodFornecedor() == 666){
+                pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM fornecedor WHERE cnpj = ?");
-            pst.setString(1, obj.getCnpj());
+                pst.setString(1, obj.getCnpj());
+               
+            }else{
+                pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM fornecedor WHERE codFornecedor = ?");
+                
+                pst.setInt(1, obj.getCodFornecedor());
+            }
+            
+            
             //executa o select
             rs = pst.executeQuery();
             //verifica se achou alguem
             if(rs.next()) { //achou
                 obj.setCodFornecedor(rs.getInt("codFornecedor"));
-                obj.setNome("nome");
-                obj.setTelefone("telefone");
-                obj.setCelular("celular");
-                obj.setCnpj("cnpj");
+                obj.setNome(rs.getString("nome"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setCnpj(rs.getString("cnpj"));
                 obj.getEndereco().setCodEndereco(rs.getInt("codEndereco"));
                 return obj;
             } else
@@ -127,7 +171,7 @@ public class FornecedorDAO implements DAO<Fornecedor>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codFornecedor), 0) + 1 as numero from fornecedor");
                 
@@ -141,7 +185,7 @@ public class FornecedorDAO implements DAO<Fornecedor>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+            
         }
     }
     

@@ -9,10 +9,10 @@ import Model.Caixa;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,68 +23,99 @@ public class CaixaDAO implements DAO<Caixa>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
     
     Date data;
+
+    public CaixaDAO(Banco bd) {
+        this.bd = bd;
+    }
     
-    public java.sql.Date getData(){
+    
+    private java.sql.Date getData(){
         //data formatada para ir para o BD
         data = new Date();
         java.sql.Date dataSQL = new java.sql.Date(data.getTime());
         return dataSQL;
     }
     
-    public java.sql.Time getHora(){
+    private java.sql.Time getHora(){
         //hora formatada para ir para o BD
         data = new Date();
         java.sql.Time horaSQL = new java.sql.Time(data.getTime());
         return horaSQL;
     }
     
+    private String converteDataView(String dataV){
+        try {
+            //data formatada para ir para a View
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data = formato.parse(dataV);
+            formato.applyPattern("dd/MM/yyyy");
+            dataV = formato.format(data);
+            return dataV;
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
     
-    @Override
-    public boolean inserir(Caixa obj) {
+    public int contarVendas(String tipo){
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
-            pst = bd.getConexao().prepareStatement( //comando SQL
-                    "insert into caixa values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                
-            pst.setInt(1, proxCodigo());
-            pst.setDate(2, getData());
-            pst.setDate(3, null);
-            pst.setTime(4, getHora());
-            pst.setTime(5, null);
-            pst.setInt(6, obj.getNotas().getCodNotas());
-            pst.setInt(7, obj.getMoedas().getCodMoedas());
-            pst.setInt(8, obj.getUsuarioAbriu().getCodUsuario());
-            pst.setInt(9, obj.getUsuarioFechou().getCodUsuario());
-            pst.setBoolean(10, obj.isStatus());
-            //verifica se o update foi efetuado e retorna true ou false
-            return pst.executeUpdate() > 0;
+            if(tipo.equals("dinheiro")){
+                pst = bd.getConexao().prepareStatement(//comando SQL
+                    "select count(d.codPagamento) as qtd from dinheiro d\n" +
+                            "inner join venda v on v.data = curdate(); ");
+            }else{
+                pst = bd.getConexao().prepareStatement(//comando SQL
+                    "select count(cc.codPagamento) as qtd from cartaoCredito cc\n" +
+                            "inner join venda v on v.data = curdate(); ");
+            }
+
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
             
+            return rs.getInt("qtd");
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Erro na inserção\n"
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
                      + ex.getMessage());
-             return false;
+             return -1;
         }finally{
             bd.fechaConexao();
         }
-
+    }
+    
+    @Override
+    public boolean inserir(Caixa obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean alterar(Caixa obj) {
         try{
+            if(obj.isStatus()){
+                obj.setDataFechamento(getData());
+                obj.setHoraFechamento(getHora());
+            }else{
+                obj.setDataAbertura(getData());
+                obj.setHoraAbertura(getHora());
+            }
+            obj.setStatus(true);
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
-            "update caixa set dataFechamento = ?, horaFechamento = ?,"
-                    + "usuarioFechou = ?, status = ? where codCaixa = ?");
-            pst.setDate(1, getData());
-            pst.setTime(2, getHora());
-            pst.setInt(3, obj.getUsuarioFechou().getCodUsuario());
-            pst.setBoolean(4, obj.isStatus());
-            pst.setInt(5, obj.getCodCaixa());
+            "update caixa set dataAbertura = ?, horaAbertura = ?, dataFechamento = ?, horaFechamento = ?,"
+                    + "status = ? where codCaixa = 1");
+            pst.setDate(1, obj.getDataAbertura());
+            pst.setTime(2, obj.getHoraAbertura());
+            pst.setDate(3, obj.getDataFechamento());
+            pst.setTime(4, obj.getHoraFechamento());       
+            pst.setBoolean(5, obj.isStatus());
+            
             return pst.executeUpdate() > 0;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro no Update\n"
@@ -103,10 +134,11 @@ public class CaixaDAO implements DAO<Caixa>{
     @Override
     public Caixa pesquisar(Caixa obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
-                      "SELECT * FROM caixa WHERE codCaixa = ?");
-            pst.setInt(1, obj.getCodCaixa());
+                      "SELECT * FROM caixa WHERE codCaixa = 1");
+            
             //executa o select
             rs = pst.executeQuery();
             //verifica se achou alguem
@@ -117,8 +149,6 @@ public class CaixaDAO implements DAO<Caixa>{
                 obj.setHoraAbertura(rs.getTime("horaFechamento"));
                 obj.getNotas().setCodNotas(rs.getInt("codNotas"));
                 obj.getMoedas().setCodMoedas(rs.getInt("codMoedas"));
-                obj.getUsuarioAbriu().setCodUsuario(rs.getInt("usuarioAbriu"));
-                obj.getUsuarioFechou().setCodUsuario(rs.getInt("usuarioFechou"));
                 obj.setStatus(rs.getBoolean("status"));
                 return obj;
             } else
@@ -132,30 +162,43 @@ public class CaixaDAO implements DAO<Caixa>{
         }
     }
 
-    /*@Override
-    public List<Caixa> listar(String filtro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+    
+    public ArrayList<Caixa> listar() {
+        try {
+            PreparedStatement pst;
+            ArrayList<Caixa> caixas = new ArrayList<>();
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM caixa WHERE status = true");
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                Caixa obj = new Caixa();
+                obj.setCodCaixa(rs.getInt("codCaixa"));
+                obj.setDataAbertura(rs.getDate("dataAbertura"));
+                obj.setDataFechamento(rs.getDate("dataFechamento"));
+                obj.setHoraAbertura(rs.getTime("horaAbertura"));
+                obj.setHoraAbertura(rs.getTime("horaFechamento"));
+                obj.getNotas().setCodNotas(rs.getInt("codNotas"));
+                obj.getMoedas().setCodMoedas(rs.getInt("codMoedas"));
+
+                obj.setStatus(rs.getBoolean("status"));
+                caixas.add(obj);
+            } 
+            return caixas;
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
+    }
 
     @Override
     public int proxCodigo() {
-        try{
-            bd.conectar(); //abre o banco
-            pst = bd.getConexao().prepareStatement(//comando SQL
-            "select ifnull(max(codCidade), 0) + 1 as numero from cidade");
-                
-            rs = pst.executeQuery();//Executa o comando
-                    
-            rs.next();//retorna o valor do BD
-            
-            return rs.getInt("numero");
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
-                     + ex.getMessage());
-             return -1;
-        }finally{
-            bd.fechaConexao();
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

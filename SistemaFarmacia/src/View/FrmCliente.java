@@ -5,12 +5,15 @@
  */
 package View;
 
+import Controller.CtrlCliente;
+import DAO.Banco;
 import DAO.ClienteDAO;
 import DAO.DAO;
 import Model.Cliente;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -24,6 +27,9 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmCliente
      */
+    
+    Cliente cliente = new Cliente();
+    CtrlCliente ctrl = new CtrlCliente();
     public FrmCliente() {
         initComponents();
         //Retirar bordas
@@ -97,35 +103,11 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel3.setText("Data Nascimento:");
 
-        txtDataNasc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataNascActionPerformed(evt);
-            }
-        });
-
-        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeClienteActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel4.setText("Telefone:");
 
-        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefoneActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel5.setText("Celular:");
-
-        txtCelular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCelularActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Aposentado:");
@@ -138,12 +120,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
 
         jLabel9.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel9.setText("Complemento:");
-
-        txtComplemento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtComplementoActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel10.setText("Bairro:");
@@ -401,17 +377,91 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void limpar(){
+        txtBairro.setText("");
+        txtBuscaCPF.setText("");
+        txtCEP.setText("");
+        txtCPF.setText("");
+        txtCelular.setText("");
+        txtCidade.setText("");
+        txtComplemento.setText("");
+        txtDataNasc.setText("");
+        txtEstado.setText("");
+        txtLogradouro.setText("");
+        txtNomeCliente.setText("");
+        txtNum.setText("");
+        txtRG.setText("");
+        txtTelefone.setText("");
+        txtBuscaCPF.requestFocusInWindow();
+    }
+    
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        cliente.setCpf(txtBuscaCPF.getText());
+        Cliente aux = ctrl.buscarCliente(cliente);
+        if(aux != null){
+            cliente = aux;
+            txtNomeCliente.setText(aux.getNome());
+            txtDataNasc.setText(aux.getDataNasc());
+            txtTelefone.setText(aux.getTelefone());
+            txtCelular.setText(aux.getCelular());
+            cbAposentado.setSelected(aux.isAposentado());
+            txtRG.setText(aux.getRg());
+            txtCPF.setText(aux.getCpf());
+            txtCEP.setText(aux.getEndereco().getCep());
+            txtLogradouro.setText(aux.getEndereco().getLogradouro());
+            txtNum.setText(aux.getEndereco().getNumero());
+            txtComplemento.setText(aux.getEndereco().getComplemento());
+            txtBairro.setText(aux.getEndereco().getBairro());
+            txtCidade.setText(aux.getEndereco().getCidade());
+            txtEstado.setText(aux.getEndereco().getEstado());
+        }else{
+            limpar();
+        }
+        
+        
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        cliente.setNome(txtNomeCliente.getText());
+        cliente.setDataNasc(txtDataNasc.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setCelular(txtCelular.getText());
+        cliente.setRg(txtRG.getText());
+        cliente.setAposentado(cbAposentado.isSelected());
+        
+        cliente.getEndereco().setLogradouro(txtLogradouro.getText());
+        cliente.getEndereco().setNumero(txtNum.getText());
+        cliente.getEndereco().setComplemento(txtComplemento.getText());
+        cliente.getEndereco().setBairro(txtBairro.getText());
+        cliente.getEndereco().setCep(txtCEP.getText());
+        cliente.getEndereco().setCidade(txtCidade.getText());
+        cliente.getEndereco().setEstado(txtEstado.getText());
+        
+        ctrl.atualizarCliente(cliente);
+        limpar();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        DAO dao = new ClienteDAO();
-        Cliente cliente = new Cliente();
+        cliente.setNome(txtNomeCliente.getText());
+        cliente.setDataNasc(txtDataNasc.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setCelular(txtCelular.getText());
+        cliente.setRg(txtRG.getText());
+        cliente.setAposentado(cbAposentado.isSelected());
+        cliente.setCpf(txtCPF.getText());
+        cliente.setRg(txtRG.getText());
+        
+        cliente.getEndereco().setLogradouro(txtLogradouro.getText());
+        cliente.getEndereco().setNumero(txtNum.getText());
+        cliente.getEndereco().setComplemento(txtComplemento.getText());
+        cliente.getEndereco().setBairro(txtBairro.getText());
+        cliente.getEndereco().setCep(txtCEP.getText());
+        cliente.getEndereco().setCidade(txtCidade.getText());
+        cliente.getEndereco().setEstado(txtEstado.getText());
+        
+        ctrl.cadastrarCliente(cliente);
+        limpar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -420,28 +470,9 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComplementoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComplementoActionPerformed
-
-    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCelularActionPerformed
-
-    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefoneActionPerformed
-
-    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeClienteActionPerformed
-
-    private void txtDataNascActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataNascActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataNascActionPerformed
-
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+        ctrl.apagarCliente(cliente);
+        limpar();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**

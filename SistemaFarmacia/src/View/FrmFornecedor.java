@@ -5,6 +5,8 @@
  */
 package View;
 
+import Controller.CtrlFornecedor;
+import Model.Fornecedor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -19,6 +21,10 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmFornecedor
      */
+    
+    Fornecedor forne = new Fornecedor();
+    CtrlFornecedor ctrl = new CtrlFornecedor();
+    
     public FrmFornecedor() {
         initComponents();
         //Retirar bordas
@@ -67,7 +73,7 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtFornecedor = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtBuscaCPF = new javax.swing.JFormattedTextField();
+        txtBuscaCNPJ = new javax.swing.JFormattedTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         txtCNPJ = new javax.swing.JFormattedTextField();
@@ -112,12 +118,6 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
             }
         });
 
-        txtEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoActionPerformed(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel10.setText("Bairro:");
 
@@ -133,35 +133,11 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel8.setText("Logradouro:");
 
-        txtComplemento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtComplementoActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel7.setText("Número:");
 
-        txtCEP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCEPActionPerformed(evt);
-            }
-        });
-
         jLabel13.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel13.setText("CNPJ:");
-
-        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefoneActionPerformed(evt);
-            }
-        });
-
-        txtCelular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCelularActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel5.setText("Celular:");
@@ -171,12 +147,6 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
-
-        txtFornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFornecedorActionPerformed(evt);
-            }
-        });
 
         jLabel16.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel16.setText("Buscar fornecedor por CNPJ: ");
@@ -191,12 +161,6 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
 
         jLabel17.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel17.setText("CEP:");
-
-        txtCNPJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCNPJActionPerformed(evt);
-            }
-        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fornecedor.png"))); // NOI18N
 
@@ -270,7 +234,7 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel16)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtBuscaCPF)
+                                        .addComponent(txtBuscaCNPJ)
                                         .addGap(59, 59, 59)))
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -296,7 +260,7 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
                     .addComponent(jLabel16)
-                    .addComponent(txtBuscaCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscaCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -354,6 +318,21 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void limpar(){
+        txtBuscaCNPJ.setText("");
+        txtBairro.setText("");
+        txtCEP.setText("");
+        txtCNPJ.setText("");
+        txtCelular.setText("");
+        txtCidade.setText("");
+        txtComplemento.setText("");
+        txtEstado.setText("");
+        txtFornecedor.setText("");
+        txtLogradouro.setText("");
+        txtNum.setText("");
+        txtTelefone.setText("");
+    }
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         getContentPane().removeAll();
         this.dispose();
@@ -361,48 +340,66 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+        ctrl.apagarFornecedor(forne);
+        limpar();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        forne.setCelular(txtCelular.getText());
+        forne.setCnpj(txtCNPJ.getText());
+        forne.setNome(txtFornecedor.getText());
+        forne.setTelefone(txtTelefone.getText());
+        
+        forne.getEndereco().setLogradouro(txtLogradouro.getText());
+        forne.getEndereco().setNumero(txtNum.getText());
+        forne.getEndereco().setComplemento(txtComplemento.getText());
+        forne.getEndereco().setBairro(txtBairro.getText());
+        forne.getEndereco().setCep(txtCEP.getText());
+        forne.getEndereco().setCidade(txtCidade.getText());
+        forne.getEndereco().setEstado(txtEstado.getText());
+        
+        ctrl.cadastrarFornecedor(forne);
+        limpar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        forne.setCelular(txtCelular.getText());
+        forne.setCnpj(txtCNPJ.getText());
+        forne.setNome(txtFornecedor.getText());
+        forne.setTelefone(txtTelefone.getText());
+        
+        forne.getEndereco().setLogradouro(txtLogradouro.getText());
+        forne.getEndereco().setNumero(txtNum.getText());
+        forne.getEndereco().setComplemento(txtComplemento.getText());
+        forne.getEndereco().setBairro(txtBairro.getText());
+        forne.getEndereco().setCep(txtCEP.getText());
+        forne.getEndereco().setCidade(txtCidade.getText());
+        forne.getEndereco().setEstado(txtEstado.getText());
+        
+        ctrl.atualizarFornecedor(forne);
+        limpar();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void txtComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComplementoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtComplementoActionPerformed
-
-    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefoneActionPerformed
-
-    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCelularActionPerformed
-
-    private void txtFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFornecedorActionPerformed
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        forne.setCnpj(txtBuscaCNPJ.getText());
+        Fornecedor aux = ctrl.buscarFornecedor(forne);
+        if(aux != null){
+            forne = aux;
+            txtBairro.setText(aux.getEndereco().getBairro());
+            txtCEP.setText(aux.getEndereco().getCep());
+            txtCNPJ.setText(aux.getCnpj());
+            txtCelular.setText(aux.getCelular());
+            txtCidade.setText(aux.getEndereco().getCidade());
+            txtComplemento.setText(aux.getEndereco().getComplemento());
+            txtEstado.setText(aux.getEndereco().getEstado());
+            txtFornecedor.setText(aux.getNome());
+            txtNum.setText(aux.getEndereco().getNumero());
+            txtTelefone.setText(aux.getTelefone());
+            txtLogradouro.setText(aux.getEndereco().getLogradouro());
+        }else{
+            limpar();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoActionPerformed
-
-    private void txtCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCEPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCEPActionPerformed
-
-    private void txtCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCNPJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCNPJActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -427,7 +424,7 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtBairro;
-    private javax.swing.JFormattedTextField txtBuscaCPF;
+    private javax.swing.JFormattedTextField txtBuscaCNPJ;
     private javax.swing.JFormattedTextField txtCEP;
     private javax.swing.JFormattedTextField txtCNPJ;
     private javax.swing.JTextField txtCelular;

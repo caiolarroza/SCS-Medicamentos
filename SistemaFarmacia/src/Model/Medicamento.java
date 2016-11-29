@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class Medicamento {
     private int codMedicamento,qtdEstoque, lote;
     private String nome, dataValidade, dataEntrada; 
-    private Fornecedor fornecedor;
+    private Fornecedor fornecedor = new Fornecedor();
     private BigDecimal preco;
 
     public int getCodMedicamento() {

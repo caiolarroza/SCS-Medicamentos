@@ -25,7 +25,7 @@ public class Notas{
     }
 
     public void setQtd2(int qtd2) {
-        this.qtd2 = qtd2;
+        this.qtd2 += qtd2;
     }
 
     public int getQtd5() {
@@ -33,7 +33,7 @@ public class Notas{
     }
 
     public void setQtd5(int qtd5) {
-        this.qtd5 = qtd5;
+        this.qtd5 += qtd5;
     }
 
     public int getQtd10() {
@@ -41,7 +41,7 @@ public class Notas{
     }
 
     public void setQtd10(int qtd10) {
-        this.qtd10 = qtd10;
+        this.qtd10 += qtd10;
     }
 
     public int getQtd20() {
@@ -49,7 +49,7 @@ public class Notas{
     }
 
     public void setQtd20(int qtd20) {
-        this.qtd20 = qtd20;
+        this.qtd20 += qtd20;
     }
 
     public int getQtd50() {
@@ -57,7 +57,7 @@ public class Notas{
     }
 
     public void setQtd50(int qtd50) {
-        this.qtd50 = qtd50;
+        this.qtd50 += qtd50;
     }
 
     public int getQtd100() {
@@ -65,7 +65,7 @@ public class Notas{
     }
 
     public void setQtd100(int qtd100) {
-        this.qtd100 = qtd100;
+        this.qtd100 += qtd100;
     }
     
 }

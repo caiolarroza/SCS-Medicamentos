@@ -40,6 +40,7 @@ public class Banco {
                     + getServidor() + ":"
                     + getPorta() + "/"
                     + getBdDados(), getUsuario(), getSenha());
+                    
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Abertura: " + 
@@ -55,7 +56,7 @@ public class Banco {
     public void fechaConexao() {
         try {
             conexao.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fechar: " +
                     ex.getMessage());
         }

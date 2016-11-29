@@ -91,13 +91,9 @@ create table caixa(
 	horaFechamento time,
 	codNotas int(5),
 	codMoedas int(5),
-	usuarioAbriu int(5),
-	usuarioFechou int(5),
 	status boolean,
 	constraint fkNotasC foreign key(codNotas) references notas(codNotas),
-	constraint fkMoedasC foreign key(codMoedas) references moedas(codMoedas),
-	constraint fkUsuarioAbriuC foreign key(usuarioAbriu) references usuario(codUsuario),
-	constraint fkUsuarioFechouC foreign key(usuarioFechou) references usuario(codUsuario)
+	constraint fkMoedasC foreign key(codMoedas) references moedas(codMoedas)
 );
 
 /*cria a tabela com o tipo do pagamento*/
@@ -192,12 +188,36 @@ insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
 insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
 		   values ("2", "5", "4","3","2","1");
 
+insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
+		   values ("3", "1", "2","3","4","5");
+
+insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
+		   values ("4", "5", "4","3","2","1");
+
+insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
+		   values ("5", "1", "2","3","4","5");
+
+insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
+		   values ("6", "5", "4","3","2","1");
+
 /*insere valores na tabela de notas*/
 insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values("1", "1", "2","3","4","5","6");
+		  values ("1", "1", "2","3","4","5","6");
 
 insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
 		  values ("2", "6", "5", "4","3","2","1");
+
+insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
+		  values ("3", "1", "2","3","4","5","6");
+
+insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
+		  values ("4", "6", "5", "4","3","2","1");
+
+insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
+		  values ("5", "1", "2","3","4","5","6");
+
+insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
+		  values ("6", "6", "5", "4","3","2","1");
 
 /*insere valores na tabela usuario*/
 insert into usuario(codUsuario, login, senha, tipoUsuario) values ("1", "usuario1","123", "Atendente");
@@ -238,18 +258,24 @@ insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtd
 						values ("2", "Fluxocor 20MG 30 comp", "2", "20170723", "25.10", "110", "1", "20161030");						
 					
 /*insere valores na tabela de caixa*/
-insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, usuarioAbriu, usuarioFechou, status)
-		  values ("1", "20161109", "20161110","09:10","10:10","1","1","1","1","0");
+insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
+		  values ("1", "20161109", "20161110","09:10","10:10","1","1","0");
 		  
-insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, usuarioAbriu, usuarioFechou, status)
-		  values ("2", "20161009", "20161009","07:15","13:27","2","2","2","2","0");		 
+insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
+		  values ("2", "20161009", "20161009","07:15","13:27","2","2","0");	
+
+insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
+		  values ("3", "20161109", null,"09:10","10:10","3","3","1");
+		  
+insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
+		  values ("4", "20161009", null,"07:15","13:27","4","4","1");		 
 
 /*insere valores na tabela de tipopagamento*/
 insert into tipopagamento(codPagamento, valorTotal) values ("1","1039.70");
 insert into tipopagamento(codPagamento, valorTotal) values ("2","1410.90");
 		  
 /*insere valores na tabela de dinheiro*/
-insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","1","1");
+insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","5","5");
 
 /*insere valores na tabela de cartaoCredito*/
 insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca)
@@ -266,3 +292,42 @@ insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) 
 insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("2", "1", "2", "29");
 insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("3", "2", "2", "50");
 insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("4", "2", "1", "10");
+
+/*nota fiscal*/
+delimiter #
+create function tipo(cod int(5)) returns varchar(20)
+  begin
+    declare procura integer;
+    declare mensagem varchar(20);
+    set procura = (select count(codPagamento) from dinheiro
+      where codPagamento = cod);
+    if procura = 0 then
+      begin
+        set mensagem = "Cartão de Credito";
+      end;
+    else
+      set mensagem = "Dinheiro";
+    end if;
+    return mensagem;
+  end#
+delimiter ;
+
+
+select v.codVenda as CodigoVenda, v.codCaixa as CodigoCaixa, 
+DATE_FORMAT(v.data, '%d/%m/%Y') as Data,
+v.porcentagemDesconto as PorcentagemDesconto, c.nome as Cliente, c.cpf as CPF, 
+m.nome as Medicamento, m.preco as Preco, vM.quantidade as Quantidade,
+tp.valorTotal as ValorTotal, tipo(v.codPagamento) as Tipo,
+round(ValorTotal*(1-PorcentagemDesconto/100), 2) as ValorFinal from Venda v
+inner join Cliente c on v.codCliente = c.codCliente
+inner join vendaMedicamento vM on v.codVenda = vM.codVenda
+inner join Medicamento m on vM.codMedicamento = m.codMedicamento
+inner join Caixa cx on v.codCaixa = cx.codCaixa
+inner join tipoPagamento tp on v.codPagamento = tp.codPagamento
+where v.codVenda = (select max(codVenda) from venda);
+
+/*good to go*/
+
+/*TESTE
+update caixa set status=0 where codCaixa = 1;
+*/

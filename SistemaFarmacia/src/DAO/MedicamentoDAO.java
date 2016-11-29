@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -23,10 +25,22 @@ public class MedicamentoDAO implements DAO<Medicamento>{
     
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
-    ResultSet rs;
     
-    public java.sql.Date getData(String dataS){
+    ResultSet rs;
+
+    public MedicamentoDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
+    private java.sql.Date getData(){
+        //data formatada para ir para o BD
+        Date data = new Date();
+        java.sql.Date dataSQL = new java.sql.Date(data.getTime());
+        return dataSQL;
+    }
+    
+    private java.sql.Date converteDataSQL(String dataS){
         //data formatada para ir para o BD
         try{
             DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -39,9 +53,24 @@ public class MedicamentoDAO implements DAO<Medicamento>{
         }
     }
     
+    private String converteDataView(String dataV){
+        try {
+            //data formatada para ir para a View
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data = formato.parse(dataV);
+            formato.applyPattern("dd/MM/yyyy");
+            dataV = formato.format(data);
+            return dataV;
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+    
     @Override
     public boolean inserir(Medicamento obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into medicamento values (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -49,11 +78,11 @@ public class MedicamentoDAO implements DAO<Medicamento>{
             pst.setInt(1, proxCodigo());
             pst.setString(2, obj.getNome());
             pst.setInt(3, obj.getFornecedor().getCodFornecedor());
-            pst.setDate(4, getData(obj.getDataValidade()));
+            pst.setDate(4, converteDataSQL(obj.getDataValidade()));
             pst.setBigDecimal(5, obj.getPreco());
             pst.setInt(6, obj.getQtdEstoque());
             pst.setInt(7, obj.getLote());
-            pst.setDate(8, getData(obj.getDataEntrada()));
+            pst.setDate(8, getData());
             //verifica se o update foi efetuado e retorna true ou false
             return pst.executeUpdate() > 0;
             
@@ -69,6 +98,7 @@ public class MedicamentoDAO implements DAO<Medicamento>{
     @Override
     public boolean alterar(Medicamento obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "update medicamento set nome = ?, codFornecedor = ?,"
@@ -77,7 +107,7 @@ public class MedicamentoDAO implements DAO<Medicamento>{
 
             pst.setString(1, obj.getNome());
             pst.setInt(2, obj.getFornecedor().getCodFornecedor());
-            pst.setDate(3, getData(obj.getDataValidade()));
+            pst.setDate(3, converteDataSQL(obj.getDataValidade()));
             pst.setBigDecimal(4, obj.getPreco());
             pst.setInt(5, obj.getQtdEstoque());
             pst.setInt(6, obj.getLote());
@@ -95,6 +125,7 @@ public class MedicamentoDAO implements DAO<Medicamento>{
     @Override
     public boolean excluir(Medicamento obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM medicamento WHERE codMedicamento = ?");
@@ -112,6 +143,7 @@ public class MedicamentoDAO implements DAO<Medicamento>{
     @Override
     public Medicamento pesquisar(Medicamento obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM medicamento WHERE nome = ?");
@@ -121,13 +153,13 @@ public class MedicamentoDAO implements DAO<Medicamento>{
             //verifica se achou alguem
             if(rs.next()) { //achou
                 obj.setCodMedicamento(rs.getInt("codMedicamento"));
-                obj.setNome("nome");
+                obj.setNome(rs.getString("nome"));
                 obj.getFornecedor().setCodFornecedor(rs.getInt("codFornecedor"));
-                obj.setDataValidade(rs.getDate("dataValidade").toString());
+                obj.setDataValidade(converteDataView(rs.getDate("dataValidade").toString()));
                 obj.setPreco(rs.getBigDecimal("preco"));
                 obj.setQtdEstoque(rs.getInt("qtdEstoque"));
                 obj.setLote(rs.getInt("lote"));
-                obj.setDataEntrada(rs.getDate("dataEntrada").toString());
+                obj.setDataEntrada(converteDataView(rs.getDate("dataEntrada").toString()));
                 
                 return obj;
             } else
@@ -141,15 +173,47 @@ public class MedicamentoDAO implements DAO<Medicamento>{
         }
     }
 
-    /*@Override
-    public List<Medicamento> listar(String filtro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
+    
+    public List<Medicamento> listar() {
+        try {
+            PreparedStatement pst;
+            ArrayList<Medicamento> meds = new ArrayList<>();
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM medicamento");
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            while(rs.next()) { //achou
+                Medicamento obj = new Medicamento();
+                obj.setCodMedicamento(rs.getInt("codMedicamento"));
+                obj.setNome(rs.getString("nome"));
+                obj.getFornecedor().setCodFornecedor(rs.getInt("codFornecedor"));
+                obj.setDataValidade(converteDataView(rs.getDate("dataValidade").toString()));
+                obj.setPreco(rs.getBigDecimal("preco"));
+                obj.setQtdEstoque(rs.getInt("qtdEstoque"));
+                obj.setLote(rs.getInt("lote"));
+                obj.setDataEntrada(converteDataView(rs.getDate("dataEntrada").toString()));
+                
+                
+                meds.add(obj);
+            }           
+            
+            return meds;
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
+    }
 
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
+            
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codMedicamento), 0) + 1 as numero from medicamento");
                 
@@ -163,7 +227,7 @@ public class MedicamentoDAO implements DAO<Medicamento>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+           
         }
     }
     

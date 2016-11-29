@@ -5,9 +5,13 @@
  */
 package View;
 
+import Controller.CtrlUsuario;
+import DAO.UsuarioDAO;
+import Model.Usuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.util.Arrays;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -19,6 +23,8 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmUsuario
      */
+    Usuario usuario = new Usuario();
+    CtrlUsuario ctrl = new CtrlUsuario();
     public FrmUsuario() {
         initComponents();
         //Retirar bordas
@@ -44,15 +50,15 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        cbTipoUsuario = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        cmbTipoUsuario = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -102,10 +108,16 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel4.setText("Tipo de Usuário:");
 
-        cbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Atendente", "Gerente" }));
+        cmbTipoUsuario.setSelectedIndex(-1);
 
-        jButton1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jButton1.setText("PESQUISAR");
+        btnBuscar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Usuario.png"))); // NOI18N
 
@@ -126,7 +138,7 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(417, 417, 417)
                         .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 272, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,13 +152,13 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4)))
+                            .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtSenha)))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(159, 159, 159))
         );
         jPanel1Layout.setVerticalGroup(
@@ -161,16 +173,16 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnBuscar))
                 .addGap(36, 36, 36)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(cmbTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
                     .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,16 +207,35 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void limpar(){
+        txtSenha.setText("");
+        txtUsuario.setText("");
+        cmbTipoUsuario.setSelectedIndex(-1);
+        txtUsuario.requestFocusInWindow();
+    }
+    
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        usuario.setLogin(txtUsuario.getText());
+        usuario.setSenha(txtSenha.getText());
+        usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+        
+        ctrl.cadastrarUsuario(usuario);
+        limpar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        // TODO add your handling code here:
+        ctrl.apagarUsuario(usuario);
+        limpar();
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        usuario.setLogin(txtUsuario.getText());
+        usuario.setSenha(txtSenha.getText());
+        usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+        
+        ctrl.atualizarUsuario(usuario);
+        limpar();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -213,21 +244,40 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        usuario.setLogin(txtUsuario.getText());
+        Usuario aux = ctrl.buscarUsuario(usuario);
+        if(aux != null){
+            usuario = aux;
+            txtUsuario.setText(aux.getLogin());
+            txtSenha.setText(aux.getSenha());
+            if(aux.getTipoUsuario().equals("Atendente")){
+                cmbTipoUsuario.setSelectedIndex(0);
+            }else{
+                cmbTipoUsuario.setSelectedIndex(1);
+            }
+        }else{
+            limpar();
+        }
+        
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDeletar;
-    private javax.swing.JComboBox<String> cbTipoUsuario;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> cmbTipoUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

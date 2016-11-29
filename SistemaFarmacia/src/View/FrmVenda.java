@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.CtrlVenda;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -142,6 +143,11 @@ public class FrmVenda extends javax.swing.JInternalFrame {
 
         btnVenda.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnVenda.setText("PROSSEGUIR");
+        btnVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendaActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnCancelar.setText("CANCELAR");
@@ -386,6 +392,11 @@ public class FrmVenda extends javax.swing.JInternalFrame {
         this.dispose();
         getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
+        CtrlVenda venda = new CtrlVenda();
+        venda.emitirNotaFiscal();
+    }//GEN-LAST:event_btnVendaActionPerformed
 
     /**
      * @param args the command line arguments

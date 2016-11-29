@@ -39,8 +39,9 @@ public class FrmSobre extends javax.swing.JFrame {
         lblSobre =
         lblSobre = new JLabel("<html>Este software foi desenvolvido<br>"
             + " para a matéria de Programação Orientada<br>"
-            + " a Objetos. Se trata de um sistema para<br>"
-            + " uma farmácia.</html>");
+            + " a Objetos do professor Flavio Viotti, <br>"
+            +   "na Fatec São Caetano do Sul. <br>"
+            + "Se trata de um sistema para uma farmácia.</html>");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 

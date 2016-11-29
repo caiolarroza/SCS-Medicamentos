@@ -20,12 +20,19 @@ public class UsuarioDAO implements DAO<Usuario>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public UsuarioDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
     
     @Override
     public boolean inserir(Usuario obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into usuario values (?, ?, ?, ?)");
@@ -50,6 +57,7 @@ public class UsuarioDAO implements DAO<Usuario>{
     @Override
     public boolean alterar(Usuario obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
             "update usuario set login = ?, senha = ?,"
@@ -71,6 +79,7 @@ public class UsuarioDAO implements DAO<Usuario>{
     @Override
     public boolean excluir(Usuario obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM usuario WHERE codUsuario = ?");
@@ -87,7 +96,29 @@ public class UsuarioDAO implements DAO<Usuario>{
 
     @Override
     public Usuario pesquisar(Usuario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement pst;
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM usuario WHERE login = ?");
+            pst.setString(1, obj.getLogin());
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                obj.setCodUsuario(rs.getInt("codUsuario"));
+                obj.setSenha(rs.getString("senha"));
+                obj.setTipoUsuario(rs.getString("tipoUsuario"));
+                return obj;
+            } else
+                return null;            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
     }
 
     /*@Override
@@ -98,7 +129,7 @@ public class UsuarioDAO implements DAO<Usuario>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codUsuario), 0) + 1 as numero from usuario");
                 
@@ -112,7 +143,7 @@ public class UsuarioDAO implements DAO<Usuario>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+            
         }
     }
     

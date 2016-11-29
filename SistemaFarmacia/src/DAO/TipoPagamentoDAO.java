@@ -9,7 +9,6 @@ import Model.TipoPagamento;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +19,19 @@ public class TipoPagamentoDAO implements DAO<TipoPagamento>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public TipoPagamentoDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
     
     @Override
     public boolean inserir(TipoPagamento obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into tipoPagamento values (?, ?)");
@@ -53,6 +59,7 @@ public class TipoPagamentoDAO implements DAO<TipoPagamento>{
     @Override
     public boolean excluir(TipoPagamento obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM tipoPagamento WHERE codPagamento = ?");
@@ -70,6 +77,7 @@ public class TipoPagamentoDAO implements DAO<TipoPagamento>{
     @Override
     public TipoPagamento pesquisar(TipoPagamento obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM tipoPagamento WHERE codPagamento = ?");
@@ -98,7 +106,24 @@ public class TipoPagamentoDAO implements DAO<TipoPagamento>{
 
     @Override
     public int proxCodigo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            PreparedStatement pst;
+            
+            pst = bd.getConexao().prepareStatement(//comando SQL
+            "select ifnull(max(codPagamento), 0) + 1 as numero from tipoPagamento");
+                
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
+            
+            return rs.getInt("numero");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        }finally{
+            
+        }
     }
     
 }

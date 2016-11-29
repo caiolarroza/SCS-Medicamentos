@@ -5,6 +5,9 @@
  */
 package View;
 
+import Controller.CtrlCaixa;
+import DAO.Banco;
+import Model.Caixa;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -22,6 +25,10 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmAbrirCaixa
      */
+    
+    Caixa caixa = new Caixa();
+    CtrlCaixa ctrl = new CtrlCaixa();
+    
     public FrmAbrirCaixa() {
         initComponents();
         //Retirar bordas
@@ -145,11 +152,29 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
-        FrmDinheiro fDinheiro = new FrmDinheiro();
-        getContentPane().removeAll();
-        getContentPane().setBackground(new Color(204,204,204));
-        getContentPane().add(fDinheiro);
-        fDinheiro.setVisible(true);
+        
+        
+        
+        if(ctrl.abrirCaixa(txtSenha.getText(), caixa)){
+            caixa = ctrl.buscarCaixa();
+            int resp = JOptionPane.showConfirmDialog(rootPane, "Deseja inserir dinheiro no caixa?",
+                "Dinheiro",JOptionPane.YES_NO_OPTION);
+            if(resp == JOptionPane.YES_OPTION){
+                FrmDinheiro fDinheiro = new FrmDinheiro(caixa.getMoedas(), caixa.getNotas());
+                getContentPane().removeAll();
+                getContentPane().setBackground(new Color(204,204,204));
+                getContentPane().add(fDinheiro);
+                fDinheiro.setVisible(true);
+            }else{
+                getContentPane().removeAll();
+                getContentPane().setBackground(new Color(204,204,204));
+                this.dispose();  
+            }
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     /**

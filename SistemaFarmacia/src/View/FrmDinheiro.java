@@ -5,17 +5,15 @@
  */
 package View;
 
+import Model.Moedas;
+import Model.Notas;
+import Model.Venda;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Insets;
-import javax.swing.JInternalFrame;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -26,12 +24,31 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmDinheiro
      */
+    private Moedas moedas;
+    private Notas notas;
+    private Venda venda;
+    
     public FrmDinheiro() {
         initComponents();
         //Retirar bordas
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
+
+    public FrmDinheiro(Moedas moedas, Notas notas) {
+        this();
+        this.moedas = moedas;
+        this.notas = notas;
+    }
+
+    public FrmDinheiro(Venda venda) {
+        this();
+        this.venda = venda;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,7 +125,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Candara", 0, 20)); // NOI18N
         jLabel3.setText("Moedas");
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("         ");
 
         jLabel5.setFont(new java.awt.Font("Candara", 0, 20)); // NOI18N
         jLabel5.setText("Notas");
@@ -131,7 +148,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel6.setText("Total:");
 
-        jLabel7.setText("jLabel7");
+        jLabel7.setText("         ");
 
         btnConfirmar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConfirmar.setText("CONFIRMAR");
@@ -322,7 +339,10 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
+        if(moedas != null){
+            moedas.setQtd5((Integer)spn005.getValue());
+            JOptionPane.showMessageDialog(null, moedas.getQtd5());
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

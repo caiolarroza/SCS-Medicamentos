@@ -19,12 +19,18 @@ public class DinheiroDAO implements DAO<Dinheiro>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public DinheiroDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
     
     @Override
     public boolean inserir(Dinheiro obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into dinheiro values (?, ?, ?)");
@@ -52,6 +58,7 @@ public class DinheiroDAO implements DAO<Dinheiro>{
     @Override
     public boolean excluir(Dinheiro obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM dinheiro WHERE codPagamento = ?");
@@ -69,6 +76,7 @@ public class DinheiroDAO implements DAO<Dinheiro>{
     @Override
     public Dinheiro pesquisar(Dinheiro obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM dinheiro WHERE codPagamento = ?");

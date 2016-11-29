@@ -9,7 +9,6 @@ import Model.Notas;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +19,19 @@ public class NotasDAO implements DAO<Notas>{
 
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public NotasDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
     
     @Override
     public boolean inserir(Notas obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into notas values (?, ?, ?, ?, ?, ?, ?)");
@@ -52,6 +58,7 @@ public class NotasDAO implements DAO<Notas>{
     @Override
     public boolean alterar(Notas obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
             "update notas set qtd2 = ?, qtd5 = ?,"
@@ -76,6 +83,7 @@ public class NotasDAO implements DAO<Notas>{
     @Override
     public boolean excluir(Notas obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM notas WHERE codNotas = ?");
@@ -93,6 +101,7 @@ public class NotasDAO implements DAO<Notas>{
     @Override
     public Notas pesquisar(Notas obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM notas WHERE codNotas = ?");
@@ -127,7 +136,8 @@ public class NotasDAO implements DAO<Notas>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
+            
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codNotas), 0) + 1 as numero from notas");
                 
@@ -141,7 +151,7 @@ public class NotasDAO implements DAO<Notas>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+           
         }
     }
     

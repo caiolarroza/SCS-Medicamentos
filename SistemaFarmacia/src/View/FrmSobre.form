@@ -115,7 +115,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="      &#xa;lblSobre = new JLabel(&quot;&lt;html&gt;Este software foi desenvolvido&lt;br&gt;&quot;&#xa;                       + &quot; para a mat&#xe9;ria de Programa&#xe7;&#xe3;o Orientada&lt;br&gt;&quot;&#xa;                       + &quot; a Objetos. Se trata de um sistema para&lt;br&gt;&quot;&#xa;                       + &quot; uma farm&#xe1;cia.&lt;/html&gt;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="      &#xa;lblSobre = new JLabel(&quot;&lt;html&gt;Este software foi desenvolvido&lt;br&gt;&quot;&#xa;                       + &quot; para a mat&#xe9;ria de Programa&#xe7;&#xe3;o Orientada&lt;br&gt;&quot;&#xa;                       + &quot; a Objetos do professor Flavio Viotti, &lt;br&gt;&quot;&#xa;                       +   &quot;na Fatec S&#xe3;o Caetano do Sul. &lt;br&gt;&quot;&#xa;                       + &quot;Se trata de um sistema para uma farm&#xe1;cia.&lt;/html&gt;&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>

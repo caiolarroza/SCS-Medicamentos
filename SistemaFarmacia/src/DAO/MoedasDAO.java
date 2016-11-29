@@ -19,12 +19,19 @@ public class MoedasDAO implements DAO<Moedas>{
     
     //variaveis auxiliares
     Banco bd;
-    PreparedStatement pst;
+    
     ResultSet rs;
+
+    public MoedasDAO(Banco bd) {
+        this.bd = bd;
+    }
+    
+    
     
     @Override
     public boolean inserir(Moedas obj) {
         try{
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
                     "insert into moedas values (?, ?, ?, ?, ?, ?)");
@@ -50,6 +57,7 @@ public class MoedasDAO implements DAO<Moedas>{
     @Override
     public boolean alterar(Moedas obj) {
         try{
+            PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
             "update moedas set qtd5 = ?, qtd10 = ?,"
@@ -73,6 +81,7 @@ public class MoedasDAO implements DAO<Moedas>{
     @Override
     public boolean excluir(Moedas obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "DELETE FROM moedas WHERE codMoedas = ?");
@@ -90,6 +99,7 @@ public class MoedasDAO implements DAO<Moedas>{
     @Override
     public Moedas pesquisar(Moedas obj) {
         try {
+            PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
                       "SELECT * FROM moedas WHERE codMoedas = ?");
@@ -123,7 +133,8 @@ public class MoedasDAO implements DAO<Moedas>{
     @Override
     public int proxCodigo() {
         try{
-            bd.conectar(); //abre o banco
+            PreparedStatement pst;
+            
             pst = bd.getConexao().prepareStatement(//comando SQL
             "select ifnull(max(codMoedas), 0) + 1 as numero from moedas");
                 
@@ -137,7 +148,7 @@ public class MoedasDAO implements DAO<Moedas>{
                      + ex.getMessage());
              return -1;
         }finally{
-            bd.fechaConexao();
+            
         }
     }
     
