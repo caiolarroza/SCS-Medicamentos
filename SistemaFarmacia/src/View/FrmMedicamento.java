@@ -75,7 +75,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        btnCancelar1 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         txtLote = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -195,12 +195,12 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Remedio.png"))); // NOI18N
 
-        btnCancelar1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        btnCancelar1.setText("DELETAR");
-        btnCancelar1.setPreferredSize(new java.awt.Dimension(127, 31));
-        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        btnDeletar.setText("DELETAR");
+        btnDeletar.setPreferredSize(new java.awt.Dimension(127, 31));
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelar1ActionPerformed(evt);
+                btnDeletarActionPerformed(evt);
             }
         });
 
@@ -243,7 +243,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
                                         .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(46, 46, 46)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(22, 22, 22))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -339,7 +339,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
                         .addGap(65, 65, 65)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCadastrar)
-                            .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -421,11 +421,11 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
         preencheTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         ctrl.apagarMedicamento(medic);
         limpar();
         preencheTabela();
-    }//GEN-LAST:event_btnCancelar1ActionPerformed
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         medic.setNome(txtNome.getText());
@@ -441,8 +441,9 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        getContentPane().removeAll();
         this.dispose();
+        getContentPane().removeAll();
+        
         getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -521,7 +522,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarForne;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCancelar1;
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

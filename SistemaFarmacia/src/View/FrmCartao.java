@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Venda;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.UIManager;
@@ -20,12 +21,21 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmCartao
      */
+    
+    Venda venda;
     public FrmCartao() {
         initComponents();
         //Retirar bordas
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setBorder(new EmptyBorder(new Insets(0,0,0,0)));
     }
+
+    public FrmCartao(Venda venda) {
+        this();
+        this.venda = venda;
+    }
+    
+    
     //centralizar o InternalFrame no DesktopPane
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();

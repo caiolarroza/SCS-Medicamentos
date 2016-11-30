@@ -109,6 +109,7 @@ create table cartaoCredito(
 	nome varchar(40),
 	validade char(7),
 	codSeguranca int(3),
+	parcelas int(2),
 	constraint fkTipoPagCC foreign key(codPagamento) references tipoPagamento(codPagamento)
 );
 
@@ -183,41 +184,17 @@ create view vFornecedor as
 
 /*insere valores na tabela de moedas*/
 insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("1", "1", "2","3","4","5");
-
+		   values ("1", "0", "0","0","0","0");
 insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("2", "5", "4","3","2","1");
+		   values ("2", "1", "2","3","4","5");
 
-insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("3", "1", "2","3","4","5");
-
-insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("4", "5", "4","3","2","1");
-
-insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("5", "1", "2","3","4","5");
-
-insert into moedas(codMoedas, qtd5, qtd10, qtd25, qtd50, qtd1Real)
-		   values ("6", "5", "4","3","2","1");
 
 /*insere valores na tabela de notas*/
 insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("1", "1", "2","3","4","5","6");
-
+		  values ("1", "0", "0","0","0","0","0");
 insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("2", "6", "5", "4","3","2","1");
+		  values ("2", "1", "2","3","4","5","6");
 
-insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("3", "1", "2","3","4","5","6");
-
-insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("4", "6", "5", "4","3","2","1");
-
-insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("5", "1", "2","3","4","5","6");
-
-insert into notas(codNotas, qtd2, qtd5, qtd10, qtd20, qtd50, qtd100)
-		  values ("6", "6", "5", "4","3","2","1");
 
 /*insere valores na tabela usuario*/
 insert into usuario(codUsuario, login, senha, tipoUsuario) values ("1", "usuario1","123", "Atendente");
@@ -260,32 +237,25 @@ insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtd
 /*insere valores na tabela de caixa*/
 insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
 		  values ("1", "20161109", "20161110","09:10","10:10","1","1","0");
-		  
-insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
-		  values ("2", "20161009", "20161009","07:15","13:27","2","2","0");	
-
-insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
-		  values ("3", "20161109", null,"09:10","10:10","3","3","1");
-		  
-insert into caixa(codCaixa, dataAbertura, dataFechamento, horaAbertura, horaFechamento, codNotas, codMoedas, status)
-		  values ("4", "20161009", null,"07:15","13:27","4","4","1");		 
+		  	 
 
 /*insere valores na tabela de tipopagamento*/
-insert into tipopagamento(codPagamento, valorTotal) values ("1","1039.70");
+insert into tipopagamento(codPagamento, valorTotal) values ("1","979");
 insert into tipopagamento(codPagamento, valorTotal) values ("2","1410.90");
 		  
 /*insere valores na tabela de dinheiro*/
-insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","5","5");
+insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","2","2");
 
 /*insere valores na tabela de cartaoCredito*/
 insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca)
-						  values("2", "1122334455667788", "Caio Larroza de Oliveira", "05/2017", "225");					  
+						  values("2", "1122334455667788", "Matheus dos Santos Lopes", "05/2017", "225");					  
 
 /*insere valores na tabela de venda*/
 insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa, data)
 				  values ("1", "5", "1", "1", "1", "20161124");
+
 insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa, data)
-				  values ("2", "20", "2", "2", "2", "20161120");				  
+				  values ("2", "20", "2", "2", "1", "20161129");				  
 				  
 /*insere valores na tabela de vendamedicamento*/
 insert into vendamedicamento(codVendaMed, codVenda, codMedicamento, quantidade) values ("1", "1", "1", "20");				  
@@ -330,4 +300,11 @@ where v.codVenda = (select max(codVenda) from venda);
 
 /*TESTE
 update caixa set status=0 where codCaixa = 1;
+
+update notas set qtd2 = 0, qtd5 = 0, qtd10 = 0, qtd20 = 0, qtd50 = 0, qtd100 = 0
+where codNotas = 1;
+
+update moedas set qtd5 = 0, qtd10 = 0, qtd25 = 0, qtd50 = 0, qtd1Real = 0
+	where codMoedas = 1;
 */
+

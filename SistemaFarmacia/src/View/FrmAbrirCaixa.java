@@ -154,9 +154,9 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
         
         
-        
-        if(ctrl.abrirCaixa(txtSenha.getText(), caixa)){
-            caixa = ctrl.buscarCaixa();
+        Caixa aux = ctrl.abrirCaixa(txtSenha.getText(), caixa);
+        if(aux != null){
+            caixa = aux;
             int resp = JOptionPane.showConfirmDialog(rootPane, "Deseja inserir dinheiro no caixa?",
                 "Dinheiro",JOptionPane.YES_NO_OPTION);
             if(resp == JOptionPane.YES_OPTION){
@@ -170,6 +170,9 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
                 getContentPane().setBackground(new Color(204,204,204));
                 this.dispose();  
             }
+        }else{
+            
+            txtSenha.requestFocusInWindow();
         }
         
         

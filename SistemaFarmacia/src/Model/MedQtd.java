@@ -11,7 +11,25 @@ package Model;
  */
 public class MedQtd {
     private Medicamento medicamento;
-    private int quantidade;
+    private int quantidade, codVendaMed;
+    private Venda venda = new Venda();
+
+    public int getCodVendaMed() {
+        return codVendaMed;
+    }
+
+    public void setCodVendaMed(int codVendaMed) {
+        this.codVendaMed = codVendaMed;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+    
 
     public Medicamento getMedicamento() {
         return medicamento;

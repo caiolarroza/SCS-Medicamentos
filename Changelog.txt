@@ -1,3 +1,7 @@
+Versao 0.4.5
+-Formulario de: abrir caixa, Venda finalizados
+-Adicionado o campo de parcelas para cartao de credito
+
 Versao 0.4.4
 -Implementadas todas as classes do pacote Controller(Não foram testadas)
 -Adicionado atributo dataEntrada nos metodos em MedicamentoDAO

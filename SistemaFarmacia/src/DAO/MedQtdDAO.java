@@ -5,43 +5,43 @@
  */
 package DAO;
 
-import Model.Moedas;
+import Model.MedQtd;
+import Model.Medicamento;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author caiol
+ * @author mslda
  */
-public class MoedasDAO implements DAO<Moedas>{
-    
+public class MedQtdDAO implements DAO<MedQtd>{
+
     //variaveis auxiliares
     Banco bd;
     
     ResultSet rs;
 
-    public MoedasDAO(Banco bd) {
+    public MedQtdDAO(Banco bd) {
         this.bd = bd;
     }
     
-    
-    
     @Override
-    public boolean inserir(Moedas obj) {
+    public boolean inserir(MedQtd obj) {
         try{
             PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
-                    "insert into moedas values (?, ?, ?, ?, ?, ?)");
+                    "insert into vendaMedicamento values (?, ?, ?, ?)");
                 
             pst.setInt(1, proxCodigo());
-            pst.setInt(2, obj.getQtd5());
-            pst.setInt(3, obj.getQtd10());
-            pst.setInt(4, obj.getQtd25());
-            pst.setInt(5, obj.getQtd50());
-            pst.setInt(6, obj.getQtd1Real());
+            pst.setInt(2, obj.getVenda().getCodVenda());
+            pst.setInt(3, obj.getMedicamento().getCodMedicamento());
+            pst.setInt(4, obj.getQuantidade());
+           
             //verifica se o update foi efetuado e retorna true ou false
             return pst.executeUpdate() > 0;
             
@@ -55,38 +55,18 @@ public class MoedasDAO implements DAO<Moedas>{
     }
 
     @Override
-    public boolean alterar(Moedas obj) {
-        
-        try{
-            PreparedStatement pst;
-            bd.conectar();
-            pst = bd.getConexao().prepareStatement(
-            "update moedas set qtd5 = ?, qtd10 = ?,"
-                    + "qtd25 = ?, qtd50 = ?, qtd1Real = ? WHERE codMoedas = ?");
-            pst.setInt(1, obj.getQtd5());
-            pst.setInt(2, obj.getQtd10());
-            pst.setInt(3, obj.getQtd25());
-            pst.setInt(4, obj.getQtd50());
-            pst.setInt(5, obj.getQtd1Real());
-            pst.setInt(6, obj.getCodMoedas());
-            return pst.executeUpdate() > 0;
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Erro no Update\n"
-                     + ex.getMessage());
-             return false;
-        }finally {
-            bd.fechaConexao();
-        }
+    public boolean alterar(MedQtd obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean excluir(Moedas obj) {
+    public boolean excluir(MedQtd obj) {
         try {
             PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
-                      "DELETE FROM moedas WHERE codMoedas = ?");
-            pst.setInt(1, obj.getCodMoedas());
+                      "DELETE FROM vendaMedicamento WHERE codVenda = ?");
+            pst.setInt(1, obj.getVenda().getCodVenda());
             return pst.executeUpdate() > 0;
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Erro no Delete\n"
@@ -98,25 +78,35 @@ public class MoedasDAO implements DAO<Moedas>{
     }
 
     @Override
-    public Moedas pesquisar(Moedas obj) {
+    public MedQtd pesquisar(MedQtd obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    public List<MedQtd> listar(MedQtd obj) {
         try {
             PreparedStatement pst;
+            ArrayList<MedQtd> meds = new ArrayList<>();
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement(
-                      "SELECT * FROM moedas WHERE codMoedas = ?");
-            pst.setInt(1, obj.getCodMoedas());
+                      "SELECT * FROM vendaMedicamento where codVenda = ?");
+            pst.setInt(1, obj.getVenda().getCodVenda());
             //executa o select
             rs = pst.executeQuery();
             //verifica se achou alguem
-            if(rs.next()) { //achou
-                obj.setQtd5(rs.getInt("qtd5"));
-                obj.setQtd10(rs.getInt("qtd10"));
-                obj.setQtd25(rs.getInt("qtd25"));
-                obj.setQtd50(rs.getInt("qtd50"));
-                obj.setQtd1Real(rs.getInt("qtd1Real"));
-                return obj;
-            } else
-                return null;            
+            while(rs.next()) { //achou
+                
+                obj.setCodVendaMed(rs.getInt("codVendaMed"));
+                obj.getVenda().setCodVenda(rs.getInt("codVenda"));
+                obj.getMedicamento().setCodMedicamento(rs.getInt("codMedicamento"));
+                obj.setQuantidade(rs.getInt("quantidade"));
+                
+                
+                
+                meds.add(obj);
+            }           
+            
+            return meds;
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
                      + ex.getMessage());
@@ -125,19 +115,14 @@ public class MoedasDAO implements DAO<Moedas>{
             bd.fechaConexao();
         }
     }
-
-    /*@Override
-    public List<Moedas> listar(String filtro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
+    
     @Override
     public int proxCodigo() {
-        try{
+         try{
             PreparedStatement pst;
             
             pst = bd.getConexao().prepareStatement(//comando SQL
-            "select ifnull(max(codMoedas), 0) + 1 as numero from moedas");
+            "select ifnull(max(codVendaMed), 0) + 1 as numero from vendaMedicamento");
                 
             rs = pst.executeQuery();//Executa o comando
                     
@@ -149,7 +134,7 @@ public class MoedasDAO implements DAO<Moedas>{
                      + ex.getMessage());
              return -1;
         }finally{
-            
+           
         }
     }
     

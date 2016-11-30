@@ -5,10 +5,18 @@
  */
 package View;
 
+import Controller.CtrlCliente;
+import Controller.CtrlMedicamento;
+import Controller.CtrlVenda;
+import Model.Cliente;
+import Model.Medicamento;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +27,13 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmVendasAntigas
      */
+    
+    CtrlVenda ctrl = new CtrlVenda();
+    CtrlMedicamento Ctrlmedic = new CtrlMedicamento();
+    CtrlCliente Ctrlcliente = new CtrlCliente();
+    Cliente cliente = new Cliente();
+    Medicamento medic = new Medicamento();
+    
     public FrmVendasEfetuadas() {
         initComponents();
         //Retirar bordas
@@ -45,7 +60,6 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cbPagamento = new javax.swing.JComboBox<>();
         btnConcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblPorcentagem = new javax.swing.JLabel();
@@ -66,6 +80,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         btnApagar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtData = new javax.swing.JTextField();
+        lblPagamento = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,14 +95,6 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel6.setText("Porcentagem de Desconto:");
-
-        cbPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão de Credito" }));
-        cbPagamento.setSelectedIndex(-1);
-        cbPagamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbPagamentoActionPerformed(evt);
-            }
-        });
 
         btnConcluir.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConcluir.setText("CONCLUIR");
@@ -108,6 +115,13 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         lblPorcentagem.setText("         ");
 
         btnBuscarCPF.setText("BUSCAR");
+        btnBuscarCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCPFActionPerformed(evt);
+            }
+        });
+
+        txtNome.setEditable(false);
 
         jLabel9.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel9.setText("Nome Cliente:");
@@ -140,20 +154,20 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jLabel11.setText("Medicamentos selecionados:");
 
         jLabel12.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel12.setText("Valor Total: ");
+        jLabel12.setText("Valor Total: R$");
 
         jLabel4.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel4.setText("Buscar cliente por CPF:");
+        jLabel4.setText("Buscar por CPF:");
 
         tbBusca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tbBusca);
@@ -174,6 +188,11 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel10.setText("Data:");
 
+        txtData.setEditable(false);
+
+        lblPagamento.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lblPagamento.setText("                             ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,11 +201,6 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,28 +216,34 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtData)
-                                .addGap(38, 38, 38)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblPorcentagem))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblValorFinal))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblValorTotal)
-                                .addGap(91, 91, 91)))))
+                                .addComponent(lblValorFinal))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtData))
+                                        .addGap(38, 38, 38)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(lblPorcentagem))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel12)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblValorTotal))))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel5)))
                 .addGap(166, 166, 166))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,8 +253,8 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel4)
+                        .addGap(257, 257, 257)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtBuscaCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -270,17 +290,18 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addComponent(lblPorcentagem))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel12)
-                                .addComponent(lblValorTotal)))
-                        .addGap(20, 20, 20)
+                                .addComponent(lblValorTotal))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(lblPagamento)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(lblValorFinal))
-                        .addGap(45, 45, 45)
+                        .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnConcluir)
                             .addComponent(btnCancelar)
@@ -288,7 +309,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
                         .addGap(49, 49, 49))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(34, Short.MAX_VALUE))))
+                        .addContainerGap(67, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -305,10 +326,41 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPagamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbPagamentoActionPerformed
-
+    /*private void preencheTabela(){
+        Vector head = new Vector();
+        Vector dados = new Vector();
+        
+        //colunas
+        head.add("Nome");
+        
+        head.add("Preço (R$)");
+        
+        List<Medicamento> meds = ctrl.listarMedicamento();
+        
+        
+        
+        
+        for(Medicamento x : meds){
+            Vector campoMeds = new Vector();
+            
+            campoMeds.add(x.getNome());
+            
+            campoMeds.add(x.getPreco());
+            
+           
+            dados.add(campoMeds);
+        }
+        
+        //instancia o modelo
+        DefaultTableModel modeloTabela = new DefaultTableModel(dados, head);
+        tbBusca.setModel(modeloTabela);
+        tbBusca.getColumnModel().getColumn(0).setPreferredWidth(120);
+        tbBusca.getColumnModel().getColumn(1).setPreferredWidth(100);
+        
+        tbBusca.setDefaultEditor(Object.class, null);
+        
+    }*/
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         getContentPane().removeAll();
         this.dispose();
@@ -322,6 +374,10 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnApagarActionPerformed
+
+    private void btnBuscarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCPFActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarCPFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,7 +421,6 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConcluir;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -379,6 +434,7 @@ public class FrmVendasEfetuadas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblPagamento;
     private javax.swing.JLabel lblPorcentagem;
     private javax.swing.JLabel lblValorFinal;
     private javax.swing.JLabel lblValorTotal;

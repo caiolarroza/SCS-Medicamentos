@@ -61,6 +61,32 @@ public class CaixaDAO implements DAO<Caixa>{
         }
     }
     
+    public double valorTotalCartao(){
+        try{
+            PreparedStatement pst;
+            bd.conectar(); //abre o banco
+            
+            pst = bd.getConexao().prepareStatement(//comando SQL
+                    "select sum(tp.valorTotal) as valor from tipoPagamento tp\n" +
+                        "inner join cartaoCredito cc on tp.codPagamento = cc.codPagamento\n" +
+                        "inner join venda v on v.codPagamento = tp.codPagamento\n" +
+                        "where v.data = curdate()");
+            
+
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
+            
+            return rs.getDouble("valor");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        }finally{
+            bd.fechaConexao();
+        }
+    }
+    
     public int contarVendas(String tipo){
         try{
             PreparedStatement pst;

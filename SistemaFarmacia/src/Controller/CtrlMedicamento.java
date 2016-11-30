@@ -21,6 +21,7 @@ public class CtrlMedicamento {
     Banco bd = new Banco();
     MedicamentoDAO dao = new MedicamentoDAO(bd);
     CtrlFornecedor forne = new CtrlFornecedor();
+    
     public boolean validarDataValidade(Medicamento medic){
         try{
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -69,6 +70,7 @@ public class CtrlMedicamento {
     public boolean atualizarMedicamento(Medicamento medic){
         if(validarDataValidade(medic)){
             if(dao.alterar(medic)){
+                JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
                 return true;
             }
         }else{

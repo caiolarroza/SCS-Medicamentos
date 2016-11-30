@@ -13,7 +13,7 @@ public class Cliente {
     private int codCliente;
     private Endereco endereco = new Endereco();
     private String nome = "", telefone, celular, rg, cpf, dataNasc;
-    private Boolean aposentado;
+    private Boolean aposentado = false;
 
     public int getCodCliente() {
         return codCliente;

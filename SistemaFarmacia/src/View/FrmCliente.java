@@ -91,6 +91,23 @@ public class FrmCliente extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(240, 73, 64));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameDeactivated(evt);
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -392,6 +409,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         txtNum.setText("");
         txtRG.setText("");
         txtTelefone.setText("");
+        cbAposentado.setSelected(false);
         txtBuscaCPF.requestFocusInWindow();
     }
     
@@ -474,6 +492,10 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         ctrl.apagarCliente(cliente);
         limpar();
     }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameDeactivated
 
     /**
      * @param args the command line arguments

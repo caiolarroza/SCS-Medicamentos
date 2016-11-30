@@ -7,11 +7,14 @@ package Controller;
 
 import DAO.Banco;
 import DAO.CaixaDAO;
+import DAO.DinheiroDAO;
+import DAO.MoedasDAO;
+import DAO.NotasDAO;
 import Model.Caixa;
+import Model.Dinheiro;
 import Model.Moedas;
 import Model.Notas;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +22,10 @@ import javax.swing.JOptionPane;
  * @author mslda
  */
 public class CtrlCaixa {
-    CaixaDAO dao = new CaixaDAO(new Banco());
+    Banco bd = new Banco();
+    CaixaDAO dao = new CaixaDAO(bd);
+    MoedasDAO moedasD = new MoedasDAO(bd);
+    NotasDAO notasD = new NotasDAO(bd);
     
     /*private boolean verificarCaixas(){
         ArrayList<Caixa> caixas = dao.listar();
@@ -40,7 +46,7 @@ public class CtrlCaixa {
         }
     }*/
     
-    public Caixa buscarCaixa(){
+    /*public Caixa buscarCaixa(){
         Caixa caixa = (Caixa)dao.pesquisar(new Caixa());
         
         if(caixa == null){
@@ -50,25 +56,29 @@ public class CtrlCaixa {
             
             return caixa;
         }
-    }
+    }*/
     
-    public boolean abrirCaixa(String senha, Caixa caixa){
+    public Caixa abrirCaixa(String senha, Caixa caixa){
         
         if(senha.equals(caixa.getSenhaAbertura())){
-            Caixa aux = dao.pesquisar(caixa);
-            if(aux.isStatus()){
+            caixa = dao.pesquisar(caixa);
+            caixa.setMoedas(moedasD.pesquisar(caixa.getMoedas()));
+            caixa.setNotas(notasD.pesquisar(caixa.getNotas()));
+            if(caixa.isStatus()){
                 JOptionPane.showMessageDialog(null, "Caixa já está aberto!");
-                return false;
+                return caixa;
             }else{
-                if(dao.alterar(caixa)){
+                
+                if(dao.alterar(caixa) ){
                     JOptionPane.showMessageDialog(null, "Caixa aberto!");
-                    return true;
+                    return caixa;
                 }
-                return false;
+                JOptionPane.showMessageDialog(null, "Erro ao abrir o caixa");
+                return null;
             } 
         }else{
             JOptionPane.showMessageDialog(null, "Senha errada!");
-            return false;
+            return null;
         }         
     }
     
@@ -81,7 +91,7 @@ public class CtrlCaixa {
         }
     }
     
-    public Caixa inserirDinheiro(Moedas moedas, Notas notas, Caixa caixa){
+    /*public Caixa inserirDinheiro(Moedas moedas, Notas notas, Caixa caixa){
         
         caixa.getMoedas().setQtd5(moedas.getQtd5());
         caixa.getMoedas().setQtd10(moedas.getQtd10());
@@ -97,6 +107,16 @@ public class CtrlCaixa {
         caixa.getNotas().setQtd100(notas.getQtd100());
         
         return caixa;
+    }*/
+    
+    public boolean alterarMoedasENotas(Moedas moedas, Notas notas){
+        
+        if(moedasD.alterar(moedas) && 
+                notasD.alterar(notas)){
+            return true;
+        }
+        
+        return false;
     }
     
     public Caixa contabilizarVendas(Caixa caixa){
@@ -113,9 +133,9 @@ public class CtrlCaixa {
         valor += (caixa.getNotas().getQtd20() * 20);
         valor += (caixa.getNotas().getQtd50() * 50);
         valor += (caixa.getNotas().getQtd100() * 100);
-        
         caixa.setValorTotalDinheiro(BigDecimal.valueOf(valor));
         caixa.setQtdDinheiro(dao.contarVendas("dinheiro"));
+        caixa.setValorTotalCartao(BigDecimal.valueOf(dao.valorTotalCartao()));
         caixa.setQtdCartao(dao.contarVendas("cartaoCredito"));
         return caixa;
     }

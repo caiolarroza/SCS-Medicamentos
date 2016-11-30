@@ -25,7 +25,7 @@ public class Moedas{
     }
 
     public void setQtd5(int qtd5) {
-        this.qtd5 += qtd5;
+        this.qtd5 = qtd5;
     }
 
     public int getQtd10() {
@@ -33,7 +33,7 @@ public class Moedas{
     }
 
     public void setQtd10(int qtd10) {
-        this.qtd10 += qtd10;
+        this.qtd10 = qtd10;
     }
 
     public int getQtd25() {
@@ -41,7 +41,7 @@ public class Moedas{
     }
 
     public void setQtd25(int qtd25) {
-        this.qtd25 += qtd25;
+        this.qtd25 = qtd25;
     }
 
     public int getQtd50() {
@@ -49,7 +49,7 @@ public class Moedas{
     }
 
     public void setQtd50(int qtd50) {
-        this.qtd50 += qtd50;
+        this.qtd50 = qtd50;
     }
 
     public int getQtd1Real() {
@@ -57,7 +57,7 @@ public class Moedas{
     }
 
     public void setQtd1Real(int qtd1Real) {
-        this.qtd1Real += qtd1Real;
+        this.qtd1Real = qtd1Real;
     }
     
 }

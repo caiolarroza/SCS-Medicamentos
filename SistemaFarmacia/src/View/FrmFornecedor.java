@@ -382,6 +382,7 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         forne.setCnpj(txtBuscaCNPJ.getText());
+        forne.setCodFornecedor(666);
         Fornecedor aux = ctrl.buscarFornecedor(forne);
         if(aux != null){
             forne = aux;

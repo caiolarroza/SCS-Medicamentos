@@ -5,11 +5,16 @@
  */
 package View;
 
+import Controller.CtrlCaixa;
+import DAO.MoedasDAO;
 import Model.Moedas;
 import Model.Notas;
 import Model.Venda;
 import java.awt.Color;
 import java.awt.Insets;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -28,6 +33,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
     private Notas notas;
     private Venda venda;
     
+    
     public FrmDinheiro() {
         initComponents();
         //Retirar bordas
@@ -39,6 +45,21 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         this();
         this.moedas = moedas;
         this.notas = notas;
+        
+        spn005.setValue(moedas.getQtd5());
+        spn01.setValue(moedas.getQtd10());
+        spn025.setValue(moedas.getQtd25());
+        spn05.setValue(moedas.getQtd50());
+        spn1.setValue(moedas.getQtd1Real());
+        
+        spn2.setValue(notas.getQtd2());
+        spn5.setValue(notas.getQtd5());
+        spn10.setValue(notas.getQtd10());
+        spn20.setValue(notas.getQtd20());
+        spn50.setValue(notas.getQtd50());
+        spn100.setValue(notas.getQtd100());
+        
+        
     }
 
     public FrmDinheiro(Venda venda) {
@@ -76,7 +97,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         spn50 = new javax.swing.JSpinner();
         spn100 = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblTotalN = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -89,10 +110,12 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         spn05 = new javax.swing.JSpinner();
         spn1 = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblTotalM = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,8 +124,14 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 24)); // NOI18N
         jLabel1.setText("Dinheiro");
 
+        spn2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn2StateChanged(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel2.setText("Total:");
+        jLabel2.setText("Total em notas:R$");
 
         jLabel26.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel26.setText("R$ 2,00:");
@@ -122,10 +151,40 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         jLabel28.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel28.setText("R$ 100,00:");
 
+        spn5.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn5StateChanged(evt);
+            }
+        });
+
+        spn10.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn10StateChanged(evt);
+            }
+        });
+
+        spn20.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn20StateChanged(evt);
+            }
+        });
+
+        spn50.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn50StateChanged(evt);
+            }
+        });
+
+        spn100.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn100StateChanged(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Candara", 0, 20)); // NOI18N
         jLabel3.setText("Moedas");
 
-        jLabel4.setText("         ");
+        lblTotalN.setText("         ");
 
         jLabel5.setFont(new java.awt.Font("Candara", 0, 20)); // NOI18N
         jLabel5.setText("Notas");
@@ -145,10 +204,40 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         jLabel16.setText("R$ 1,00:");
 
-        jLabel6.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-        jLabel6.setText("Total:");
+        spn005.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn005StateChanged(evt);
+            }
+        });
 
-        jLabel7.setText("         ");
+        spn01.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn01StateChanged(evt);
+            }
+        });
+
+        spn025.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn025StateChanged(evt);
+            }
+        });
+
+        spn05.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn05StateChanged(evt);
+            }
+        });
+
+        spn1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spn1StateChanged(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        jLabel6.setText("Total em moedas: R$");
+
+        lblTotalM.setText("         ");
 
         btnConfirmar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConfirmar.setText("CONFIRMAR");
@@ -168,6 +257,11 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Dinheiro.png"))); // NOI18N
 
+        jLabel9.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+        jLabel9.setText("Total geral:");
+
+        lblTotal.setText("         ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -175,80 +269,93 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(btnConfirmar)
+                        .addGap(123, 123, 123)
+                        .addComponent(btnCancelar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(356, 356, 356)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(204, 204, 204)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel23)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel26)))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spn5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(197, 197, 197)
-                                .addComponent(jLabel24)
-                                .addGap(18, 18, 18)
-                                .addComponent(spn10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(188, 188, 188)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel27)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel28)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spn20, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spn50, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spn100, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))))
-                        .addGap(197, 197, 197)
+                        .addGap(370, 370, 370)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblTotal))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(149, 149, 149)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(lblTotalN))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(204, 204, 204)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel16)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel15)
+                                        .addComponent(jLabel23)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel14)))
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel26)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(spn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spn5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(197, 197, 197)
+                                    .addComponent(jLabel24)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(spn10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(188, 188, 188)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel27)
+                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel28))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(spn20, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spn50, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spn100, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(197, 197, 197)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(spn01, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel16)
+                                                .addComponent(jLabel15)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel12)
+                                                    .addComponent(jLabel14)))
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(spn025, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(spn05, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(spn01, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(18, 18, 18)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(spn025, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(spn05, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(spn1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(2, 2, 2)
+                                            .addComponent(jLabel13)
                                             .addGap(18, 18, 18)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel7)
-                                                .addComponent(spn1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addComponent(jLabel13)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(spn005, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(spn005, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(61, 61, 61))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(61, 61, 61))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(btnConfirmar)
-                        .addGap(123, 123, 123)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(247, Short.MAX_VALUE))
+                                .addGap(151, 151, 151)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotalM)))))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +365,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel8))
                 .addGap(79, 79, 79)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -288,14 +395,11 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnConfirmar)
-                            .addComponent(btnCancelar))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblTotalN)
+                            .addComponent(jLabel6)
+                            .addComponent(lblTotalM)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 16, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)
                         .addComponent(jLabel3)
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -316,12 +420,16 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(spn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(234, 234, 234))))
+                            .addComponent(spn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(lblTotal))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirmar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -338,11 +446,54 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    private void valoresTotais(){
+        double totalM = 0, totalN = 0, total = 0;
+        totalM += (Double.parseDouble(spn005.getValue().toString()) * 0.05);
+        totalM += (Double.parseDouble(spn01.getValue().toString()) * 0.1);
+        totalM += (Double.parseDouble(spn025.getValue().toString()) * 0.25);
+        totalM += (Double.parseDouble(spn05.getValue().toString()) * 0.5);
+        totalM += (Double.parseDouble(spn1.getValue().toString()) * 1);
+        
+        totalN += (Double.parseDouble(spn2.getValue().toString()) * 2);
+        totalN += (Double.parseDouble(spn5.getValue().toString()) * 5);
+        totalN += (Double.parseDouble(spn10.getValue().toString()) * 10);
+        totalN += (Double.parseDouble(spn20.getValue().toString()) * 20);
+        totalN += (Double.parseDouble(spn50.getValue().toString()) * 50);
+        totalN += (Double.parseDouble(spn100.getValue().toString()) * 100);
+        total = totalN + totalM;
+        
+        lblTotalM.setText(String.format("%.2f", totalM));
+        lblTotalN.setText(String.format("%.2f", totalN));
+        lblTotal.setText(String.format("%.2f", total));
+    }
+    
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         if(moedas != null){
             moedas.setQtd5((Integer)spn005.getValue());
-            JOptionPane.showMessageDialog(null, moedas.getQtd5());
+            moedas.setQtd10((Integer)spn01.getValue());
+            moedas.setQtd25((Integer)spn025.getValue());
+            moedas.setQtd50((Integer)spn05.getValue());
+            moedas.setQtd1Real((Integer)spn1.getValue());
+            
+            notas.setQtd2((Integer)spn2.getValue());
+            notas.setQtd5((Integer)spn5.getValue());
+            notas.setQtd10((Integer)spn10.getValue());
+            notas.setQtd20((Integer)spn20.getValue());
+            notas.setQtd50((Integer)spn50.getValue());
+            notas.setQtd100((Integer)spn100.getValue());
+            
+            CtrlCaixa caixa = new CtrlCaixa();
+            
+            if(caixa.alterarMoedasENotas(moedas, notas)){
+                JOptionPane.showMessageDialog(null, "Dinheiro inserido com sucesso!");
+            }
+        }else if(venda != null){
+            
         }
+        
+        btnCancelar.doClick();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -350,6 +501,50 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         this.dispose();
         getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void spn2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn2StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn2StateChanged
+
+    private void spn5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn5StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn5StateChanged
+
+    private void spn10StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn10StateChanged
+       valoresTotais();
+    }//GEN-LAST:event_spn10StateChanged
+
+    private void spn20StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn20StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn20StateChanged
+
+    private void spn50StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn50StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn50StateChanged
+
+    private void spn100StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn100StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn100StateChanged
+
+    private void spn005StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn005StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn005StateChanged
+
+    private void spn01StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn01StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn01StateChanged
+
+    private void spn025StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn025StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn025StateChanged
+
+    private void spn05StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn05StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn05StateChanged
+
+    private void spn1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spn1StateChanged
+        valoresTotais();
+    }//GEN-LAST:event_spn1StateChanged
 
     /**
      * @param args the command line arguments
@@ -389,14 +584,16 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinner12;
     private javax.swing.JSpinner jSpinner5;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JLabel lblTotalM;
+    private javax.swing.JLabel lblTotalN;
     private javax.swing.JSpinner spn005;
     private javax.swing.JSpinner spn01;
     private javax.swing.JSpinner spn025;

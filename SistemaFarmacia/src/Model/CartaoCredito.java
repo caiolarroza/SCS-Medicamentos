@@ -14,7 +14,15 @@ import java.util.Date;
 public class CartaoCredito extends TipoPagamento {
     private Long numero;
     private String nome, validade;
-    private int codSeguranca;
+    private int codSeguranca, parcelas;
+
+    public int getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(int parcelas) {
+        this.parcelas = parcelas;
+    }
 
     public int getCodSeguranca() {
         return codSeguranca;
