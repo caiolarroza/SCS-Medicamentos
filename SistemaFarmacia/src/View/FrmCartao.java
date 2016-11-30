@@ -5,9 +5,18 @@
  */
 package View;
 
+import Controller.CtrlCliente;
+import Controller.CtrlVenda;
+import DAO.Banco;
+import DAO.TipoPagamentoDAO;
+import Model.CartaoCredito;
+import Model.Cliente;
 import Model.Venda;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.math.BigInteger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -21,8 +30,9 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmCartao
      */
-    
+    Banco bd = new Banco();
     Venda venda;
+    CtrlVenda ctrl = new CtrlVenda();
     public FrmCartao() {
         initComponents();
         //Retirar bordas
@@ -50,22 +60,6 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        txtNumCartao1 = new javax.swing.JTextField();
-        txtValidade1 = new javax.swing.JTextField();
-        try{ 
-            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");
-            txtValidade = new javax.swing.JFormattedTextField(data);
-        }
-        catch (Exception e){
-        }
-        txtNomeCartao1 = new javax.swing.JTextField();
-        txtCodCartao1 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -73,59 +67,12 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNumCartao = new javax.swing.JTextField();
         txtValidade = new javax.swing.JTextField();
-        try{ 
-            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");
-            txtValidade = new javax.swing.JFormattedTextField(data);
-        }
-        catch (Exception e){
-        }
         txtNomeCartao = new javax.swing.JTextField();
         txtCodCartao = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnVoltar = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-
-        jPanel1.setBackground(new java.awt.Color(240, 96, 106));
-        jPanel1.setPreferredSize(new java.awt.Dimension(900, 600));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 37, Short.MAX_VALUE)
-        );
-
-        jLabel6.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel6.setText("Número do Cartão:");
-
-        jLabel7.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel7.setText("Nome:");
-
-        jLabel8.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel8.setText("Validade:");
-
-        jLabel9.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        jLabel9.setText("Código de Segurança:");
-
-        txtNomeCartao1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeCartao1ActionPerformed(evt);
-            }
-        });
-
-        txtCodCartao1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodCartao1ActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Candara", 0, 24)); // NOI18N
-        jLabel10.setText("Cartão de Crédito");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -164,6 +111,11 @@ public class FrmCartao extends javax.swing.JInternalFrame {
 
         btnConfirmar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnConfirmar.setText("CONFIRMAR");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CartaoCredito.png"))); // NOI18N
 
@@ -251,21 +203,44 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeCartao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeCartao1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeCartao1ActionPerformed
-
-    private void txtCodCartao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodCartao1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodCartao1ActionPerformed
-
     private void txtNumCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCartaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumCartaoActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        // TODO add your handling code here:
+        getContentPane().removeAll();
+        this.dispose();
+        getContentPane().setBackground(new Color(204,204,204));
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        
+        venda.getTipoPagamento().getCartao().setNumero(Long.valueOf(txtNumCartao.getText()));
+        venda.getTipoPagamento().getCartao().setNome(txtNomeCartao.getText());
+        venda.getTipoPagamento().getCartao().setValidade(txtValidade.getText());
+        venda.getTipoPagamento().getCartao().setCodSeguranca(Integer.parseInt(txtCodCartao.getText()));
+        
+        venda.getTipoPagamento().setDinheiro(null);
+        
+        TipoPagamentoDAO tpDAO = new TipoPagamentoDAO(bd);
+        if(tpDAO.inserir(venda.getTipoPagamento())){
+            venda.getTipoPagamento().setCodPagamento(tpDAO.proxCodigoExterno()- 1);
+            
+            
+            CtrlCliente ctrlCliente = new CtrlCliente();
+            Cliente aux = ctrlCliente.buscarCliente(venda.getCliente());
+            if(aux != null){
+                venda.setCliente(aux);
+                ctrl.cadastrarVenda(venda);
+                getContentPane().removeAll();
+                
+                this.dispose();
+                getContentPane().setBackground(new Color(204,204,204));
+            }
+        }
+        
+        
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,25 +272,15 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtCodCartao;
-    private javax.swing.JTextField txtCodCartao1;
     private javax.swing.JTextField txtNomeCartao;
-    private javax.swing.JTextField txtNomeCartao1;
     private javax.swing.JTextField txtNumCartao;
-    private javax.swing.JTextField txtNumCartao1;
     private javax.swing.JTextField txtValidade;
-    private javax.swing.JTextField txtValidade1;
     // End of variables declaration//GEN-END:variables
 }

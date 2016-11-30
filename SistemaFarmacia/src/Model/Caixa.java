@@ -14,7 +14,7 @@ import java.sql.Time;
  * @author caiol
  */
 public class Caixa {
-    private int codCaixa, qtdDinheiro, qtdCartao;
+    private int codCaixa = 1, qtdDinheiro, qtdCartao;
     private static String senhaAbertura = "123", senhaFechamento = "321";
     private Date dataAbertura, dataFechamento;
     private Time horaAbertura, horaFechamento;

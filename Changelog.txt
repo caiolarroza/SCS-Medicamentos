@@ -1,5 +1,8 @@
+Versao 0.4.6
+-Formularios de: fechar caixa, Venda, cartao, dinheiro finalizados
+
 Versao 0.4.5
--Formulario de: abrir caixa, Venda finalizados
+-Formulario de: abrir caixa finalizado 
 -Adicionado o campo de parcelas para cartao de credito
 
 Versao 0.4.4

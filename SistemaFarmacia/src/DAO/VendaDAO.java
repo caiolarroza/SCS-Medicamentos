@@ -60,14 +60,13 @@ public class VendaDAO implements DAO<Venda>{
             PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
-                    "insert into venda values (?, ?, ?, ?, ?, ?)");
+                    "insert into venda values (?, ?, ?, ?, 1, ?)");
                 
             pst.setInt(1, proxCodigo());
             pst.setInt(2, obj.getPorcentagemDesconto());
             pst.setInt(3, obj.getCliente().getCodCliente());
             pst.setInt(4, obj.getTipoPagamento().getCodPagamento());
-            pst.setInt(5, obj.getCaixa().getCodCaixa());
-            pst.setDate(6, getData());
+            pst.setDate(5, getData());
             
             
             //verifica se o update foi efetuado e retorna true ou false
@@ -166,6 +165,37 @@ public class VendaDAO implements DAO<Venda>{
             bd.fechaConexao();
         }
     }
+    
+    public List<Venda> listarTodas() {
+        List vendas = new ArrayList();
+        try {
+            PreparedStatement pst;
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM venda");
+            
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            while(rs.next()) { //achou
+                Venda aux = new Venda();
+                aux.setCodVenda(rs.getInt("CodVenda"));
+                aux.setPorcentagemDesconto(rs.getInt("porcentagemDesconto"));
+                aux.getCliente().setCodCliente(rs.getInt("codCliente"));
+                aux.getTipoPagamento().setCodPagamento(rs.getInt("codPagamento"));
+                aux.getCaixa().setCodCaixa(rs.getInt("codCaixa"));
+                aux.setData(converteDataView(rs.getDate("data").toString()));
+                vendas.add(aux);
+            } 
+            return vendas;
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
+    }
 
     @Override
     public int proxCodigo() {
@@ -186,6 +216,27 @@ public class VendaDAO implements DAO<Venda>{
              return -1;
         }finally{
             
+        }
+    }
+    
+    public int proxCodigoExterno() {
+        try{
+            PreparedStatement pst;
+            bd.conectar();
+            pst = bd.getConexao().prepareStatement(//comando SQL
+            "select ifnull(max(codVenda), 0) as numero from venda");
+                
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
+            
+            return rs.getInt("numero");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        }finally{
+            bd.fechaConexao();
         }
     }
     

@@ -155,9 +155,10 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         
         
         Caixa aux = ctrl.abrirCaixa(txtSenha.getText(), caixa);
+        
         if(aux != null){
             caixa = aux;
-            int resp = JOptionPane.showConfirmDialog(rootPane, "Deseja inserir dinheiro no caixa?",
+            int resp = JOptionPane.showConfirmDialog(null, "Deseja inserir dinheiro no caixa?",
                 "Dinheiro",JOptionPane.YES_NO_OPTION);
             if(resp == JOptionPane.YES_OPTION){
                 FrmDinheiro fDinheiro = new FrmDinheiro(caixa.getMoedas(), caixa.getNotas());
@@ -170,10 +171,10 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
                 getContentPane().setBackground(new Color(204,204,204));
                 this.dispose();  
             }
-        }else{
-            
-            txtSenha.requestFocusInWindow();
         }
+        
+        txtSenha.setText("");
+        txtSenha.requestFocusInWindow();
         
         
         

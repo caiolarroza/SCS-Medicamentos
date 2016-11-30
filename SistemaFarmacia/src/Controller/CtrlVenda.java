@@ -8,10 +8,15 @@ package Controller;
 import DAO.Banco;
 import DAO.CartaoCreditoDAO;
 import DAO.DinheiroDAO;
+import DAO.MedQtdDAO;
+import DAO.MoedasDAO;
+import DAO.NotasDAO;
+import DAO.TipoPagamentoDAO;
 import DAO.VendaDAO;
 import Model.CartaoCredito;
 import Model.Dinheiro;
 import Model.MedQtd;
+import Model.Medicamento;
 import Model.Venda;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,6 +31,12 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class CtrlVenda {
     VendaDAO dao = new VendaDAO(new Banco());
+    Banco bd = new Banco();
+    MedQtdDAO medQtd = new MedQtdDAO(bd);
+    CtrlMedicamento ctrlMedic = new CtrlMedicamento();
+    CtrlCliente ctrlCliente = new CtrlCliente();
+    TipoPagamentoDAO tpDao = new TipoPagamentoDAO(bd);
+    
     
     private boolean validarQtdMedicamento(Venda venda){
         for(MedQtd x : venda.getMedQtd()){
@@ -46,24 +57,36 @@ public class CtrlVenda {
         }
     }
     
-    private void obterPagamento(Venda venda){
-        if(venda.getTipoPagamento() instanceof Dinheiro){
+    private boolean obterPagamento(Venda venda){
+        if(venda.getTipoPagamento().getDinheiro() != null){
             //gambi para acessar a subclasse de TipoPagamento
-            Dinheiro d = (Dinheiro)venda.getTipoPagamento();
-            DinheiroDAO dD = new DinheiroDAO(new Banco());
-            dD.inserir(d);
-        }else if(venda.getTipoPagamento() instanceof CartaoCredito){
+            
+            venda.getTipoPagamento().getDinheiro().setCodPagamento(venda.getTipoPagamento().getCodPagamento());
+            DinheiroDAO dD = new DinheiroDAO(bd);
+            NotasDAO nD = new NotasDAO(bd);
+            MoedasDAO mD = new MoedasDAO(bd);
+            nD.inserir(venda.getTipoPagamento().getDinheiro().getNotas());
+            mD.inserir(venda.getTipoPagamento().getDinheiro().getMoedas());
+            venda.getTipoPagamento().getDinheiro().getNotas().setCodNotas(nD.proxCodigoExterno());
+            venda.getTipoPagamento().getDinheiro().getMoedas().setCodMoedas(nD.proxCodigoExterno());
+            dD.inserir(venda.getTipoPagamento().getDinheiro());
+            return true;
+        }else if(venda.getTipoPagamento().getCartao() != null){
             //gambi para acessar a subclasse de TipoPagamento
-            CartaoCredito cc = (CartaoCredito)venda.getTipoPagamento();
-            CartaoCreditoDAO ccD = new CartaoCreditoDAO(new Banco());
-            ccD.inserir(cc);
+            venda.getTipoPagamento().getCartao().setCodPagamento(venda.getTipoPagamento().getCodPagamento());
+            CartaoCreditoDAO ccD = new CartaoCreditoDAO(bd);
+            ccD.inserir(venda.getTipoPagamento().getCartao());
+            return true;
         }
+        return false;
     }
     
     private boolean efetuarBaixaEstoque(Venda venda){
-        CtrlMedicamento med = new CtrlMedicamento();
+        
         for(MedQtd x : venda.getMedQtd()){
-            if(med.atualizarMedicamento(x.getMedicamento()) == false){
+            Medicamento aux = ctrlMedic.buscarMedicamento(x.getMedicamento());
+            aux.setQtdEstoque(aux.getQtdEstoque() - x.getQuantidade());
+            if(ctrlMedic.atualizarMedicamento(aux) == false){
                 return false;
             }
         }
@@ -88,14 +111,38 @@ public class CtrlVenda {
     }
     
     public void cadastrarVenda(Venda venda){
-            if(dao.inserir(venda)){
-                JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!");
+        
+        
+        if(obterPagamento(venda) && dao.inserir(venda)){
+            for(MedQtd x : venda.getMedQtd()){
+                x.getVenda().setCodVenda(dao.proxCodigoExterno());
+                x.setMedicamento(ctrlMedic.buscarMedicamento(x.getMedicamento()));
+                medQtd.inserir(x);
+                
+                
             }
+            efetuarBaixaEstoque(venda);
+            emitirNotaFiscal();
+            JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!");
+        }
+    }
+    
+    public Venda buscarVenda(Venda venda){
+        Venda aux = dao.pesquisar(venda);
+        if(aux == null){
+            JOptionPane.showMessageDialog(null, "Venda não existe no sistema!");
+            return null;
+        }else{
+            venda = aux;
+            venda.setCliente(ctrlCliente.buscarClienteCod(venda.getCliente()));
+            venda.setTipoPagamento(tpDao.pesquisar(venda.getTipoPagamento()));
+            return venda;
+        }
     }
     
     public void apagarVenda(Venda venda){
         if(dao.excluir(venda)){
-            JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!");
+            JOptionPane.showMessageDialog(null, "Venda apagada com sucesso!");
         }
     }
     
@@ -103,5 +150,7 @@ public class CtrlVenda {
         return dao.listar(venda);
     }
     
-
+    public List<Venda> listarTodas(){
+        return dao.listarTodas();
+    }
 }

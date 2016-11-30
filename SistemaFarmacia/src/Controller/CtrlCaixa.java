@@ -46,17 +46,18 @@ public class CtrlCaixa {
         }
     }*/
     
-    /*public Caixa buscarCaixa(){
+    public Caixa buscarCaixa(){
         Caixa caixa = (Caixa)dao.pesquisar(new Caixa());
         
         if(caixa == null){
             JOptionPane.showMessageDialog(null, "Caixa não existe no sistema!");
             return null;
         }else{
-            
+            caixa.setMoedas(moedasD.pesquisar(caixa.getMoedas()));
+            caixa.setNotas(notasD.pesquisar(caixa.getNotas()));
             return caixa;
         }
-    }*/
+    }
     
     public Caixa abrirCaixa(String senha, Caixa caixa){
         
@@ -82,13 +83,24 @@ public class CtrlCaixa {
         }         
     }
     
-    public void fecharCaixa(String senha, Caixa caixa){
+    public int fecharCaixa(String senha, Caixa caixa){
         
         if(senha.equals(caixa.getSenhaFechamento())){
-            if(dao.alterar(caixa)){
-                JOptionPane.showMessageDialog(null, "Caixa fechado!");
-            }
+             if(!caixa.isStatus()){
+                JOptionPane.showMessageDialog(null, "Caixa já está fechado!");
+                return 1;
+            }else{
+                if(dao.alterar(caixa)){
+                    JOptionPane.showMessageDialog(null, "Caixa fechado!");
+                    return 2;
+                }
+                return 0;
+             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Senha errada!");
+            return 0;
         }
+        
     }
     
     /*public Caixa inserirDinheiro(Moedas moedas, Notas notas, Caixa caixa){

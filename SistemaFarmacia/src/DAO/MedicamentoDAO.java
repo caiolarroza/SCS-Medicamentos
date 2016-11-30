@@ -172,6 +172,38 @@ public class MedicamentoDAO implements DAO<Medicamento>{
             bd.fechaConexao();
         }
     }
+    
+    public Medicamento pesquisarCOD(Medicamento obj){
+        try {
+            PreparedStatement pst;
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM medicamento WHERE codMedicamento = ?");
+            pst.setInt(1, obj.getCodMedicamento());
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                obj.setCodMedicamento(rs.getInt("codMedicamento"));
+                obj.setNome(rs.getString("nome"));
+                obj.getFornecedor().setCodFornecedor(rs.getInt("codFornecedor"));
+                obj.setDataValidade(converteDataView(rs.getDate("dataValidade").toString()));
+                obj.setPreco(rs.getBigDecimal("preco"));
+                obj.setQtdEstoque(rs.getInt("qtdEstoque"));
+                obj.setLote(rs.getInt("lote"));
+                obj.setDataEntrada(converteDataView(rs.getDate("dataEntrada").toString()));
+                
+                return obj;
+            } else
+                return null;            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
+    }
 
     
     public List<Medicamento> listar() {

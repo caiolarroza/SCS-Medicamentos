@@ -31,6 +31,7 @@ public class MedQtdDAO implements DAO<MedQtd>{
     
     @Override
     public boolean inserir(MedQtd obj) {
+        
         try{
             PreparedStatement pst;
             bd.conectar(); //abre o banco
@@ -52,6 +53,7 @@ public class MedQtdDAO implements DAO<MedQtd>{
         }finally{
             bd.fechaConexao();
         }
+        
     }
 
     @Override
@@ -97,7 +99,7 @@ public class MedQtdDAO implements DAO<MedQtd>{
             while(rs.next()) { //achou
                 
                 obj.setCodVendaMed(rs.getInt("codVendaMed"));
-                obj.getVenda().setCodVenda(rs.getInt("codVenda"));
+                
                 obj.getMedicamento().setCodMedicamento(rs.getInt("codMedicamento"));
                 obj.setQuantidade(rs.getInt("quantidade"));
                 
@@ -105,6 +107,10 @@ public class MedQtdDAO implements DAO<MedQtd>{
                 
                 meds.add(obj);
             }           
+            
+            for(MedQtd x : meds){
+                JOptionPane.showMessageDialog(null, x.getCodVendaMed());
+            }
             
             return meds;
         } catch (SQLException ex) {

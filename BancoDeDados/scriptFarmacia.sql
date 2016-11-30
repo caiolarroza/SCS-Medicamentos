@@ -213,12 +213,16 @@ insert into endereco(codEndereco, logradouro, numero, complemento, bairro, cep, 
 insert into endereco(codEndereco, logradouro, numero, complemento, bairro, cep, cidade, estado) 
 			values ("4", "Rua Macedo Costa","55","","Jardim Santa Genebra","13080180","Campinas","SP");
 
+insert into endereco(codEndereco, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+			values ("5", "Rua Dias de Almeida","55","","Jardim Miriam","04419000","São Paulo","SP");
+
 /*insere valores na tabela cliente*/
 insert into cliente(codCliente, nome, telefone, celular, rg, cpf, dataNascimento, aposentado, codEndereco)
-						values ("1", "Caio Larroza", "1144445555", "11944445555", "665844571", "55511124855", "1996-03-15", "0", "1");
+						values ("1", "Caio Larroza", "1144445555", "11944445555", "665844571", "44064969553", "1996-03-15", "0", "1");
 
 insert into cliente(codCliente, nome, telefone, celular, rg, cpf, dataNascimento, aposentado, codEndereco)
-					values ("2", "Matheus dos Santos", "1155554444", "11955554444", "775514847", "22214548441", "1997-11-06", "1", "2");
+					values ("2", "Matheus dos Santos", "1155554444", "11955554444", "775514847", "43800754860", "1997-11-06", "1", "2");
+
 
 /*insere valores na tabela fornecedor*/
 insert into fornecedor(codFornecedor, nome, telefone, celular, cnpj, codEndereco) 
@@ -226,6 +230,9 @@ insert into fornecedor(codFornecedor, nome, telefone, celular, cnpj, codEndereco
 				 
 insert into fornecedor(codFornecedor, nome, telefone, celular, cnpj, codEndereco) 
 		     values ("2", "Medlye Industria Farmaceutica Ltda.","1921178222","","50929710000179","4");
+
+insert into fornecedor(codFornecedor, nome, telefone, celular, cnpj, codEndereco) 
+		     values ("3", "Stark Ltda.","1921179222","","1","5");
 					
 /*insere valores na tabela medicamento*/
 insert into medicamento(codMedicamento,nome,codFornecedor,dataValidade,preco,qtdEstoque,lote, dataEntrada)
@@ -247,8 +254,8 @@ insert into tipopagamento(codPagamento, valorTotal) values ("2","1410.90");
 insert into dinheiro(CodPagamento, codNotas, codMoedas) values ("1","2","2");
 
 /*insere valores na tabela de cartaoCredito*/
-insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca)
-						  values("2", "1122334455667788", "Matheus dos Santos Lopes", "05/2017", "225");					  
+insert into cartaocredito(codPagamento, numero, nome, validade, codSeguranca, parcelas)
+						  values("2", "1122334455667788", "Matheus dos Santos Lopes", "05/2017", "225", "2");					  
 
 /*insere valores na tabela de venda*/
 insert into venda(codVenda, porcentagemDesconto, codCliente, codPagamento, codCaixa, data)
@@ -306,5 +313,12 @@ where codNotas = 1;
 
 update moedas set qtd5 = 0, qtd10 = 0, qtd25 = 0, qtd50 = 0, qtd1Real = 0
 	where codMoedas = 1;
+
+delete from vendaMedicamento where codVenda > 2;
+delete from venda where codVenda > 2;
+delete from Dinheiro where codPagamento > 2;
+delete from moedas where codMoedas > 2;
+delete from notas where codNotas > 2;
+
 */
 

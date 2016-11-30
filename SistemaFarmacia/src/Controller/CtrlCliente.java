@@ -47,6 +47,18 @@ public class CtrlCliente {
         }
     }
     
+    public Cliente buscarClienteCod(Cliente cliente){
+        cliente = (Cliente)dao.pesquisarCod(cliente);
+        if(cliente == null){
+            JOptionPane.showMessageDialog(null, "Codigo não existe no sistema!");
+            return null;
+        }else{
+            
+            
+            return cliente;
+        }
+    }
+    
     public void atualizarCliente(Cliente cliente){
         if(dao.alterar(cliente)){
             if(endereco.alterar(cliente.getEndereco())){

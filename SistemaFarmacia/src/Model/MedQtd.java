@@ -10,7 +10,7 @@ package Model;
  * @author mslda
  */
 public class MedQtd {
-    private Medicamento medicamento;
+    private Medicamento medicamento = new Medicamento();
     private int quantidade, codVendaMed;
     private Venda venda = new Venda();
 

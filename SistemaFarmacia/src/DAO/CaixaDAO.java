@@ -126,11 +126,15 @@ public class CaixaDAO implements DAO<Caixa>{
             if(obj.isStatus()){
                 obj.setDataFechamento(getData());
                 obj.setHoraFechamento(getHora());
+                obj.setStatus(false);
             }else{
                 obj.setDataAbertura(getData());
                 obj.setHoraAbertura(getHora());
+                obj.setDataFechamento(null);
+                obj.setHoraFechamento(null);
+                obj.setStatus(true);
             }
-            obj.setStatus(true);
+            
             PreparedStatement pst;
             bd.conectar();
             pst = bd.getConexao().prepareStatement(
@@ -172,7 +176,7 @@ public class CaixaDAO implements DAO<Caixa>{
                 obj.setDataAbertura(rs.getDate("dataAbertura"));
                 obj.setDataFechamento(rs.getDate("dataFechamento"));
                 obj.setHoraAbertura(rs.getTime("horaAbertura"));
-                obj.setHoraAbertura(rs.getTime("horaFechamento"));
+                obj.setHoraFechamento(rs.getTime("horaFechamento"));
                 obj.getNotas().setCodNotas(rs.getInt("codNotas"));
                 obj.getMoedas().setCodMoedas(rs.getInt("codMoedas"));
                 obj.setStatus(rs.getBoolean("status"));
@@ -189,7 +193,7 @@ public class CaixaDAO implements DAO<Caixa>{
     }
 
     
-    public ArrayList<Caixa> listar() {
+    /*public ArrayList<Caixa> listar() {
         try {
             PreparedStatement pst;
             ArrayList<Caixa> caixas = new ArrayList<>();
@@ -220,7 +224,7 @@ public class CaixaDAO implements DAO<Caixa>{
         } finally {
             bd.fechaConexao();
         }
-    }
+    }*/
 
     @Override
     public int proxCodigo() {

@@ -6,13 +6,25 @@
 package View;
 
 import Controller.CtrlCaixa;
+import DAO.Banco;
 import Model.Caixa;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -142,9 +154,63 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        if(aux != null){
+        caixa = ctrl.buscarCaixa();
+        if(caixa != null){
+            int re = ctrl.fecharCaixa(txtSenha.getText(), caixa);
+            if( re == 2){
+                try {
+                    HashMap mapa = new HashMap();
+                    caixa = ctrl.buscarCaixa();
+                    mapa.put("codCaixa", caixa.getCodCaixa());
+                    mapa.put("dataAbertura", caixa.getDataAbertura());
+                    mapa.put("dataFechamento", caixa.getDataFechamento());
+                    mapa.put("horaAbertura", caixa.getHoraAbertura());
+                    mapa.put("horaFechamento", caixa.getHoraFechamento());
+                    mapa.put("mQtd5", caixa.getMoedas().getQtd5());
+                    mapa.put("mQtd10", caixa.getMoedas().getQtd10());
+                    mapa.put("mQtd25", caixa.getMoedas().getQtd25());
+                    mapa.put("mQtd50", caixa.getMoedas().getQtd50());
+                    mapa.put("mQtd1Real", caixa.getMoedas().getQtd1Real());
+                    mapa.put("nQtd2", caixa.getNotas().getQtd2());
+                    mapa.put("nQtd5", caixa.getNotas().getQtd5());
+                    mapa.put("nQtd10", caixa.getNotas().getQtd10());
+                    mapa.put("nQtd20", caixa.getNotas().getQtd20());
+                    mapa.put("nQtd50", caixa.getNotas().getQtd50());
+                    mapa.put("nQtd100", caixa.getNotas().getQtd100());
+                    
+                    caixa = ctrl.contabilizarVendas(caixa);
+                    
+                    mapa.put("valorTotalDinheiro", String.format("%.2f", caixa.getValorTotalDinheiro()));
+                    mapa.put("qtdDinheiro", caixa.getQtdDinheiro());
+                    mapa.put("valorTotalCartao", String.format("%.2f", caixa.getValorTotalCartao()));
+                    mapa.put("qtdCartao", caixa.getQtdCartao());
+                    
+                    
+                    String src="D:\\Drive\\Fatec\\4_Semestre\\Prog_Orientada_a_Objetos_-_Viotti\\N2\\Sistema_Farmacia_Fatec\\Relatorios\\fechamentoCaixa.jrxml";
+                    
+                    
+                    
+                    JasperReport jasperReport = JasperCompileManager.compileReport(src);
+                    JasperPrint jasperPrint = null;
+                    jasperPrint = JasperFillManager.fillReport(jasperReport, mapa, new JREmptyDataSource());
+                    
+                    
+                    JasperViewer view = new JasperViewer(jasperPrint, false);
+                    
+                    view.setVisible(true);
+                    
+                    
+                    btnCancelar.doClick();
+                } catch (JRException ex) {
+                    Logger.getLogger(FrmFecharCaixa.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else if(re == 1){
+                btnCancelar.doClick();
+            }
             
         }
+        txtSenha.setText("");
+        txtSenha.requestFocusInWindow();
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

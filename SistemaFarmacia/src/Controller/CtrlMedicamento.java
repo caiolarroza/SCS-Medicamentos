@@ -67,10 +67,21 @@ public class CtrlMedicamento {
         }
     }
     
+    public Medicamento buscarMedicamentoCod(Medicamento medic){
+        medic = (Medicamento)dao.pesquisarCOD(medic);
+        if(medic == null){
+            JOptionPane.showMessageDialog(null, "Medicamento não existe no sistema!");
+            return null;
+        }else{
+            medic.setFornecedor(forne.buscarFornecedor(medic.getFornecedor()));
+            return medic;
+        }
+    }
+    
     public boolean atualizarMedicamento(Medicamento medic){
         if(validarDataValidade(medic)){
             if(dao.alterar(medic)){
-                JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
+                //JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
                 return true;
             }
         }else{

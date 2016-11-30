@@ -26,19 +26,20 @@ public class CartaoCreditoDAO implements DAO<CartaoCredito>{
         this.bd = bd;
     }
     
-    
+   
     @Override
     public boolean inserir(CartaoCredito obj) {
         try{
             PreparedStatement pst;
             bd.conectar(); //abre o banco
             pst = bd.getConexao().prepareStatement( //comando SQL
-                    "insert into cartaoCredito values (?, ?, ?, ?, ?)");
+                    "insert into cartaoCredito values (?, ?, ?, ?, ?, ?)");
             pst.setInt(1, obj.getCodPagamento());
             pst.setLong(2, obj.getNumero());
             pst.setString(3, obj.getNome());
             pst.setString(4, obj.getValidade());
             pst.setInt(5, obj.getCodSeguranca());
+            pst.setInt(6, obj.getParcelas());
             
             //verifica se o update foi efetuado e retorna true ou false
             return pst.executeUpdate() > 0;

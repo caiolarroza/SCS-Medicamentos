@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class Venda {
     private int codVenda,porcentagemDesconto;
-    private Cliente cliente;
-    private Caixa caixa;
-    private TipoPagamento tipoPagamento;
+    private Cliente cliente = new Cliente();
+    private Caixa caixa = new Caixa();
+    private TipoPagamento tipoPagamento = new TipoPagamento();
     private ArrayList<MedQtd> medQtd;
     private String data;
 

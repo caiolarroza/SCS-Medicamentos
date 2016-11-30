@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -188,9 +190,71 @@ public class ClienteDAO implements DAO<Cliente>{
         }
     }
 
-    /*@Override
-    public List<Cliente> listar(String filtro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public Cliente pesquisarCod(Cliente obj) {
+        try {
+            PreparedStatement pst;
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM cliente WHERE codCliente = ?");
+            pst.setInt(1, obj.getCodCliente());
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            if(rs.next()) { //achou
+                obj.setCodCliente(rs.getInt("codCliente"));
+                obj.setNome(rs.getString("nome"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setDataNasc(converteDataView(rs.getDate("dataNascimento").toString()));
+                obj.setAposentado(rs.getBoolean("aposentado"));
+                obj.getEndereco().setCodEndereco(rs.getInt("codEndereco"));
+                return obj;
+            } else
+                return null;            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
+    }
+    
+    
+    /*public List<Cliente> listar(Cliente obj) {
+        try {
+            PreparedStatement pst;
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            bd.conectar(); //abre o banco
+            pst = bd.getConexao().prepareStatement(
+                      "SELECT * FROM cliente WHERE cpf = ?");
+            pst.setString(1, obj.getCpf());
+            //executa o select
+            rs = pst.executeQuery();
+            //verifica se achou alguem
+            while(rs.next()) { //achou
+                obj.setCodCliente(rs.getInt("codCliente"));
+                obj.setNome(rs.getString("nome"));
+                obj.setTelefone(rs.getString("telefone"));
+                obj.setCelular(rs.getString("celular"));
+                obj.setRg(rs.getString("rg"));
+                obj.setCpf(rs.getString("cpf"));
+                obj.setDataNasc(converteDataView(rs.getDate("dataNascimento").toString()));
+                obj.setAposentado(rs.getBoolean("aposentado"));
+                obj.getEndereco().setCodEndereco(rs.getInt("codEndereco"));
+                
+                clientes.add(obj);
+            } 
+                return clientes;            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return null;
+        } finally {
+            bd.fechaConexao();
+        }
     }*/
 
     @Override

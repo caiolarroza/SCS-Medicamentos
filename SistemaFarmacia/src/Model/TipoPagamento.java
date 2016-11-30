@@ -13,7 +13,35 @@ import java.math.BigDecimal;
  */
 public class TipoPagamento {
     private int codPagamento;
-    private BigDecimal valor;
+    private BigDecimal valor, valorDescontado;
+    private Dinheiro dinheiro;
+    private CartaoCredito cartao;
+
+    public BigDecimal getValorDescontado() {
+        return valorDescontado;
+    }
+
+    public void setValorDescontado(BigDecimal valorDescontado) {
+        this.valorDescontado = valorDescontado;
+    }
+
+    
+    
+    public Dinheiro getDinheiro() {
+        return dinheiro;
+    }
+
+    public void setDinheiro(Dinheiro dinheiro) {
+        this.dinheiro = dinheiro;
+    }
+
+    public CartaoCredito getCartao() {
+        return cartao;
+    }
+
+    public void setCartao(CartaoCredito cartao) {
+        this.cartao = cartao;
+    }
 
     public int getCodPagamento() {
         return codPagamento;

@@ -126,4 +126,26 @@ public class TipoPagamentoDAO implements DAO<TipoPagamento>{
         }
     }
     
+    public int proxCodigoExterno(){
+        try{
+            PreparedStatement pst;
+            bd.conectar();
+            pst = bd.getConexao().prepareStatement(//comando SQL
+            "select ifnull(max(codPagamento), 0) + 1 as numero from tipoPagamento");
+                
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
+            
+            return rs.getInt("numero");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        }finally{
+            bd.fechaConexao();
+        }
+    }
 }
+    
+

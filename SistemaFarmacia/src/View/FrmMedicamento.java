@@ -417,6 +417,7 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
         medic.getFornecedor().setCnpj(txtCNPJ.getText());
         
         ctrl.atualizarMedicamento(medic);
+        JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
         limpar();
         preencheTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed

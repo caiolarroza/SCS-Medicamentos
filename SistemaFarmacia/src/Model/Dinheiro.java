@@ -10,13 +10,10 @@ package Model;
  * @author caiol
  */
 public class Dinheiro extends TipoPagamento{
-    private Moedas moedas;
-    private Notas notas;
+    private Moedas moedas = new Moedas();
+    private Notas notas = new Notas();
 
-    public Dinheiro(Moedas moedas, Notas notas) {
-        this.moedas = moedas;
-        this.notas = notas;
-    }
+    
 
     public Moedas getMoedas() {
         return moedas;

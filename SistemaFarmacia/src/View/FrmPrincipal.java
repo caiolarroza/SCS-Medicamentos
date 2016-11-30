@@ -33,6 +33,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         //janela iniciar maximizada
         setExtendedState(MAXIMIZED_BOTH); 
         
+        /*SOFTWARE FEITO SOB A PREMISSA DE POG(PROGRAMAÇÃO ORIENTADA A
+        GAMBIARRA), USANDO COMO BASE UMA METODOLOGIA AMPLAMENTE CONHECIDA E
+        UTILIZADA AO REDOR DO MUNDO, A GO HORSE.
+        */
     }
 
     /**

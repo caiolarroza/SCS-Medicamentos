@@ -155,4 +155,25 @@ public class NotasDAO implements DAO<Notas>{
         }
     }
     
+    public int proxCodigoExterno() {
+        try{
+            PreparedStatement pst;
+            bd.conectar();
+            pst = bd.getConexao().prepareStatement(//comando SQL
+            "select ifnull(max(codNotas), 0) as numero from notas");
+                
+            rs = pst.executeQuery();//Executa o comando
+                    
+            rs.next();//retorna o valor do BD
+            
+            return rs.getInt("numero");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro na Pesquisa\n"
+                     + ex.getMessage());
+             return -1;
+        }finally{
+           bd.fechaConexao();
+        }
+    }
+    
 }
