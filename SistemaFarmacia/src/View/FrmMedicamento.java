@@ -409,36 +409,69 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
     }
     
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        medic.setNome(txtNome.getText());
-        medic.setDataValidade(txtValidade.getText());
-        medic.setLote(Integer.parseInt(txtLote.getText()));
-        medic.setQtdEstoque(Integer.parseInt(txtQuantidade.getText()));
-        medic.setPreco(new BigDecimal(txtPreco.getText()));
-        medic.getFornecedor().setCnpj(txtCNPJ.getText());
+        if(txtNome.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtFornecedor.getText().length() > 0 && txtValidade.getText().length() > 0 &&
+                txtLote.getText().length() > 0 && txtQuantidade.getText().length() > 0 &&
+                txtPreco.getText().length() > 0){
+            
+            medic.setNome(txtNome.getText());
+            medic.setDataValidade(txtValidade.getText());
+            medic.setLote(Integer.parseInt(txtLote.getText()));
+            medic.setQtdEstoque(Integer.parseInt(txtQuantidade.getText()));
+            medic.setPreco(new BigDecimal(txtPreco.getText()));
+            medic.getFornecedor().setCnpj(txtCNPJ.getText());
+
+            ctrl.atualizarMedicamento(medic);
+            JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
+            limpar();
+            preencheTabela();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtNome.requestFocusInWindow();
+       } 
         
-        ctrl.atualizarMedicamento(medic);
-        JOptionPane.showMessageDialog(null, "Medicamento atualizado com sucesso!");
-        limpar();
-        preencheTabela();
+        
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        ctrl.apagarMedicamento(medic);
-        limpar();
-        preencheTabela();
+        if(txtNome.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtFornecedor.getText().length() > 0 && txtValidade.getText().length() > 0 &&
+                txtLote.getText().length() > 0 && txtQuantidade.getText().length() > 0 &&
+                txtPreco.getText().length() > 0){
+            
+            ctrl.apagarMedicamento(medic);
+            limpar();
+            preencheTabela();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtNome.requestFocusInWindow();
+       } 
+        
+        
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        medic.setNome(txtNome.getText());
-        medic.setDataValidade(txtValidade.getText());
-        medic.setLote(Integer.parseInt(txtLote.getText()));
-        medic.setQtdEstoque(Integer.parseInt(txtQuantidade.getText()));
-        medic.setPreco(new BigDecimal(txtPreco.getText()));
-        medic.getFornecedor().setCnpj(txtCNPJ.getText());
+        if(txtNome.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtFornecedor.getText().length() > 0 && txtValidade.getText().length() > 0 &&
+                txtLote.getText().length() > 0 && txtQuantidade.getText().length() > 0 &&
+                txtPreco.getText().length() > 0){
+         
+            medic.setNome(txtNome.getText());
+            medic.setDataValidade(txtValidade.getText());
+            medic.setLote(Integer.parseInt(txtLote.getText()));
+            medic.setQtdEstoque(Integer.parseInt(txtQuantidade.getText()));
+            medic.setPreco(new BigDecimal(txtPreco.getText()));
+            medic.getFornecedor().setCnpj(txtCNPJ.getText());
+
+            ctrl.cadastrarMedicamento(medic);
+            limpar();
+            preencheTabela();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtNome.requestFocusInWindow();
+       } 
         
-        ctrl.cadastrarMedicamento(medic);
-        limpar();
-        preencheTabela();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -461,8 +494,9 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbMedicamentosMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        medic.setNome(txtPesquisar.getText());
-        Medicamento aux = ctrl.buscarMedicamento(medic);
+        if(txtPesquisar.getText().length() > 0){
+            medic.setNome(txtPesquisar.getText());
+            Medicamento aux = ctrl.buscarMedicamento(medic);
             if(aux != null){
                 medic = aux;
                 txtNome.setText(aux.getNome());
@@ -475,22 +509,35 @@ public class FrmMedicamento extends javax.swing.JInternalFrame {
             }else{
                 limpar();
             }
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha o campo de busca");
+           txtPesquisar.requestFocusInWindow();
+       } 
+        
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBuscarForneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarForneActionPerformed
-        medic.getFornecedor().setCnpj(txtCNPJ.getText());
-        //gambi para resolver o problema do fornecedor no frmMedicamento
-        medic.getFornecedor().setCodFornecedor(666);
-        Fornecedor aux = forne.buscarFornecedor(medic.getFornecedor());
-        if(aux != null){
-            medic.setFornecedor(aux);
-            txtCNPJ.setText(aux.getCnpj());
-            txtFornecedor.setText(aux.getNome());
+        if(txtCNPJ.getText().length() > 0){
+            medic.getFornecedor().setCnpj(txtCNPJ.getText());
+            //gambi para resolver o problema do fornecedor no frmMedicamento
+            medic.getFornecedor().setCodFornecedor(666);
+            Fornecedor aux = forne.buscarFornecedor(medic.getFornecedor());
+            if(aux != null){
+                medic.setFornecedor(aux);
+                txtCNPJ.setText(aux.getCnpj());
+                txtFornecedor.setText(aux.getNome());
+            }else{
+                txtCNPJ.setText("");
+                txtFornecedor.setText("");
+                txtCNPJ.requestFocusInWindow();
+            }
         }else{
-            txtCNPJ.setText("");
-            txtFornecedor.setText("");
-            txtCNPJ.requestFocusInWindow();
-        }
+           JOptionPane.showMessageDialog(null, "Preencha o campo de busca");
+           txtPesquisar.requestFocusInWindow();
+        } 
+        
+        
     }//GEN-LAST:event_btnBuscarForneActionPerformed
   
     /**

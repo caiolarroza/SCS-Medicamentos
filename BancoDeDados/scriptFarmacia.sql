@@ -314,11 +314,21 @@ where codNotas = 1;
 update moedas set qtd5 = 0, qtd10 = 0, qtd25 = 0, qtd50 = 0, qtd1Real = 0
 	where codMoedas = 1;
 
-delete from vendaMedicamento where codVenda > 2;
-delete from venda where codVenda > 2;
-delete from Dinheiro where codPagamento > 2;
-delete from moedas where codMoedas > 2;
-delete from notas where codNotas > 2;
+delete from vendaMedicamento where codVenda > 3;
+delete from venda where codVenda > 3;
+delete from Dinheiro where codPagamento > 3;
+delete from moedas where codMoedas > 3;
+delete from notas where codNotas > 3;
+delete from CartaoCredito where codPagamento > 3;
+delete from tipoPagamento where codPagamento > 3;
 
+select count(d.codPagamento) as qtd from dinheiro d 
+inner join venda v on v.data = curdate()
+where d.codPagamento = v.codPagamento;
+
+
+select count(cc.codPagamento) as qtd from cartaoCredito cc 
+inner join venda v on v.data = curdate()
+where cc.codPagamento = v.codPagamento;
 */
 

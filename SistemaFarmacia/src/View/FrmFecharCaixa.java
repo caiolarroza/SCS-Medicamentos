@@ -14,6 +14,7 @@ import java.awt.Insets;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -63,10 +64,10 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
-        txtSenha = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,15 +102,6 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnFechar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)))
-                .addGap(0, 287, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(409, 409, 409)
@@ -120,6 +112,15 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(288, 288, 288)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnFechar)
+                        .addGap(49, 49, 49)
+                        .addComponent(btnCancelar))
+                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 287, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,13 +131,13 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
                     .addComponent(jLabel39))
                 .addGap(58, 58, 58)
                 .addComponent(jLabel1)
-                .addGap(135, 135, 135)
+                .addGap(111, 111, 111)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
+                .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
                     .addComponent(btnCancelar))
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,63 +155,69 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        caixa = ctrl.buscarCaixa();
-        if(caixa != null){
-            int re = ctrl.fecharCaixa(txtSenha.getText(), caixa);
-            if( re == 2){
-                try {
-                    HashMap mapa = new HashMap();
-                    caixa = ctrl.buscarCaixa();
-                    mapa.put("codCaixa", caixa.getCodCaixa());
-                    mapa.put("dataAbertura", caixa.getDataAbertura());
-                    mapa.put("dataFechamento", caixa.getDataFechamento());
-                    mapa.put("horaAbertura", caixa.getHoraAbertura());
-                    mapa.put("horaFechamento", caixa.getHoraFechamento());
-                    mapa.put("mQtd5", caixa.getMoedas().getQtd5());
-                    mapa.put("mQtd10", caixa.getMoedas().getQtd10());
-                    mapa.put("mQtd25", caixa.getMoedas().getQtd25());
-                    mapa.put("mQtd50", caixa.getMoedas().getQtd50());
-                    mapa.put("mQtd1Real", caixa.getMoedas().getQtd1Real());
-                    mapa.put("nQtd2", caixa.getNotas().getQtd2());
-                    mapa.put("nQtd5", caixa.getNotas().getQtd5());
-                    mapa.put("nQtd10", caixa.getNotas().getQtd10());
-                    mapa.put("nQtd20", caixa.getNotas().getQtd20());
-                    mapa.put("nQtd50", caixa.getNotas().getQtd50());
-                    mapa.put("nQtd100", caixa.getNotas().getQtd100());
-                    
-                    caixa = ctrl.contabilizarVendas(caixa);
-                    
-                    mapa.put("valorTotalDinheiro", String.format("%.2f", caixa.getValorTotalDinheiro()));
-                    mapa.put("qtdDinheiro", caixa.getQtdDinheiro());
-                    mapa.put("valorTotalCartao", String.format("%.2f", caixa.getValorTotalCartao()));
-                    mapa.put("qtdCartao", caixa.getQtdCartao());
-                    
-                    
-                    String src="D:\\Drive\\Fatec\\4_Semestre\\Prog_Orientada_a_Objetos_-_Viotti\\N2\\Sistema_Farmacia_Fatec\\Relatorios\\fechamentoCaixa.jrxml";
-                    
-                    
-                    
-                    JasperReport jasperReport = JasperCompileManager.compileReport(src);
-                    JasperPrint jasperPrint = null;
-                    jasperPrint = JasperFillManager.fillReport(jasperReport, mapa, new JREmptyDataSource());
-                    
-                    
-                    JasperViewer view = new JasperViewer(jasperPrint, false);
-                    
-                    view.setVisible(true);
-                    
-                    
+        if(txtSenha.getText().length() > 0){
+            caixa = ctrl.buscarCaixa();
+            if(caixa != null){
+                int re = ctrl.fecharCaixa(txtSenha.getText(), caixa);
+                if( re == 2){
+                    try {
+                        HashMap mapa = new HashMap();
+                        caixa = ctrl.buscarCaixa();
+                        mapa.put("codCaixa", caixa.getCodCaixa());
+                        mapa.put("dataAbertura", caixa.getDataAbertura());
+                        mapa.put("dataFechamento", caixa.getDataFechamento());
+                        mapa.put("horaAbertura", caixa.getHoraAbertura());
+                        mapa.put("horaFechamento", caixa.getHoraFechamento());
+                        mapa.put("mQtd5", caixa.getMoedas().getQtd5());
+                        mapa.put("mQtd10", caixa.getMoedas().getQtd10());
+                        mapa.put("mQtd25", caixa.getMoedas().getQtd25());
+                        mapa.put("mQtd50", caixa.getMoedas().getQtd50());
+                        mapa.put("mQtd1Real", caixa.getMoedas().getQtd1Real());
+                        mapa.put("nQtd2", caixa.getNotas().getQtd2());
+                        mapa.put("nQtd5", caixa.getNotas().getQtd5());
+                        mapa.put("nQtd10", caixa.getNotas().getQtd10());
+                        mapa.put("nQtd20", caixa.getNotas().getQtd20());
+                        mapa.put("nQtd50", caixa.getNotas().getQtd50());
+                        mapa.put("nQtd100", caixa.getNotas().getQtd100());
+
+                        caixa = ctrl.contabilizarVendas(caixa);
+
+                        mapa.put("valorTotalDinheiro", String.format("%.2f", caixa.getValorTotalDinheiro()));
+                        mapa.put("qtdDinheiro", caixa.getQtdDinheiro());
+                        mapa.put("valorTotalCartao", String.format("%.2f", caixa.getValorTotalCartao()));
+                        mapa.put("qtdCartao", caixa.getQtdCartao());
+
+
+                        String src="D:\\Drive\\Fatec\\4_Semestre\\Prog_Orientada_a_Objetos_-_Viotti\\N2\\Sistema_Farmacia_Fatec\\Relatorios\\fechamentoCaixa.jrxml";
+
+
+
+                        JasperReport jasperReport = JasperCompileManager.compileReport(src);
+                        JasperPrint jasperPrint = null;
+                        jasperPrint = JasperFillManager.fillReport(jasperReport, mapa, new JREmptyDataSource());
+
+
+                        JasperViewer view = new JasperViewer(jasperPrint, false);
+
+                        view.setVisible(true);
+
+
+                        btnCancelar.doClick();
+                    } catch (JRException ex) {
+                        Logger.getLogger(FrmFecharCaixa.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else if(re == 1){
                     btnCancelar.doClick();
-                } catch (JRException ex) {
-                    Logger.getLogger(FrmFecharCaixa.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if(re == 1){
-                btnCancelar.doClick();
+
             }
-            
-        }
-        txtSenha.setText("");
-        txtSenha.requestFocusInWindow();
+            txtSenha.setText("");
+            txtSenha.requestFocusInWindow();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtSenha.requestFocusInWindow();
+       } 
+        
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -250,6 +257,6 @@ public class FrmFecharCaixa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,6 +10,7 @@ import Model.Fornecedor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -340,66 +341,109 @@ public class FrmFornecedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        ctrl.apagarFornecedor(forne);
-        limpar();
+        if(txtFornecedor.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtTelefone.getText().length() > 0 && txtCEP.getText().length() > 0 &&
+                txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
+            
+            ctrl.apagarFornecedor(forne);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCNPJ.requestFocusInWindow();
+       } 
+        
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        forne.setCelular(txtCelular.getText());
-        forne.setCnpj(txtCNPJ.getText());
-        forne.setNome(txtFornecedor.getText());
-        forne.setTelefone(txtTelefone.getText());
+        if(txtFornecedor.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtTelefone.getText().length() > 0 && txtCEP.getText().length() > 0 &&
+                txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
+            
+            
+            forne.setCelular(txtCelular.getText());
+            forne.setCnpj(txtCNPJ.getText());
+            forne.setNome(txtFornecedor.getText());
+            forne.setTelefone(txtTelefone.getText());
+
+            forne.getEndereco().setLogradouro(txtLogradouro.getText());
+            forne.getEndereco().setNumero(txtNum.getText());
+            forne.getEndereco().setComplemento(txtComplemento.getText());
+            forne.getEndereco().setBairro(txtBairro.getText());
+            forne.getEndereco().setCep(txtCEP.getText());
+            forne.getEndereco().setCidade(txtCidade.getText());
+            forne.getEndereco().setEstado(txtEstado.getText());
+
+            ctrl.cadastrarFornecedor(forne);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCNPJ.requestFocusInWindow();
+       } 
         
-        forne.getEndereco().setLogradouro(txtLogradouro.getText());
-        forne.getEndereco().setNumero(txtNum.getText());
-        forne.getEndereco().setComplemento(txtComplemento.getText());
-        forne.getEndereco().setBairro(txtBairro.getText());
-        forne.getEndereco().setCep(txtCEP.getText());
-        forne.getEndereco().setCidade(txtCidade.getText());
-        forne.getEndereco().setEstado(txtEstado.getText());
         
-        ctrl.cadastrarFornecedor(forne);
-        limpar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        forne.setCelular(txtCelular.getText());
-        forne.setCnpj(txtCNPJ.getText());
-        forne.setNome(txtFornecedor.getText());
-        forne.setTelefone(txtTelefone.getText());
+        if(txtFornecedor.getText().length() > 0 && txtCNPJ.getText().length() > 0 &&
+                txtTelefone.getText().length() > 0 && txtCEP.getText().length() > 0 &&
+                txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
+            
+            forne.setCelular(txtCelular.getText());
+            forne.setCnpj(txtCNPJ.getText());
+            forne.setNome(txtFornecedor.getText());
+            forne.setTelefone(txtTelefone.getText());
+
+            forne.getEndereco().setLogradouro(txtLogradouro.getText());
+            forne.getEndereco().setNumero(txtNum.getText());
+            forne.getEndereco().setComplemento(txtComplemento.getText());
+            forne.getEndereco().setBairro(txtBairro.getText());
+            forne.getEndereco().setCep(txtCEP.getText());
+            forne.getEndereco().setCidade(txtCidade.getText());
+            forne.getEndereco().setEstado(txtEstado.getText());
+
+            ctrl.atualizarFornecedor(forne);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCNPJ.requestFocusInWindow();
+       } 
         
-        forne.getEndereco().setLogradouro(txtLogradouro.getText());
-        forne.getEndereco().setNumero(txtNum.getText());
-        forne.getEndereco().setComplemento(txtComplemento.getText());
-        forne.getEndereco().setBairro(txtBairro.getText());
-        forne.getEndereco().setCep(txtCEP.getText());
-        forne.getEndereco().setCidade(txtCidade.getText());
-        forne.getEndereco().setEstado(txtEstado.getText());
         
-        ctrl.atualizarFornecedor(forne);
-        limpar();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        forne.setCnpj(txtBuscaCNPJ.getText());
-        forne.setCodFornecedor(666);
-        Fornecedor aux = ctrl.buscarFornecedor(forne);
-        if(aux != null){
-            forne = aux;
-            txtBairro.setText(aux.getEndereco().getBairro());
-            txtCEP.setText(aux.getEndereco().getCep());
-            txtCNPJ.setText(aux.getCnpj());
-            txtCelular.setText(aux.getCelular());
-            txtCidade.setText(aux.getEndereco().getCidade());
-            txtComplemento.setText(aux.getEndereco().getComplemento());
-            txtEstado.setText(aux.getEndereco().getEstado());
-            txtFornecedor.setText(aux.getNome());
-            txtNum.setText(aux.getEndereco().getNumero());
-            txtTelefone.setText(aux.getTelefone());
-            txtLogradouro.setText(aux.getEndereco().getLogradouro());
+        if(txtBuscaCNPJ.getText().length() > 0){
+            forne.setCnpj(txtBuscaCNPJ.getText());
+            forne.setCodFornecedor(666);
+            Fornecedor aux = ctrl.buscarFornecedor(forne);
+            if(aux != null){
+                forne = aux;
+                txtBairro.setText(aux.getEndereco().getBairro());
+                txtCEP.setText(aux.getEndereco().getCep());
+                txtCNPJ.setText(aux.getCnpj());
+                txtCelular.setText(aux.getCelular());
+                txtCidade.setText(aux.getEndereco().getCidade());
+                txtComplemento.setText(aux.getEndereco().getComplemento());
+                txtEstado.setText(aux.getEndereco().getEstado());
+                txtFornecedor.setText(aux.getNome());
+                txtNum.setText(aux.getEndereco().getNumero());
+                txtTelefone.setText(aux.getTelefone());
+                txtLogradouro.setText(aux.getEndereco().getLogradouro());
+            }else{
+                limpar();
+            }
         }else{
-            limpar();
-        }
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCNPJ.requestFocusInWindow();
+       } 
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 

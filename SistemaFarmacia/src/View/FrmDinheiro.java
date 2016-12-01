@@ -41,7 +41,7 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
     Banco bd = new Banco();
     
     CtrlVenda ctrl = new CtrlVenda();
-    
+    Double totalEntrado = 0.0;
     public FrmDinheiro() {
         initComponents();
         //Retirar bordas
@@ -508,6 +508,8 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
         lblTotalM.setText(String.format("%.2f", totalM));
         lblTotalN.setText(String.format("%.2f", totalN));
         lblTotal.setText(String.format("%.2f", total));
+        
+        totalEntrado = total;
     }
     
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
@@ -532,38 +534,47 @@ public class FrmDinheiro extends javax.swing.JInternalFrame {
             }
             btnCancelar.doClick();
         }else if(venda != null){
-            venda.getTipoPagamento().setCartao(null);
-            venda.getTipoPagamento().getDinheiro().getMoedas().setQtd5((Integer)spn005.getValue());
-            venda.getTipoPagamento().getDinheiro().getMoedas().setQtd10((Integer)spn01.getValue());
-            venda.getTipoPagamento().getDinheiro().getMoedas().setQtd25((Integer)spn025.getValue());
-            venda.getTipoPagamento().getDinheiro().getMoedas().setQtd50((Integer)spn05.getValue());
-            venda.getTipoPagamento().getDinheiro().getMoedas().setQtd1Real((Integer)spn1.getValue());
             
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd2((Integer)spn2.getValue());
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd5((Integer)spn5.getValue());
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd10((Integer)spn10.getValue());
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd20((Integer)spn20.getValue());
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd50((Integer)spn50.getValue());
-            venda.getTipoPagamento().getDinheiro().getNotas().setQtd100((Integer)spn100.getValue());
-            
-            TipoPagamentoDAO tpDAO = new TipoPagamentoDAO(bd);
-            if(tpDAO.inserir(venda.getTipoPagamento())){
-                venda.getTipoPagamento().setCodPagamento(tpDAO.proxCodigoExterno()- 1);
+            if((venda.getTipoPagamento().getValorDescontado().doubleValue() - totalEntrado) < 0.05 || (totalEntrado - venda.getTipoPagamento().getValorDescontado().doubleValue()) > -0.05){
+                
+                
+                venda.getTipoPagamento().setCartao(null);
+                venda.getTipoPagamento().getDinheiro().getMoedas().setQtd5((Integer)spn005.getValue());
+                venda.getTipoPagamento().getDinheiro().getMoedas().setQtd10((Integer)spn01.getValue());
+                venda.getTipoPagamento().getDinheiro().getMoedas().setQtd25((Integer)spn025.getValue());
+                venda.getTipoPagamento().getDinheiro().getMoedas().setQtd50((Integer)spn05.getValue());
+                venda.getTipoPagamento().getDinheiro().getMoedas().setQtd1Real((Integer)spn1.getValue());
+
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd2((Integer)spn2.getValue());
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd5((Integer)spn5.getValue());
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd10((Integer)spn10.getValue());
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd20((Integer)spn20.getValue());
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd50((Integer)spn50.getValue());
+                venda.getTipoPagamento().getDinheiro().getNotas().setQtd100((Integer)spn100.getValue());
+
+                TipoPagamentoDAO tpDAO = new TipoPagamentoDAO(bd);
+                if(tpDAO.inserir(venda.getTipoPagamento())){
+                    venda.getTipoPagamento().setCodPagamento(tpDAO.proxCodigoExterno()- 1);
 
 
-                CtrlCliente ctrlCliente = new CtrlCliente();
-                Cliente aux = ctrlCliente.buscarCliente(venda.getCliente());
-                if(aux != null){
-                    venda.setCliente(aux);
-                    ctrl.cadastrarVenda(venda);
-                    
-                    contabilizarDinheiroCaixa(venda);
-                    
-                    
-                    btnCancelar.doClick();
+                    CtrlCliente ctrlCliente = new CtrlCliente();
+                    Cliente aux = ctrlCliente.buscarCliente(venda.getCliente());
+                    if(aux != null){
+                        venda.setCliente(aux);
+                        ctrl.cadastrarVenda(venda);
+
+                        contabilizarDinheiroCaixa(venda);
+
+
+                        btnCancelar.doClick();
+                    }
+            
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Entre com o valor correto");
+                
+            } 
             
-            }
         }
         
         

@@ -54,9 +54,9 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         btnAbrir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(51, 137, 154));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -91,15 +91,6 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAbrir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar))
-                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 288, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(349, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,6 +102,15 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(417, 417, 417))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(288, 288, 288)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAbrir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addComponent(btnCancelar))
+                    .addComponent(txtSenha))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,11 +119,11 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(55, 55, 55)
+                .addGap(56, 56, 56)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAbrir)
                     .addComponent(btnCancelar))
@@ -152,29 +152,34 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        if(txtSenha.getText().length() > 0){
+            Caixa aux = ctrl.abrirCaixa(txtSenha.getText(), caixa);
         
-        
-        Caixa aux = ctrl.abrirCaixa(txtSenha.getText(), caixa);
-        
-        if(aux != null){
-            caixa = aux;
-            int resp = JOptionPane.showConfirmDialog(null, "Deseja inserir dinheiro no caixa?",
-                "Dinheiro",JOptionPane.YES_NO_OPTION);
-            if(resp == JOptionPane.YES_OPTION){
-                FrmDinheiro fDinheiro = new FrmDinheiro(caixa.getMoedas(), caixa.getNotas());
-                getContentPane().removeAll();
-                getContentPane().setBackground(new Color(204,204,204));
-                getContentPane().add(fDinheiro);
-                fDinheiro.setVisible(true);
-            }else{
-                getContentPane().removeAll();
-                getContentPane().setBackground(new Color(204,204,204));
-                this.dispose();  
+            if(aux != null){
+                caixa = aux;
+                int resp = JOptionPane.showConfirmDialog(null, "Deseja inserir dinheiro no caixa?",
+                    "Dinheiro",JOptionPane.YES_NO_OPTION);
+                if(resp == JOptionPane.YES_OPTION){
+                    FrmDinheiro fDinheiro = new FrmDinheiro(caixa.getMoedas(), caixa.getNotas());
+                    getContentPane().removeAll();
+                    getContentPane().setBackground(new Color(204,204,204));
+                    getContentPane().add(fDinheiro);
+                    fDinheiro.setVisible(true);
+                }else{
+                    getContentPane().removeAll();
+                    getContentPane().setBackground(new Color(204,204,204));
+                    this.dispose();  
+                }
             }
-        }
+
+            txtSenha.setText("");
+            txtSenha.requestFocusInWindow();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtSenha.requestFocusInWindow();
+       } 
         
-        txtSenha.setText("");
-        txtSenha.requestFocusInWindow();
+        
         
         
         
@@ -216,6 +221,6 @@ public class FrmAbrirCaixa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

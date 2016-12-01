@@ -1,3 +1,7 @@
+Versao 1.0
+-Software finalizado
+-Documentacao finalizada
+
 Versao 0.4.6
 -Formularios de: fechar caixa, Venda, cartao, dinheiro finalizados
 

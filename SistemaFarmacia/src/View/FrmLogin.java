@@ -5,9 +5,12 @@
  */
 package View;
 
+import Controller.CtrlUsuario;
+import Model.Usuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -16,22 +19,23 @@ import javax.swing.border.EmptyBorder;
  *
  * @author caiol
  */
-public class FrmLogin extends javax.swing.JInternalFrame {
+public class FrmLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form frmLogin
      */
     public FrmLogin() {
         initComponents();
+        setLocationRelativeTo(null);
         //Retirar bordas
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        setBorder(new EmptyBorder(new Insets(0,0,0,0)));
+        /*((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        setBorder(new EmptyBorder(new Insets(0,0,0,0)));*/
     }
     //centralizar o InternalFrame no DesktopPane
-    public void setPosicao() {
+    /*public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,12 +49,10 @@ public class FrmLogin extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnEntrar = new javax.swing.JButton();
-        txtSenha = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        txtSenha = new javax.swing.JPasswordField();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -64,6 +66,11 @@ public class FrmLogin extends javax.swing.JInternalFrame {
 
         btnEntrar.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         btnEntrar.setText("ENTRAR");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Candara", 0, 24)); // NOI18N
         jLabel1.setText("Senha");
@@ -75,16 +82,6 @@ public class FrmLogin extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(296, 296, 296)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEntrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar))
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(411, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,6 +91,16 @@ public class FrmLogin extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(417, 417, 417))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEntrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                    .addComponent(txtSenha))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +113,7 @@ public class FrmLogin extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar)
                     .addComponent(btnCancelar))
@@ -128,10 +135,31 @@ public class FrmLogin extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        getContentPane().removeAll();
-        this.dispose();
-        getContentPane().setBackground(new Color(204,204,204));
+        System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+       
+       if(txtUsuario.getText().length() > 0 && txtSenha.getText().length() > 0){
+            Usuario usuario = new Usuario();
+            CtrlUsuario ctrl = new CtrlUsuario();
+            usuario.setLogin(txtUsuario.getText());
+            usuario.setSenha(txtSenha.getText());
+            Usuario aux = ctrl.buscarUsuario(usuario);
+            if(aux != null){
+                usuario = aux;
+
+                FrmPrincipal principal = new FrmPrincipal(usuario.getTipoUsuario());
+                this.setVisible(false);
+                principal.setVisible(true);
+
+            }
+       }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtUsuario.requestFocusInWindow();
+       } 
+       
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,7 +188,7 @@ public class FrmLogin extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

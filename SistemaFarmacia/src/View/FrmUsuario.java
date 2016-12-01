@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -216,26 +217,52 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     }
     
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        usuario.setLogin(txtUsuario.getText());
-        usuario.setSenha(txtSenha.getText());
-        usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+        if(txtUsuario.getText().length() > 0 && txtSenha.getText().length() > 0 && 
+                cmbTipoUsuario.getSelectedIndex() != -1){
+            
+            usuario.setLogin(txtUsuario.getText());
+            usuario.setSenha(txtSenha.getText());
+            usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+
+            ctrl.cadastrarUsuario(usuario);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtUsuario.requestFocusInWindow();
+       } 
         
-        ctrl.cadastrarUsuario(usuario);
-        limpar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        ctrl.apagarUsuario(usuario);
-        limpar();
+        if(txtUsuario.getText().length() > 0 && txtSenha.getText().length() > 0 && 
+                cmbTipoUsuario.getSelectedIndex() != -1){
+            
+            ctrl.apagarUsuario(usuario);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtUsuario.requestFocusInWindow();
+       } 
+        
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        usuario.setLogin(txtUsuario.getText());
-        usuario.setSenha(txtSenha.getText());
-        usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+        if(txtUsuario.getText().length() > 0 && txtSenha.getText().length() > 0 && 
+                cmbTipoUsuario.getSelectedIndex() != -1){
+            
+            usuario.setLogin(txtUsuario.getText());
+            usuario.setSenha(txtSenha.getText());
+            usuario.setTipoUsuario(cmbTipoUsuario.getSelectedItem().toString());
+
+            ctrl.atualizarUsuario(usuario);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtUsuario.requestFocusInWindow();
+       } 
         
-        ctrl.atualizarUsuario(usuario);
-        limpar();
+        
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -245,20 +272,26 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        usuario.setLogin(txtUsuario.getText());
-        Usuario aux = ctrl.buscarUsuario(usuario);
-        if(aux != null){
-            usuario = aux;
-            txtUsuario.setText(aux.getLogin());
-            txtSenha.setText(aux.getSenha());
-            if(aux.getTipoUsuario().equals("Atendente")){
-                cmbTipoUsuario.setSelectedIndex(0);
+        if(txtUsuario.getText().length() > 0){
+            usuario.setLogin(txtUsuario.getText());
+            Usuario aux = ctrl.buscarUsuario(usuario);
+            if(aux != null){
+                usuario = aux;
+                txtUsuario.setText(aux.getLogin());
+                txtSenha.setText(aux.getSenha());
+                if(aux.getTipoUsuario().equals("Atendente")){
+                    cmbTipoUsuario.setSelectedIndex(0);
+                }else{
+                    cmbTipoUsuario.setSelectedIndex(1);
+                }
             }else{
-                cmbTipoUsuario.setSelectedIndex(1);
+                limpar();
             }
         }else{
-            limpar();
-        }
+           JOptionPane.showMessageDialog(null, "Preencha o campo de busca");
+           txtUsuario.requestFocusInWindow();
+       } 
+        
         
         
     }//GEN-LAST:event_btnBuscarActionPerformed

@@ -93,12 +93,14 @@ public class CaixaDAO implements DAO<Caixa>{
             bd.conectar(); //abre o banco
             if(tipo.equals("dinheiro")){
                 pst = bd.getConexao().prepareStatement(//comando SQL
-                    "select count(d.codPagamento) as qtd from dinheiro d\n" +
-                            "inner join venda v on v.data = curdate(); ");
+                    "select count(d.codPagamento) as qtd from dinheiro d \n" +
+                    "inner join venda v on v.data = curdate()\n" +
+                    "where d.codPagamento = v.codPagamento;");
             }else{
                 pst = bd.getConexao().prepareStatement(//comando SQL
-                    "select count(cc.codPagamento) as qtd from cartaoCredito cc\n" +
-                            "inner join venda v on v.data = curdate(); ");
+                    "select count(cc.codPagamento) as qtd from cartaoCredito cc \n" +
+                    "inner join venda v on v.data = curdate()\n" +
+                    "where cc.codPagamento = v.codPagamento;");
             }
 
             rs = pst.executeQuery();//Executa o comando

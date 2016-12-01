@@ -140,6 +140,24 @@ public class CtrlVenda {
         }
     }
     
+    public Dinheiro getPagamentoDinheiro(Venda venda){
+        DinheiroDAO dd = new DinheiroDAO(bd);
+        venda.getTipoPagamento().setDinheiro(new Dinheiro());
+        venda.getTipoPagamento().getDinheiro().setCodPagamento(venda.getTipoPagamento().getCodPagamento());
+        
+        Dinheiro aux = dd.pesquisar(venda.getTipoPagamento().getDinheiro());
+        
+        return aux;
+    }
+    
+    public CartaoCredito getPagamentoCartao(Venda venda){
+        CartaoCreditoDAO ccD = new CartaoCreditoDAO(bd);
+        venda.getTipoPagamento().setCartao(new CartaoCredito());
+        venda.getTipoPagamento().getCartao().setCodPagamento(venda.getTipoPagamento().getCodPagamento());
+        CartaoCredito aux = ccD.pesquisar(venda.getTipoPagamento().getCartao());
+        return aux;
+    }
+    
     public void apagarVenda(Venda venda){
         if(dao.excluir(venda)){
             JOptionPane.showMessageDialog(null, "Venda apagada com sucesso!");

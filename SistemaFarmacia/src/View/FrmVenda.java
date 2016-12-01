@@ -5,9 +5,11 @@
  */
 package View;
 
+import Controller.CtrlCaixa;
 import Controller.CtrlCliente;
 import Controller.CtrlMedicamento;
 import Controller.CtrlVenda;
+import Model.Caixa;
 import Model.CartaoCredito;
 import Model.Cliente;
 import Model.Dinheiro;
@@ -70,7 +72,13 @@ public class FrmVenda extends javax.swing.JInternalFrame {
         jLabel7.setEnabled(false);
         jLabel15.setEnabled(false);
         
-        
+        CtrlCaixa ctrlCaixa = new CtrlCaixa();
+        Caixa caixa = new Caixa();
+        caixa = ctrlCaixa.buscarCaixa();
+        if(!caixa.isStatus()){
+            JOptionPane.showMessageDialog(null, "Abra o caixa primeiro");
+            btnCancelar.doClick();
+        }
         
         /*SOFTWARE DE CRISTAL, SE MEXER, QUEBRA*/
     }
@@ -356,12 +364,9 @@ public class FrmVenda extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
                                 .addComponent(jLabel4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -537,8 +542,11 @@ public class FrmVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void txtParcelasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtParcelasFocusLost
-        double parcelas = valorFinal / Integer.parseInt(txtParcelas.getText());
-        lblParcelas.setText(String.format("%.2f", parcelas));
+        if(txtParcelas.getText().length() > 0){
+            double parcelas = valorFinal / Integer.parseInt(txtParcelas.getText());
+            lblParcelas.setText(String.format("%.2f", parcelas));
+        }
+        
     }//GEN-LAST:event_txtParcelasFocusLost
 
     private void tbSelecionadoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbSelecionadoPropertyChange
@@ -588,42 +596,57 @@ public class FrmVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbSelecionadoMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        medic.setNome(txtMedicamento.getText());
-        int qtd = Integer.parseInt(txtQuantidade.getText());
+        if(txtMedicamento.getText().length() > 0 && txtQuantidade.getText().length() > 0){
+            medic.setNome(txtMedicamento.getText());
+            int qtd = Integer.parseInt(txtQuantidade.getText());
 
-        Medicamento aux = ctrlMedic.buscarMedicamento(medic);
-        if(aux != null){
-            medic = aux;
-            if(medic.getQtdEstoque() >= qtd){
-                Vector medicamentos = new Vector();
-                medicamentos.add(medic.getNome());
-                medicamentos.add(qtd);
-                medicamentos.add(medic.getPreco().multiply(new BigDecimal(qtd)));
-                alteraTabelaSelec(medicamentos);
+            Medicamento aux = ctrlMedic.buscarMedicamento(medic);
+            if(aux != null){
+                medic = aux;
+                if(medic.getQtdEstoque() >= qtd){
+                    Vector medicamentos = new Vector();
+                    medicamentos.add(medic.getNome());
+                    medicamentos.add(qtd);
+                    medicamentos.add(medic.getPreco().multiply(new BigDecimal(qtd)));
+                    alteraTabelaSelec(medicamentos);
 
-                //medicamentos.removeAllElements();
+                    //medicamentos.removeAllElements();
 
-            }else{
-                JOptionPane.showMessageDialog(null, "Quantidade superior a disponivel");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Quantidade superior a disponivel");
+                }
             }
-        }
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha os campos de busca");
+           txtMedicamento.requestFocusInWindow();
+       } 
+        
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBuscarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCPFActionPerformed
-        cliente.setCpf(txtBuscaCPF.getText());
-        Cliente aux = ctrlCliente.buscarCliente(cliente);
-        if(aux != null){
-            cliente = aux;
-            txtNome.setText(aux.getNome());
-            if(cliente.isAposentado()){
-                lblPorcentagem.setText("20%");
-                
-                valorFinal = valorTotal * 0.8;
-                lblValorFinal.setText(String.format("%.2f", valorFinal));
+        if(txtBuscaCPF.getText().length() > 0){
+            
+            cliente.setCpf(txtBuscaCPF.getText());
+            Cliente aux = ctrlCliente.buscarCliente(cliente);
+            if(aux != null){
+                cliente = aux;
+                txtNome.setText(aux.getNome());
+                if(cliente.isAposentado()){
+                    lblPorcentagem.setText("20%");
+
+                    valorFinal = valorTotal * 0.8;
+                    lblValorFinal.setText(String.format("%.2f", valorFinal));
+                }
+            }else{
+                //limpar();
             }
         }else{
-            //limpar();
-        }
+           JOptionPane.showMessageDialog(null, "Preencha o campo de busca");
+           txtMedicamento.requestFocusInWindow();
+       } 
+        
+        
     }//GEN-LAST:event_btnBuscarCPFActionPerformed
 
     private void tbMedicamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMedicamentosMouseClicked
@@ -640,51 +663,67 @@ public class FrmVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
-        int linhas = ((DefaultTableModel)tbSelecionado.getModel()).getRowCount();
-        ArrayList<MedQtd> medqtd = new ArrayList();
-        for(int x = 0; x < linhas; x++){
-            MedQtd med = new MedQtd();
-            med.getMedicamento().setNome(((DefaultTableModel)tbSelecionado.getModel()).getValueAt(x, 0).toString());
-            med.setQuantidade(Integer.parseInt(((DefaultTableModel)tbSelecionado.getModel()).getValueAt(x, 1).toString()));
-
-            medqtd.add(med);
-        }
-
-        if(lblPorcentagem.getText().equals("20%")){
-            venda.setPorcentagemDesconto(20);
-        }else if(lblPorcentagem.getText().equals("5%")){
-            venda.setPorcentagemDesconto(5);
-        }else{
-            venda.setPorcentagemDesconto(0);
-        }
-
-        venda.setMedQtd(medqtd);
-        venda.getCliente().setCpf(txtBuscaCPF.getText());
-        venda.getCliente().setNome(txtNome.getText());
-        venda.getTipoPagamento().setValor(new BigDecimal(valorTotal));
-        venda.getTipoPagamento().setValorDescontado(new BigDecimal(valorFinal));
-
-        if(cbPagamento.getSelectedItem().equals("Dinheiro")){
-            venda.getTipoPagamento().setDinheiro(new Dinheiro());
+        if(txtBuscaCPF.getText().length() > 0 && txtNome.getText().length() > 0 && 
+                cbPagamento.getSelectedIndex() != -1 ){
             
-            FrmDinheiro fDinheiro = new FrmDinheiro(venda);
-            getContentPane().removeAll();
-            getContentPane().setBackground(new Color(204,204,204));
-            getContentPane().add(fDinheiro);
-            fDinheiro.setVisible(true);
-        }else if(cbPagamento.getSelectedItem().equals("Cartão de Credito")){
-            venda.getTipoPagamento().setCartao(new CartaoCredito());
-            venda.getTipoPagamento().getCartao().setParcelas(Integer.parseInt(txtParcelas.getText()));
-            FrmCartao fCartao = new FrmCartao(venda);
-            getContentPane().removeAll();
-            getContentPane().setBackground(new Color(204,204,204));
-            getContentPane().add(fCartao);
-            fCartao.setVisible(true);
-        }
+            int linhas = ((DefaultTableModel)tbSelecionado.getModel()).getRowCount();
+            ArrayList<MedQtd> medqtd = new ArrayList();
+            for(int x = 0; x < linhas; x++){
+                MedQtd med = new MedQtd();
+                med.getMedicamento().setNome(((DefaultTableModel)tbSelecionado.getModel()).getValueAt(x, 0).toString());
+                med.setQuantidade(Integer.parseInt(((DefaultTableModel)tbSelecionado.getModel()).getValueAt(x, 1).toString()));
+
+                medqtd.add(med);
+            }
+
+            if(lblPorcentagem.getText().equals("20%")){
+                venda.setPorcentagemDesconto(20);
+            }else if(lblPorcentagem.getText().equals("5%")){
+                venda.setPorcentagemDesconto(5);
+            }else{
+                venda.setPorcentagemDesconto(0);
+            }
+
+            venda.setMedQtd(medqtd);
+            venda.getCliente().setCpf(txtBuscaCPF.getText());
+            venda.getCliente().setNome(txtNome.getText());
+            venda.getTipoPagamento().setValor(new BigDecimal(valorTotal));
+            venda.getTipoPagamento().setValorDescontado(new BigDecimal(valorFinal));
+
+            if(cbPagamento.getSelectedItem().equals("Dinheiro")){
+                venda.getTipoPagamento().setDinheiro(new Dinheiro());
+
+                FrmDinheiro fDinheiro = new FrmDinheiro(venda);
+                getContentPane().removeAll();
+                getContentPane().setBackground(new Color(204,204,204));
+                getContentPane().add(fDinheiro);
+                fDinheiro.setVisible(true);
+            }else if(cbPagamento.getSelectedItem().equals("Cartão de Credito")){
+                if(txtParcelas.getText().length() > 0){
+                    venda.getTipoPagamento().setCartao(new CartaoCredito());
+                    venda.getTipoPagamento().getCartao().setParcelas(Integer.parseInt(txtParcelas.getText()));
+                    FrmCartao fCartao = new FrmCartao(venda);
+                    getContentPane().removeAll();
+                    getContentPane().setBackground(new Color(204,204,204));
+                    getContentPane().add(fCartao);
+                    fCartao.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Preencha a quantidade de parcelas");
+                    txtParcelas.requestFocusInWindow();
+                }
+                
+            }
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCPF.requestFocusInWindow();
+       } 
+        
+        
+        
     }//GEN-LAST:event_btnVendaActionPerformed
 
     private void cbPagamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPagamentoItemStateChanged
-        double valor = 0;
+        
         if(cliente.isAposentado()){
             lblPorcentagem.setText("20%");
             valorFinal = valorTotal * 0.8;

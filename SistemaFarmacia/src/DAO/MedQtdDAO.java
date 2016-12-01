@@ -97,20 +97,18 @@ public class MedQtdDAO implements DAO<MedQtd>{
             rs = pst.executeQuery();
             //verifica se achou alguem
             while(rs.next()) { //achou
+                MedQtd aux = new MedQtd();
+                aux.setCodVendaMed(rs.getInt("codVendaMed"));
+                aux.getVenda().setCodVenda(rs.getInt("codVenda"));
+                aux.getMedicamento().setCodMedicamento(rs.getInt("codMedicamento"));
+                aux.setQuantidade(rs.getInt("quantidade"));
                 
-                obj.setCodVendaMed(rs.getInt("codVendaMed"));
-                
-                obj.getMedicamento().setCodMedicamento(rs.getInt("codMedicamento"));
-                obj.setQuantidade(rs.getInt("quantidade"));
                 
                 
-                
-                meds.add(obj);
+                meds.add(aux);
             }           
             
-            for(MedQtd x : meds){
-                JOptionPane.showMessageDialog(null, x.getCodVendaMed());
-            }
+            
             
             return meds;
         } catch (SQLException ex) {

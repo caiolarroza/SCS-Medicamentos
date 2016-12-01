@@ -414,72 +414,107 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }
     
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        cliente.setCpf(txtBuscaCPF.getText());
-        Cliente aux = ctrl.buscarCliente(cliente);
-        if(aux != null){
-            cliente = aux;
-            txtNomeCliente.setText(aux.getNome());
-            txtDataNasc.setText(aux.getDataNasc());
-            txtTelefone.setText(aux.getTelefone());
-            txtCelular.setText(aux.getCelular());
-            cbAposentado.setSelected(aux.isAposentado());
-            txtRG.setText(aux.getRg());
-            txtCPF.setText(aux.getCpf());
-            txtCEP.setText(aux.getEndereco().getCep());
-            txtLogradouro.setText(aux.getEndereco().getLogradouro());
-            txtNum.setText(aux.getEndereco().getNumero());
-            txtComplemento.setText(aux.getEndereco().getComplemento());
-            txtBairro.setText(aux.getEndereco().getBairro());
-            txtCidade.setText(aux.getEndereco().getCidade());
-            txtEstado.setText(aux.getEndereco().getEstado());
+        if(txtBuscaCPF.getText().length() > 0){
+            cliente.setCpf(txtBuscaCPF.getText());
+            Cliente aux = ctrl.buscarCliente(cliente);
+            if(aux != null){
+                cliente = aux;
+                txtNomeCliente.setText(aux.getNome());
+                txtDataNasc.setText(aux.getDataNasc());
+                txtTelefone.setText(aux.getTelefone());
+                txtCelular.setText(aux.getCelular());
+                cbAposentado.setSelected(aux.isAposentado());
+                txtRG.setText(aux.getRg());
+                txtCPF.setText(aux.getCpf());
+                txtCEP.setText(aux.getEndereco().getCep());
+                txtLogradouro.setText(aux.getEndereco().getLogradouro());
+                txtNum.setText(aux.getEndereco().getNumero());
+                txtComplemento.setText(aux.getEndereco().getComplemento());
+                txtBairro.setText(aux.getEndereco().getBairro());
+                txtCidade.setText(aux.getEndereco().getCidade());
+                txtEstado.setText(aux.getEndereco().getEstado());
+            }else{
+                limpar();
+            }
         }else{
-            limpar();
-        }
+           JOptionPane.showMessageDialog(null, "Preencha o campo de busca");
+           txtBuscaCPF.requestFocusInWindow();
+       } 
+        
+        
         
         
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        cliente.setNome(txtNomeCliente.getText());
-        cliente.setDataNasc(txtDataNasc.getText());
-        cliente.setTelefone(txtTelefone.getText());
-        cliente.setCelular(txtCelular.getText());
-        cliente.setRg(txtRG.getText());
-        cliente.setAposentado(cbAposentado.isSelected());
+        if(txtNomeCliente.getText().length() > 0 && txtDataNasc.getText().length() > 0 && 
+                txtTelefone.getText().length() > 0 && txtCelular.getText().length() > 0 && 
+                txtRG.getText().length() > 0 && txtCPF.getText().length() > 0 && 
+                txtCEP.getText().length() > 0 && txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
+            
+            
+            cliente.setNome(txtNomeCliente.getText());
+            cliente.setDataNasc(txtDataNasc.getText());
+            cliente.setTelefone(txtTelefone.getText());
+            cliente.setCelular(txtCelular.getText());
+            cliente.setRg(txtRG.getText());
+            cliente.setAposentado(cbAposentado.isSelected());
+
+            cliente.getEndereco().setLogradouro(txtLogradouro.getText());
+            cliente.getEndereco().setNumero(txtNum.getText());
+            cliente.getEndereco().setComplemento(txtComplemento.getText());
+            cliente.getEndereco().setBairro(txtBairro.getText());
+            cliente.getEndereco().setCep(txtCEP.getText());
+            cliente.getEndereco().setCidade(txtCidade.getText());
+            cliente.getEndereco().setEstado(txtEstado.getText());
+
+            ctrl.atualizarCliente(cliente);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCPF.requestFocusInWindow();
+       } 
         
-        cliente.getEndereco().setLogradouro(txtLogradouro.getText());
-        cliente.getEndereco().setNumero(txtNum.getText());
-        cliente.getEndereco().setComplemento(txtComplemento.getText());
-        cliente.getEndereco().setBairro(txtBairro.getText());
-        cliente.getEndereco().setCep(txtCEP.getText());
-        cliente.getEndereco().setCidade(txtCidade.getText());
-        cliente.getEndereco().setEstado(txtEstado.getText());
         
-        ctrl.atualizarCliente(cliente);
-        limpar();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        cliente.setNome(txtNomeCliente.getText());
-        cliente.setDataNasc(txtDataNasc.getText());
-        cliente.setTelefone(txtTelefone.getText());
-        cliente.setCelular(txtCelular.getText());
-        cliente.setRg(txtRG.getText());
-        cliente.setAposentado(cbAposentado.isSelected());
-        cliente.setCpf(txtCPF.getText());
-        cliente.setRg(txtRG.getText());
+        if(txtNomeCliente.getText().length() > 0 && txtDataNasc.getText().length() > 0 && 
+                txtTelefone.getText().length() > 0 && txtCelular.getText().length() > 0 && 
+                txtRG.getText().length() > 0 && txtCPF.getText().length() > 0 && 
+                txtCEP.getText().length() > 0 && txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
         
-        cliente.getEndereco().setLogradouro(txtLogradouro.getText());
-        cliente.getEndereco().setNumero(txtNum.getText());
-        cliente.getEndereco().setComplemento(txtComplemento.getText());
-        cliente.getEndereco().setBairro(txtBairro.getText());
-        cliente.getEndereco().setCep(txtCEP.getText());
-        cliente.getEndereco().setCidade(txtCidade.getText());
-        cliente.getEndereco().setEstado(txtEstado.getText());
+            
+            cliente.setNome(txtNomeCliente.getText());
+            cliente.setDataNasc(txtDataNasc.getText());
+            cliente.setTelefone(txtTelefone.getText());
+            cliente.setCelular(txtCelular.getText());
+            cliente.setRg(txtRG.getText());
+            cliente.setAposentado(cbAposentado.isSelected());
+            cliente.setCpf(txtCPF.getText());
+            cliente.setRg(txtRG.getText());
+
+            cliente.getEndereco().setLogradouro(txtLogradouro.getText());
+            cliente.getEndereco().setNumero(txtNum.getText());
+            cliente.getEndereco().setComplemento(txtComplemento.getText());
+            cliente.getEndereco().setBairro(txtBairro.getText());
+            cliente.getEndereco().setCep(txtCEP.getText());
+            cliente.getEndereco().setCidade(txtCidade.getText());
+            cliente.getEndereco().setEstado(txtEstado.getText());
+
+            ctrl.cadastrarCliente(cliente);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCPF.requestFocusInWindow();
+       } 
         
-        ctrl.cadastrarCliente(cliente);
-        limpar();
+        
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -489,8 +524,21 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        ctrl.apagarCliente(cliente);
-        limpar();
+        if(txtNomeCliente.getText().length() > 0 && txtDataNasc.getText().length() > 0 && 
+                txtTelefone.getText().length() > 0 && txtCelular.getText().length() > 0 && 
+                txtRG.getText().length() > 0 && txtCPF.getText().length() > 0 && 
+                txtCEP.getText().length() > 0 && txtLogradouro.getText().length() > 0 && 
+                txtNum.getText().length() > 0 && txtBairro.getText().length() > 0 && 
+                txtCidade.getText().length() > 0 && txtEstado.getText().length() > 0){
+            
+            
+            ctrl.apagarCliente(cliente);
+            limpar();
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtBuscaCPF.requestFocusInWindow();
+       } 
+        
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated

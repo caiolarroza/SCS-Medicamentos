@@ -37,6 +37,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         GAMBIARRA), USANDO COMO BASE UMA METODOLOGIA AMPLAMENTE CONHECIDA E
         UTILIZADA AO REDOR DO MUNDO, A GO HORSE.
         */
+        
+            
+    }
+    
+    public FrmPrincipal(String tipoUsuario){
+        this();
+        liberarBotoes(tipoUsuario);
+        
     }
 
     /**
@@ -281,12 +289,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVenEfetu)
                     .addComponent(jLabel9))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Cadastro e Pesquisa");
         jMenu1.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
 
+        itmCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cliente.png"))); // NOI18N
         itmCliente.setText("Cliente");
         itmCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,6 +304,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(itmCliente);
 
+        itmMedicamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Remedio.png"))); // NOI18N
         itmMedicamento.setText("Medicamento");
         itmMedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,6 +313,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(itmMedicamento);
 
+        itmFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fornecedor.png"))); // NOI18N
         itmFornecedor.setText("Fornecedor");
         itmFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,6 +322,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(itmFornecedor);
 
+        itmUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Usuario.png"))); // NOI18N
         itmUsuario.setText("Usuario");
         itmUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,6 +331,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(itmUsuario);
 
+        itmVenEfetu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Carrinho.png"))); // NOI18N
         itmVenEfetu.setText("Vendas Efetuadas");
         itmVenEfetu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,6 +345,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Caixa");
         jMenu2.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
 
+        itmAbrirCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CadeadoAberto.png"))); // NOI18N
         itmAbrirCaixa.setText("Abrir Caixa");
         itmAbrirCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +354,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(itmAbrirCaixa);
 
+        itmFecharCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CadeadoTrancado.png"))); // NOI18N
         itmFecharCaixa.setText("Fechar Caixa");
         itmFecharCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,6 +368,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Venda");
         jMenu3.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
 
+        itmVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Carrinho.png"))); // NOI18N
         itmVenda.setText("Venda");
         itmVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,13 +401,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
             .addComponent(dtpTela, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void liberarBotoes(String tipoUsuario){
+        if(tipoUsuario.equals("Atendente")){
+            btnUsuario.setEnabled(false);
+            itmUsuario.setEnabled(false);
+            btnFecharCaixa.setEnabled(false);
+            itmFecharCaixa.setEnabled(false);
+        }
+    }
+    
     public Dimension tamanhoTela(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight());
@@ -505,8 +530,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        FrmLogin fLogin = new FrmLogin();
-        /*ADICIONAR LOGIN*/
+        
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void itmFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmFornecedorActionPerformed

@@ -38,6 +38,8 @@ public class FrmCartao extends javax.swing.JInternalFrame {
         //Retirar bordas
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setBorder(new EmptyBorder(new Insets(0,0,0,0)));
+        
+        txtNumCartao.requestFocusInWindow();
     }
 
     public FrmCartao(Venda venda) {
@@ -214,30 +216,37 @@ public class FrmCartao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        
-        venda.getTipoPagamento().getCartao().setNumero(Long.valueOf(txtNumCartao.getText()));
-        venda.getTipoPagamento().getCartao().setNome(txtNomeCartao.getText());
-        venda.getTipoPagamento().getCartao().setValidade(txtValidade.getText());
-        venda.getTipoPagamento().getCartao().setCodSeguranca(Integer.parseInt(txtCodCartao.getText()));
-        
-        venda.getTipoPagamento().setDinheiro(null);
-        
-        TipoPagamentoDAO tpDAO = new TipoPagamentoDAO(bd);
-        if(tpDAO.inserir(venda.getTipoPagamento())){
-            venda.getTipoPagamento().setCodPagamento(tpDAO.proxCodigoExterno()- 1);
+        if(txtNomeCartao.getText().length() > 0 && txtNumCartao.getText().length() > 0 && 
+                txtCodCartao.getText().length() > 0 && txtValidade.getText().length() > 0){
             
-            
-            CtrlCliente ctrlCliente = new CtrlCliente();
-            Cliente aux = ctrlCliente.buscarCliente(venda.getCliente());
-            if(aux != null){
-                venda.setCliente(aux);
-                ctrl.cadastrarVenda(venda);
-                getContentPane().removeAll();
-                
-                this.dispose();
-                getContentPane().setBackground(new Color(204,204,204));
+            venda.getTipoPagamento().getCartao().setNumero(Long.valueOf(txtNumCartao.getText()));
+            venda.getTipoPagamento().getCartao().setNome(txtNomeCartao.getText());
+            venda.getTipoPagamento().getCartao().setValidade(txtValidade.getText());
+            venda.getTipoPagamento().getCartao().setCodSeguranca(Integer.parseInt(txtCodCartao.getText()));
+
+            venda.getTipoPagamento().setDinheiro(null);
+
+            TipoPagamentoDAO tpDAO = new TipoPagamentoDAO(bd);
+            if(tpDAO.inserir(venda.getTipoPagamento())){
+                venda.getTipoPagamento().setCodPagamento(tpDAO.proxCodigoExterno()- 1);
+
+
+                CtrlCliente ctrlCliente = new CtrlCliente();
+                Cliente aux = ctrlCliente.buscarCliente(venda.getCliente());
+                if(aux != null){
+                    venda.setCliente(aux);
+                    ctrl.cadastrarVenda(venda);
+                    getContentPane().removeAll();
+
+                    this.dispose();
+                    getContentPane().setBackground(new Color(204,204,204));
+                }
             }
-        }
+        }else{
+           JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+           txtNumCartao.requestFocusInWindow();
+       } 
+        
         
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
