@@ -1,3 +1,3 @@
-# Sistema_Farmacia_Fatec
+Sistema Farmacêutico - SCS Medicamentos
 
-Repositório referente ao projeto de um sistema para farmacia em Java, orientado pelo professor Flavio Viotti na matéria de Programação Orientada a Objetos na Fatec São Caetano do Sul
+Sistema para farmácia, desenvolvido em Java, orientado pelo professor Flavio Viotti na matéria de Programação Orientada a Objetos, durante o 4°semestre do curso de análise e desenvolvimento de sistemas, na Fatec São Caetano do Sul.
